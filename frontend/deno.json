@@ -7,6 +7,9 @@
   },
   "imports": {
     "@tailwindcss/vite": "npm:@tailwindcss/vite@^4.1.17",
+    "@tanstack/react-router": "npm:@tanstack/react-router@^1.135.2",
+    "@tanstack/react-router-devtools": "npm:@tanstack/react-router-devtools@^1.135.2",
+    "@tanstack/router-plugin": "npm:@tanstack/router-plugin@^1.135.2",
     "react": "npm:react@^19.2.0",
     "@types/react": "npm:@types/react@^19.2.2",
     "react-dom": "npm:react-dom@^19.2.0",
