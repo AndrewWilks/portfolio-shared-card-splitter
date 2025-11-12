@@ -1,1 +1,19 @@
-{}
+{
+  "compilerOptions": {
+    "types": ["react", "react-dom", "@types/react"],
+    "lib": ["dom", "dom.iterable", "deno.ns"],
+    "jsx": "react-jsx",
+    "jsxImportSource": "react"
+  },
+  "imports": {
+    "react": "npm:react@^19.2.0",
+    "@types/react": "npm:@types/react@^19.2.2",
+    "react-dom": "npm:react-dom@^19.2.0",
+    "vite": "npm:vite@^7.2.2",
+    "@vitejs/plugin-react": "npm:@vitejs/plugin-react@^5.1.0"
+  },
+  "tasks": {
+    "dev": "deno run -A npm:vite --config ./.config/vite.config.ts",
+    "build": "deno run -A npm:vite build"
+  }
+}
