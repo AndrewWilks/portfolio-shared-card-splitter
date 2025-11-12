@@ -7,6 +7,7 @@
     "npm:@tanstack/router-plugin@^1.135.2": "1.135.2_@tanstack+react-router@1.135.2__react@19.2.0__react-dom@19.2.0___react@19.2.0_vite@7.2.2__picomatch@4.0.3_@babel+core@7.28.5_react@19.2.0_react-dom@19.2.0__react@19.2.0",
     "npm:@types/react@^19.2.2": "19.2.2",
     "npm:@vitejs/plugin-react@^5.1.0": "5.1.0_vite@7.2.2__picomatch@4.0.3_@babel+core@7.28.5",
+    "npm:hono@*": "4.10.4",
     "npm:react-dom@^19.2.0": "19.2.0_react@19.2.0",
     "npm:react@^19.2.0": "19.2.0",
     "npm:tailwindcss@^4.1.17": "4.1.17",
@@ -964,6 +965,9 @@
     "graceful-fs@4.2.11": {
       "integrity": "sha512-RbJ5/jmFcNNCcDV5o9eTnBLJ/HszWV0P73bc+Ff4nS/rJj+YaS6IGyiOL0VoBYX+l1Wrl3k63h/KrH+nhJ0XvQ=="
     },
+    "hono@4.10.4": {
+      "integrity": "sha512-YG/fo7zlU3KwrBL5vDpWKisLYiM+nVstBQqfr7gCPbSYURnNEP9BDxEMz8KfsDR9JX0lJWDRNc6nXX31v7ZEyg=="
+    },
     "is-binary-path@2.1.0": {
       "integrity": "sha512-ZMERYes6pDydyuGidse7OsHxtbI7WVeUEozgR/g7rd0xUimYNlvZRE/K2MgZTjWy725IfelLeVcEM97mmtRGXw==",
       "dependencies": [
@@ -1310,6 +1314,11 @@
   },
   "workspace": {
     "members": {
+      "backend": {
+        "dependencies": [
+          "npm:hono@*"
+        ]
+      },
       "frontend": {
         "dependencies": [
           "npm:@tailwindcss/vite@^4.1.17",
