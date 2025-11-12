@@ -19,6 +19,7 @@
   },
   "tasks": {
     "dev": "deno run -A npm:vite --config ./.config/vite.config.ts",
-    "build": "deno run -A npm:vite build"
+    "build": "deno run -A npm:vite build --config ./.config/vite.config.ts",
+    "preview": "deno run -A npm:vite preview --config ./.config/vite.config.ts"
   }
 }
