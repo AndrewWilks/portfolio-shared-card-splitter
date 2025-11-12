@@ -1,1 +1,15 @@
 @import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+body #root {
+  height: 100vh;
+}
+
+html {
+  overscroll-behavior: none;
+  overflow: hidden;
+}
+
+body {
+  overscroll-behavior: auto;
+}
