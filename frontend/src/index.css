@@ -1,1 +1,141 @@
 @import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+body #root {
+  height: 100vh;
+}
+
+html {
+  overscroll-behavior: none;
+  overflow: hidden;
+  @apply antialiased scroll-smooth;
+}
+
+html,
+body {
+  @apply bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors;
+}
+
+* {
+  @apply border-gray-200 dark:border-gray-700;
+}
+
+body {
+  overscroll-behavior: auto;
+}
+
+/* Typography */
+h1 {
+  @apply text-4xl font-bold mb-4 text-gray-900 dark:text-gray-100;
+}
+
+h2 {
+  @apply text-3xl font-semibold mb-3 text-gray-800 dark:text-gray-200;
+}
+
+h3 {
+  @apply text-2xl font-semibold mb-2 text-gray-800 dark:text-gray-200;
+}
+
+h4 {
+  @apply text-xl font-medium mb-2 text-gray-700 dark:text-gray-300;
+}
+
+h5 {
+  @apply text-lg font-medium mb-1 text-gray-700 dark:text-gray-300;
+}
+
+h6 {
+  @apply text-base font-medium mb-1 text-gray-600 dark:text-gray-400;
+}
+
+p {
+  @apply text-base leading-relaxed mb-4 text-gray-700 dark:text-gray-300;
+}
+
+a {
+  @apply text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition-colors underline decoration-transparent hover:decoration-current;
+}
+
+/* Form Elements */
+button {
+  @apply px-4 py-2 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 active:bg-blue-800 transition-colors shadow-sm hover:shadow focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="search"],
+input[type="tel"],
+input[type="url"],
+textarea,
+select {
+  @apply px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-shadow;
+}
+
+textarea {
+  @apply min-h-[100px];
+  resize: vertical;
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+  @apply w-4 h-4 text-blue-600 border-gray-300 dark:border-gray-600 rounded focus:ring-2 focus:ring-blue-500;
+}
+
+label {
+  @apply block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1;
+}
+
+/* Lists */
+ul {
+  @apply list-disc list-inside mb-4 text-gray-700 dark:text-gray-300 space-y-1;
+}
+
+ol {
+  @apply list-decimal list-inside mb-4 text-gray-700 dark:text-gray-300 space-y-1;
+}
+
+li {
+  @apply leading-relaxed;
+}
+
+/* Code */
+code {
+  @apply px-1.5 py-0.5 bg-gray-100 dark:bg-gray-800 text-pink-600 dark:text-pink-400 rounded text-sm font-mono;
+}
+
+pre {
+  @apply p-4 bg-gray-100 dark:bg-gray-800 rounded-lg overflow-x-auto mb-4;
+}
+
+pre code {
+  @apply p-0 bg-transparent text-gray-800 dark:text-gray-200;
+}
+
+/* Tables */
+table {
+  @apply w-full border-collapse mb-4;
+}
+
+th {
+  @apply bg-gray-100 dark:bg-gray-800 text-left px-4 py-2 font-semibold text-gray-900 dark:text-gray-100 border-b-2 border-gray-300 dark:border-gray-600;
+}
+
+td {
+  @apply px-4 py-2 border-b border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300;
+}
+
+tr:hover {
+  @apply bg-gray-50 dark:bg-gray-800/50;
+}
+
+/* Other Elements */
+hr {
+  @apply my-6 border-gray-300 dark:border-gray-700;
+}
+
+blockquote {
+  @apply pl-4 border-l-4 border-gray-300 dark:border-gray-600 italic text-gray-600 dark:text-gray-400 my-4;
+}

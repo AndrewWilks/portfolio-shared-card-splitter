@@ -1,14 +1,19 @@
-import * as React from "react";
 import { Outlet, createRootRoute } from "@tanstack/react-router";
+import RootLayout from "../components/layout/index.tsx";
+import Providers from "../context/index.tsx";
+import useBootstrap from "../hooks/useBootstrap.tsx";
 
 export const Route = createRootRoute({
   component: RootComponent,
 });
 
 function RootComponent() {
+  useBootstrap();
   return (
-    <React.Fragment>
-      <Outlet />
-    </React.Fragment>
+    <Providers>
+      <RootLayout>
+        <Outlet />
+      </RootLayout>
+    </Providers>
   );
 }

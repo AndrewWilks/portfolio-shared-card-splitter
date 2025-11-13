@@ -10,9 +10,11 @@
     "@tanstack/react-router": "npm:@tanstack/react-router@^1.135.2",
     "@tanstack/react-router-devtools": "npm:@tanstack/react-router-devtools@^1.135.2",
     "@tanstack/router-plugin": "npm:@tanstack/router-plugin@^1.135.2",
+    "lucide-react": "npm:lucide-react@^0.553.0",
     "react": "npm:react@^19.2.0",
     "@types/react": "npm:@types/react@^19.2.2",
     "react-dom": "npm:react-dom@^19.2.0",
+    "react-responsive": "npm:react-responsive@^10.0.1",
     "tailwindcss": "npm:tailwindcss@^4.1.17",
     "vite": "npm:vite@^7.2.2",
     "@vitejs/plugin-react": "npm:@vitejs/plugin-react@^5.1.0"
