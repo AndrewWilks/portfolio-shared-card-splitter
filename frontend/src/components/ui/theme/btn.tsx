@@ -10,7 +10,7 @@ export default function ThemeBtn() {
 
   return (
     <button onClick={toggleTheme} type="button">
-      {theme === Themes.Light ? <Sun /> : <Moon />}
+      {theme === Themes.Light ? <Sun size={12} /> : <Moon size={12} />}
     </button>
   );
 }
