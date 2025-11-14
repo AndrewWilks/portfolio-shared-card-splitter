@@ -1,4 +1,7 @@
 {
   "workspace": ["frontend", "backend", "shared"],
-  "nodeModulesDir": "auto"
+  "nodeModulesDir": "auto",
+  "imports": {
+    "zod": "npm:zod@^4.1.12"
+  }
 }
