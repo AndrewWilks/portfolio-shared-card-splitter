@@ -1,0 +1,1 @@
+// TODO: Build the env loader class to manage environment variables and configurations and validate on startup using Deno and zod returning validated config object on success with default values if missing or throwing error on failure or giving warnings for deprecated variables or issues.
