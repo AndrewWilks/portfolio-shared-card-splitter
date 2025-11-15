@@ -144,10 +144,13 @@ app.post(
   }
 );
 
-// Apply authentication middleware to all /api/v1/* routes except public ones
+// =============================================================
+// Apply authentication middleware to all /api/v1/*
 app.use("/api/v1/*", requireAuth());
-
-// Protected routes (authentication required)
+// =============================================================
+// =============================================================
+// Protected routes below (authentication required)
+// =============================================================
 
 app.post("/api/v1/auth/logout", (c) => {
   TokenCookieService.clearTokenCookie(c);
@@ -179,10 +182,13 @@ app.get("/api/v1/auth/me", async (c) => {
   );
 });
 
+// =============================================================
 // Add a catch-all to see what's being requested
+// =============================================================
 app.all("*", (c) => {
   console.log("Unhandled request:", c.req.url);
   return c.text("Not Found", 404);
 });
+// =============================================================
 
 Deno.serve({ port: 8000 }, app.fetch);
