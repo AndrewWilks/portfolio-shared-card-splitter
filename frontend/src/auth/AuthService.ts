@@ -5,6 +5,7 @@ import { router } from "../router.tsx";
 export interface AuthSnapshot {
   user: User | null;
   isAuthenticated: boolean;
+  isBootstrapped: boolean | null;
   initialAuthChecked: boolean;
 }
 
@@ -14,6 +15,7 @@ export class AuthService {
   private snapshot: AuthSnapshot = {
     user: null,
     isAuthenticated: false,
+    isBootstrapped: false,
     initialAuthChecked: false,
   };
 
@@ -42,6 +44,7 @@ export class AuthService {
     this.snapshot = {
       user,
       isAuthenticated: !!user,
+      isBootstrapped: this.isBootstrapped,
       initialAuthChecked: this.checkedInitialAuth,
     };
     this.notify();
@@ -81,6 +84,31 @@ export class AuthService {
     return res;
   }
 
+  get isBootstrapped(): boolean | null {
+    const stored = localStorage.getItem("isBootstrapped");
+
+    if (stored === null) return null;
+
+    return Boolean(stored);
+  }
+
+  set isBootstrapped(value: boolean) {
+    localStorage.setItem("isBootstrapped", value ? "true" : "false");
+  }
+
+  async checkBootstrapped() {
+    const res = await fetch("/api/v1/bootstrap/status");
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      const error = ApiError.parse(data);
+      throw new Error(error.message);
+    }
+
+    this.isBootstrapped = Boolean(data);
+  }
+
   get checkedInitialAuth() {
     return sessionStorage.getItem("initialAuthChecked") === "true";
   }
@@ -116,6 +144,16 @@ export class AuthService {
 // singleton for client side SPA
 export const authService = new AuthService();
 
-if (authService.state.initialAuthChecked === false) {
+// if (
+//   authService.isBootstrapped === null ||
+//   authService.isBootstrapped === false
+// ) {
+//   await authService.checkBootstrapped();
+// }
+
+if (
+  authService.state.initialAuthChecked === false &&
+  authService.isBootstrapped === true
+) {
   await authService.checkInitialAuth();
 }

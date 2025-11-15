@@ -22,12 +22,6 @@ import { requireAuth } from "./middleware/auth.ts";
 
 // Config
 import { config } from "./.config/evnLoader.ts";
-const user = new User({
-  id: crypto.randomUUID(),
-  email: "john.doe@example.com",
-  firstName: "John",
-  lastName: "Doe",
-});
 
 const app = new Hono();
 
@@ -45,8 +39,18 @@ app.get("/api", (c) => c.text("Hello Deno!"));
 
 // Public routes (no authentication required)
 app.get("/api/v1/bootstrap/status", async (c) => {
-  const isBootstrapped = await BootstrapService.isBootstrapped();
-  return c.json(isBootstrapped);
+  try {
+    const isBootstrapped = await BootstrapService.isBootstrapped();
+    return c.json(isBootstrapped);
+  } catch (error) {
+    return c.json(
+      new ApiError({
+        message: (error as Error).message,
+        code: ApiError.InternalCodes.SYSTEM_BOOTSTRAP_CHECK_FAILED,
+      }),
+      STATUS_CODE.InternalServerError
+    );
+  }
 });
 
 app.post(
@@ -103,13 +107,36 @@ app.post(
     }
   }),
   async (c) => {
-    // TODO: Validate user credentials against database
-    // For now, create token with dummy user ID
-    const token = await TokenService.createToken(user.id);
+    const { email, password } = c.req.valid("json");
+
+    // Verify credentials with auto-migration from SHA-256 to Argon2id
+    const isValid = await UserService.verifyPassword(email, password);
+
+    if (!isValid) {
+      const errorData: TApiError = {
+        message: "Invalid email or password",
+        code: ApiError.InternalCodes.INVALID_LOGIN_DATA,
+      };
+      return c.json(new ApiError(errorData), STATUS_CODE.Unauthorized);
+    }
+
+    // Get user from database
+    const userResult = await UserService.getUserByEmail(email);
+
+    if (userResult instanceof ApiError || !userResult) {
+      const errorData: TApiError = {
+        message: "User not found",
+        code: ApiError.InternalCodes.INVALID_LOGIN_DATA,
+      };
+      return c.json(new ApiError(errorData), STATUS_CODE.Unauthorized);
+    }
+
+    // Create token and set cookie
+    const token = await TokenService.createToken(userResult.id);
     TokenCookieService.setTokenCookie(c, token);
 
     const apiResponse = new ApiResponse({
-      data: user,
+      data: userResult,
       message: "Login successful",
     });
 
