@@ -1,4 +1,8 @@
-import { User, TUserLogin } from "@shared/entities/user/index.ts";
+import {
+  User,
+  TUserLogin,
+  TUserBootstrap,
+} from "@shared/entities/user/index.ts";
 import { ApiError } from "@shared/entities/api/apiError.ts";
 import { router } from "../router.tsx";
 
@@ -80,6 +84,29 @@ export class AuthService {
       replace: true,
       search: () => ({ redirectTo: router.latestLocation.pathname }),
     });
+    return res;
+  }
+
+  async bootstrap(data: TUserBootstrap) {
+    const res = await User.bootstrap(data);
+
+    if (res instanceof ApiError) {
+      return res;
+    }
+
+    if (!res.data) {
+      return new ApiError({
+        message: "Bootstrap failed: No user data returned",
+        code: ApiError.InternalCodes.INVALID_BOOTSTRAP_DATA,
+      });
+    }
+
+    // Set user in state (backend already set auth cookie)
+    this.setUser(res.data);
+
+    // Update bootstrap status
+    this.isBootstrapped = true;
+
     return res;
   }
 

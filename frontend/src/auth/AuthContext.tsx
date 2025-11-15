@@ -11,6 +11,7 @@ import { authService, type AuthSnapshot } from "./AuthService.ts";
 export interface AuthContextValue extends AuthSnapshot {
   login: typeof authService.login;
   logout: typeof authService.logout;
+  bootstrap: typeof authService.bootstrap;
 }
 
 const AuthContext = createContext<AuthContextValue | null>(null);
@@ -35,6 +36,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       ...snapshot,
       login: (data) => authService.login(data),
       logout: () => authService.logout(),
+      bootstrap: (data) => authService.bootstrap(data),
     }),
     [snapshot]
   );

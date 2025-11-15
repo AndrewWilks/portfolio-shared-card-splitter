@@ -141,6 +141,62 @@ export class User {
     return returnValue;
   }
 
+  static async bootstrap({
+    email,
+    password,
+    firstName,
+    lastName,
+  }: TUserBootstrap) {
+    const parsedEmail = this.emailSchema.parse(email);
+    const parsedPassword = this.passwordSchema.parse(password);
+    const parsedFirstName = this.firstNameSchema.parse(firstName);
+    const parsedLastName = this.lastNameSchema.parse(lastName);
+
+    const body = {
+      email: parsedEmail,
+      password: parsedPassword,
+      firstName: parsedFirstName,
+      lastName: parsedLastName,
+    };
+
+    const res = await fetch("/api/v1/bootstrap", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify(body),
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      const apiError = ApiError.parse(data);
+      return apiError;
+    }
+
+    const parsed = ApiResponse.parse(data, User.schema);
+
+    if (!parsed.data) {
+      return new ApiError({
+        message: "Bootstrap failed: No user data returned",
+        code: ApiError.InternalCodes.INVALID_BOOTSTRAP_DATA,
+      });
+    }
+
+    const returnValue = new ApiResponse({
+      message: parsed.message,
+      data: new User({
+        id: parsed.data.id,
+        email: parsed.data.email,
+        firstName: parsed.data.firstName,
+        lastName: parsed.data.lastName,
+      }),
+    });
+
+    return returnValue;
+  }
+
   static get loginSchema() {
     return z.object({
       email: this.emailSchema,
@@ -218,3 +274,4 @@ export type TUser = z.infer<typeof User.schema>;
 
 export type TUserLogin = z.infer<typeof User.loginSchema>;
 export type TUserLogout = z.infer<typeof User.logoutSchema>;
+export type TUserBootstrap = z.infer<typeof User.bootstrapSchema>;
