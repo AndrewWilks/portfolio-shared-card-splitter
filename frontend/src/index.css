@@ -1,6 +1,32 @@
 @import "tailwindcss";
 @custom-variant dark (&:where(.dark, .dark *));
 
+/* Modern Scrollbar - Minimal */
+::-webkit-scrollbar {
+  @apply w-2 h-1;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-gray-400/30 dark:bg-gray-500/30 rounded-full hover:bg-gray-400/50 dark:hover:bg-gray-500/50 transition-colors;
+}
+
+::-webkit-scrollbar-corner {
+  @apply bg-transparent;
+}
+
+/* Firefox Scrollbar - Minimal */
+* {
+  scrollbar-color: rgb(156 163 175 / 0.3) transparent;
+}
+
+.dark * {
+  scrollbar-color: rgb(107 114 128 / 0.3) transparent;
+}
+
 body #root {
   height: 100vh;
 }
@@ -50,7 +76,7 @@ h6 {
 }
 
 p {
-  @apply text-base leading-relaxed mb-4 text-gray-700 dark:text-gray-300;
+  @apply text-base leading-relaxed [&:not([class*="mb-"])&:not([class*="m-"])]:mb-4 text-gray-700 dark:text-gray-300;
 }
 
 a {
@@ -58,9 +84,6 @@ a {
 }
 
 /* Form Elements */
-button {
-  @apply px-4 py-2 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 active:bg-blue-800 transition-colors shadow-sm hover:shadow focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed;
-}
 
 input[type="text"],
 input[type="email"],

@@ -9,85 +9,41 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root.tsx'
+import { Route as AuthenticatedRouteImport } from './routes/_authenticated.tsx'
 import { Route as IndexRouteImport } from './routes/index.tsx'
-import { Route as TransactionsIndexRouteImport } from './routes/transactions/index.tsx'
-import { Route as PotsIndexRouteImport } from './routes/pots/index.tsx'
-import { Route as MembersIndexRouteImport } from './routes/members/index.tsx'
-import { Route as CardAccountsIndexRouteImport } from './routes/card-accounts/index.tsx'
-import { Route as TransactionsNewRouteImport } from './routes/transactions/new.tsx'
-import { Route as PotsNewRouteImport } from './routes/pots/new.tsx'
-import { Route as MembersIdRouteImport } from './routes/members/$id.tsx'
-import { Route as DetailsLedgerRouteImport } from './routes/details/ledger.tsx'
-import { Route as DetailsActivityRouteImport } from './routes/details/activity.tsx'
-import { Route as CardAccountsNewRouteImport } from './routes/card-accounts/new.tsx'
 import { Route as AuthResetPasswordRouteImport } from './routes/auth/reset-password.tsx'
 import { Route as AuthLoginRouteImport } from './routes/auth/login.tsx'
-import { Route as AuthInviteRouteImport } from './routes/auth/invite.tsx'
 import { Route as AuthBootstrapRouteImport } from './routes/auth/bootstrap.tsx'
 import { Route as AuthAcceptInviteRouteImport } from './routes/auth/accept-invite.tsx'
-import { Route as TransactionsIdIndexRouteImport } from './routes/transactions/$id.index.tsx'
-import { Route as PotsIdIndexRouteImport } from './routes/pots/$id.index.tsx'
-import { Route as CardAccountsIdIndexRouteImport } from './routes/card-accounts/$id.index.tsx'
-import { Route as TransactionsIdPayRouteImport } from './routes/transactions/$id.pay.tsx'
-import { Route as TransactionsIdEditRouteImport } from './routes/transactions/$id.edit.tsx'
-import { Route as TransactionsIdAllocateRouteImport } from './routes/transactions/$id.allocate.tsx'
-import { Route as PotsIdReserveRouteImport } from './routes/pots/$id.reserve.tsx'
-import { Route as PotsIdEditRouteImport } from './routes/pots/$id.edit.tsx'
-import { Route as CardAccountsIdEditRouteImport } from './routes/card-accounts/$id.edit.tsx'
+import { Route as AuthenticatedTransactionsIndexRouteImport } from './routes/_authenticated/transactions/index.tsx'
+import { Route as AuthenticatedPotsIndexRouteImport } from './routes/_authenticated/pots/index.tsx'
+import { Route as AuthenticatedMembersIndexRouteImport } from './routes/_authenticated/members/index.tsx'
+import { Route as AuthenticatedDashboardIndexRouteImport } from './routes/_authenticated/dashboard/index.tsx'
+import { Route as AuthenticatedCardAccountsIndexRouteImport } from './routes/_authenticated/card-accounts/index.tsx'
+import { Route as AuthenticatedTransactionsNewRouteImport } from './routes/_authenticated/transactions/new.tsx'
+import { Route as AuthenticatedPotsNewRouteImport } from './routes/_authenticated/pots/new.tsx'
+import { Route as AuthenticatedMembersIdRouteImport } from './routes/_authenticated/members/$id.tsx'
+import { Route as AuthenticatedDetailsLedgerRouteImport } from './routes/_authenticated/details/ledger.tsx'
+import { Route as AuthenticatedDetailsActivityRouteImport } from './routes/_authenticated/details/activity.tsx'
+import { Route as AuthenticatedCardAccountsNewRouteImport } from './routes/_authenticated/card-accounts/new.tsx'
+import { Route as AuthenticatedAuthInviteRouteImport } from './routes/_authenticated/auth/invite.tsx'
+import { Route as AuthenticatedTransactionsIdIndexRouteImport } from './routes/_authenticated/transactions/$id.index.tsx'
+import { Route as AuthenticatedPotsIdIndexRouteImport } from './routes/_authenticated/pots/$id.index.tsx'
+import { Route as AuthenticatedCardAccountsIdIndexRouteImport } from './routes/_authenticated/card-accounts/$id.index.tsx'
+import { Route as AuthenticatedTransactionsIdPayRouteImport } from './routes/_authenticated/transactions/$id.pay.tsx'
+import { Route as AuthenticatedTransactionsIdEditRouteImport } from './routes/_authenticated/transactions/$id.edit.tsx'
+import { Route as AuthenticatedTransactionsIdAllocateRouteImport } from './routes/_authenticated/transactions/$id.allocate.tsx'
+import { Route as AuthenticatedPotsIdReserveRouteImport } from './routes/_authenticated/pots/$id.reserve.tsx'
+import { Route as AuthenticatedPotsIdEditRouteImport } from './routes/_authenticated/pots/$id.edit.tsx'
+import { Route as AuthenticatedCardAccountsIdEditRouteImport } from './routes/_authenticated/card-accounts/$id.edit.tsx'
 
+const AuthenticatedRoute = AuthenticatedRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const TransactionsIndexRoute = TransactionsIndexRouteImport.update({
-  id: '/transactions/',
-  path: '/transactions/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PotsIndexRoute = PotsIndexRouteImport.update({
-  id: '/pots/',
-  path: '/pots/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const MembersIndexRoute = MembersIndexRouteImport.update({
-  id: '/members/',
-  path: '/members/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CardAccountsIndexRoute = CardAccountsIndexRouteImport.update({
-  id: '/card-accounts/',
-  path: '/card-accounts/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const TransactionsNewRoute = TransactionsNewRouteImport.update({
-  id: '/transactions/new',
-  path: '/transactions/new',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PotsNewRoute = PotsNewRouteImport.update({
-  id: '/pots/new',
-  path: '/pots/new',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const MembersIdRoute = MembersIdRouteImport.update({
-  id: '/members/$id',
-  path: '/members/$id',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DetailsLedgerRoute = DetailsLedgerRouteImport.update({
-  id: '/details/ledger',
-  path: '/details/ledger',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DetailsActivityRoute = DetailsActivityRouteImport.update({
-  id: '/details/activity',
-  path: '/details/activity',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CardAccountsNewRoute = CardAccountsNewRouteImport.update({
-  id: '/card-accounts/new',
-  path: '/card-accounts/new',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthResetPasswordRoute = AuthResetPasswordRouteImport.update({
@@ -100,11 +56,6 @@ const AuthLoginRoute = AuthLoginRouteImport.update({
   path: '/auth/login',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthInviteRoute = AuthInviteRouteImport.update({
-  id: '/auth/invite',
-  path: '/auth/invite',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const AuthBootstrapRoute = AuthBootstrapRouteImport.update({
   id: '/auth/bootstrap',
   path: '/auth/bootstrap',
@@ -115,133 +66,213 @@ const AuthAcceptInviteRoute = AuthAcceptInviteRouteImport.update({
   path: '/auth/accept-invite',
   getParentRoute: () => rootRouteImport,
 } as any)
-const TransactionsIdIndexRoute = TransactionsIdIndexRouteImport.update({
-  id: '/transactions/$id/',
-  path: '/transactions/$id/',
-  getParentRoute: () => rootRouteImport,
+const AuthenticatedTransactionsIndexRoute =
+  AuthenticatedTransactionsIndexRouteImport.update({
+    id: '/transactions/',
+    path: '/transactions/',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedPotsIndexRoute = AuthenticatedPotsIndexRouteImport.update({
+  id: '/pots/',
+  path: '/pots/',
+  getParentRoute: () => AuthenticatedRoute,
 } as any)
-const PotsIdIndexRoute = PotsIdIndexRouteImport.update({
-  id: '/pots/$id/',
-  path: '/pots/$id/',
-  getParentRoute: () => rootRouteImport,
+const AuthenticatedMembersIndexRoute =
+  AuthenticatedMembersIndexRouteImport.update({
+    id: '/members/',
+    path: '/members/',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedDashboardIndexRoute =
+  AuthenticatedDashboardIndexRouteImport.update({
+    id: '/dashboard/',
+    path: '/dashboard/',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedCardAccountsIndexRoute =
+  AuthenticatedCardAccountsIndexRouteImport.update({
+    id: '/card-accounts/',
+    path: '/card-accounts/',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedTransactionsNewRoute =
+  AuthenticatedTransactionsNewRouteImport.update({
+    id: '/transactions/new',
+    path: '/transactions/new',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedPotsNewRoute = AuthenticatedPotsNewRouteImport.update({
+  id: '/pots/new',
+  path: '/pots/new',
+  getParentRoute: () => AuthenticatedRoute,
 } as any)
-const CardAccountsIdIndexRoute = CardAccountsIdIndexRouteImport.update({
-  id: '/card-accounts/$id/',
-  path: '/card-accounts/$id/',
-  getParentRoute: () => rootRouteImport,
+const AuthenticatedMembersIdRoute = AuthenticatedMembersIdRouteImport.update({
+  id: '/members/$id',
+  path: '/members/$id',
+  getParentRoute: () => AuthenticatedRoute,
 } as any)
-const TransactionsIdPayRoute = TransactionsIdPayRouteImport.update({
-  id: '/transactions/$id/pay',
-  path: '/transactions/$id/pay',
-  getParentRoute: () => rootRouteImport,
+const AuthenticatedDetailsLedgerRoute =
+  AuthenticatedDetailsLedgerRouteImport.update({
+    id: '/details/ledger',
+    path: '/details/ledger',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedDetailsActivityRoute =
+  AuthenticatedDetailsActivityRouteImport.update({
+    id: '/details/activity',
+    path: '/details/activity',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedCardAccountsNewRoute =
+  AuthenticatedCardAccountsNewRouteImport.update({
+    id: '/card-accounts/new',
+    path: '/card-accounts/new',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedAuthInviteRoute = AuthenticatedAuthInviteRouteImport.update({
+  id: '/auth/invite',
+  path: '/auth/invite',
+  getParentRoute: () => AuthenticatedRoute,
 } as any)
-const TransactionsIdEditRoute = TransactionsIdEditRouteImport.update({
-  id: '/transactions/$id/edit',
-  path: '/transactions/$id/edit',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const TransactionsIdAllocateRoute = TransactionsIdAllocateRouteImport.update({
-  id: '/transactions/$id/allocate',
-  path: '/transactions/$id/allocate',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PotsIdReserveRoute = PotsIdReserveRouteImport.update({
-  id: '/pots/$id/reserve',
-  path: '/pots/$id/reserve',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PotsIdEditRoute = PotsIdEditRouteImport.update({
+const AuthenticatedTransactionsIdIndexRoute =
+  AuthenticatedTransactionsIdIndexRouteImport.update({
+    id: '/transactions/$id/',
+    path: '/transactions/$id/',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedPotsIdIndexRoute =
+  AuthenticatedPotsIdIndexRouteImport.update({
+    id: '/pots/$id/',
+    path: '/pots/$id/',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedCardAccountsIdIndexRoute =
+  AuthenticatedCardAccountsIdIndexRouteImport.update({
+    id: '/card-accounts/$id/',
+    path: '/card-accounts/$id/',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedTransactionsIdPayRoute =
+  AuthenticatedTransactionsIdPayRouteImport.update({
+    id: '/transactions/$id/pay',
+    path: '/transactions/$id/pay',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedTransactionsIdEditRoute =
+  AuthenticatedTransactionsIdEditRouteImport.update({
+    id: '/transactions/$id/edit',
+    path: '/transactions/$id/edit',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedTransactionsIdAllocateRoute =
+  AuthenticatedTransactionsIdAllocateRouteImport.update({
+    id: '/transactions/$id/allocate',
+    path: '/transactions/$id/allocate',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedPotsIdReserveRoute =
+  AuthenticatedPotsIdReserveRouteImport.update({
+    id: '/pots/$id/reserve',
+    path: '/pots/$id/reserve',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedPotsIdEditRoute = AuthenticatedPotsIdEditRouteImport.update({
   id: '/pots/$id/edit',
   path: '/pots/$id/edit',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AuthenticatedRoute,
 } as any)
-const CardAccountsIdEditRoute = CardAccountsIdEditRouteImport.update({
-  id: '/card-accounts/$id/edit',
-  path: '/card-accounts/$id/edit',
-  getParentRoute: () => rootRouteImport,
-} as any)
+const AuthenticatedCardAccountsIdEditRoute =
+  AuthenticatedCardAccountsIdEditRouteImport.update({
+    id: '/card-accounts/$id/edit',
+    path: '/card-accounts/$id/edit',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth/accept-invite': typeof AuthAcceptInviteRoute
   '/auth/bootstrap': typeof AuthBootstrapRoute
-  '/auth/invite': typeof AuthInviteRoute
   '/auth/login': typeof AuthLoginRoute
   '/auth/reset-password': typeof AuthResetPasswordRoute
-  '/card-accounts/new': typeof CardAccountsNewRoute
-  '/details/activity': typeof DetailsActivityRoute
-  '/details/ledger': typeof DetailsLedgerRoute
-  '/members/$id': typeof MembersIdRoute
-  '/pots/new': typeof PotsNewRoute
-  '/transactions/new': typeof TransactionsNewRoute
-  '/card-accounts': typeof CardAccountsIndexRoute
-  '/members': typeof MembersIndexRoute
-  '/pots': typeof PotsIndexRoute
-  '/transactions': typeof TransactionsIndexRoute
-  '/card-accounts/$id/edit': typeof CardAccountsIdEditRoute
-  '/pots/$id/edit': typeof PotsIdEditRoute
-  '/pots/$id/reserve': typeof PotsIdReserveRoute
-  '/transactions/$id/allocate': typeof TransactionsIdAllocateRoute
-  '/transactions/$id/edit': typeof TransactionsIdEditRoute
-  '/transactions/$id/pay': typeof TransactionsIdPayRoute
-  '/card-accounts/$id': typeof CardAccountsIdIndexRoute
-  '/pots/$id': typeof PotsIdIndexRoute
-  '/transactions/$id': typeof TransactionsIdIndexRoute
+  '/auth/invite': typeof AuthenticatedAuthInviteRoute
+  '/card-accounts/new': typeof AuthenticatedCardAccountsNewRoute
+  '/details/activity': typeof AuthenticatedDetailsActivityRoute
+  '/details/ledger': typeof AuthenticatedDetailsLedgerRoute
+  '/members/$id': typeof AuthenticatedMembersIdRoute
+  '/pots/new': typeof AuthenticatedPotsNewRoute
+  '/transactions/new': typeof AuthenticatedTransactionsNewRoute
+  '/card-accounts': typeof AuthenticatedCardAccountsIndexRoute
+  '/dashboard': typeof AuthenticatedDashboardIndexRoute
+  '/members': typeof AuthenticatedMembersIndexRoute
+  '/pots': typeof AuthenticatedPotsIndexRoute
+  '/transactions': typeof AuthenticatedTransactionsIndexRoute
+  '/card-accounts/$id/edit': typeof AuthenticatedCardAccountsIdEditRoute
+  '/pots/$id/edit': typeof AuthenticatedPotsIdEditRoute
+  '/pots/$id/reserve': typeof AuthenticatedPotsIdReserveRoute
+  '/transactions/$id/allocate': typeof AuthenticatedTransactionsIdAllocateRoute
+  '/transactions/$id/edit': typeof AuthenticatedTransactionsIdEditRoute
+  '/transactions/$id/pay': typeof AuthenticatedTransactionsIdPayRoute
+  '/card-accounts/$id': typeof AuthenticatedCardAccountsIdIndexRoute
+  '/pots/$id': typeof AuthenticatedPotsIdIndexRoute
+  '/transactions/$id': typeof AuthenticatedTransactionsIdIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth/accept-invite': typeof AuthAcceptInviteRoute
   '/auth/bootstrap': typeof AuthBootstrapRoute
-  '/auth/invite': typeof AuthInviteRoute
   '/auth/login': typeof AuthLoginRoute
   '/auth/reset-password': typeof AuthResetPasswordRoute
-  '/card-accounts/new': typeof CardAccountsNewRoute
-  '/details/activity': typeof DetailsActivityRoute
-  '/details/ledger': typeof DetailsLedgerRoute
-  '/members/$id': typeof MembersIdRoute
-  '/pots/new': typeof PotsNewRoute
-  '/transactions/new': typeof TransactionsNewRoute
-  '/card-accounts': typeof CardAccountsIndexRoute
-  '/members': typeof MembersIndexRoute
-  '/pots': typeof PotsIndexRoute
-  '/transactions': typeof TransactionsIndexRoute
-  '/card-accounts/$id/edit': typeof CardAccountsIdEditRoute
-  '/pots/$id/edit': typeof PotsIdEditRoute
-  '/pots/$id/reserve': typeof PotsIdReserveRoute
-  '/transactions/$id/allocate': typeof TransactionsIdAllocateRoute
-  '/transactions/$id/edit': typeof TransactionsIdEditRoute
-  '/transactions/$id/pay': typeof TransactionsIdPayRoute
-  '/card-accounts/$id': typeof CardAccountsIdIndexRoute
-  '/pots/$id': typeof PotsIdIndexRoute
-  '/transactions/$id': typeof TransactionsIdIndexRoute
+  '/auth/invite': typeof AuthenticatedAuthInviteRoute
+  '/card-accounts/new': typeof AuthenticatedCardAccountsNewRoute
+  '/details/activity': typeof AuthenticatedDetailsActivityRoute
+  '/details/ledger': typeof AuthenticatedDetailsLedgerRoute
+  '/members/$id': typeof AuthenticatedMembersIdRoute
+  '/pots/new': typeof AuthenticatedPotsNewRoute
+  '/transactions/new': typeof AuthenticatedTransactionsNewRoute
+  '/card-accounts': typeof AuthenticatedCardAccountsIndexRoute
+  '/dashboard': typeof AuthenticatedDashboardIndexRoute
+  '/members': typeof AuthenticatedMembersIndexRoute
+  '/pots': typeof AuthenticatedPotsIndexRoute
+  '/transactions': typeof AuthenticatedTransactionsIndexRoute
+  '/card-accounts/$id/edit': typeof AuthenticatedCardAccountsIdEditRoute
+  '/pots/$id/edit': typeof AuthenticatedPotsIdEditRoute
+  '/pots/$id/reserve': typeof AuthenticatedPotsIdReserveRoute
+  '/transactions/$id/allocate': typeof AuthenticatedTransactionsIdAllocateRoute
+  '/transactions/$id/edit': typeof AuthenticatedTransactionsIdEditRoute
+  '/transactions/$id/pay': typeof AuthenticatedTransactionsIdPayRoute
+  '/card-accounts/$id': typeof AuthenticatedCardAccountsIdIndexRoute
+  '/pots/$id': typeof AuthenticatedPotsIdIndexRoute
+  '/transactions/$id': typeof AuthenticatedTransactionsIdIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteWithChildren
   '/auth/accept-invite': typeof AuthAcceptInviteRoute
   '/auth/bootstrap': typeof AuthBootstrapRoute
-  '/auth/invite': typeof AuthInviteRoute
   '/auth/login': typeof AuthLoginRoute
   '/auth/reset-password': typeof AuthResetPasswordRoute
-  '/card-accounts/new': typeof CardAccountsNewRoute
-  '/details/activity': typeof DetailsActivityRoute
-  '/details/ledger': typeof DetailsLedgerRoute
-  '/members/$id': typeof MembersIdRoute
-  '/pots/new': typeof PotsNewRoute
-  '/transactions/new': typeof TransactionsNewRoute
-  '/card-accounts/': typeof CardAccountsIndexRoute
-  '/members/': typeof MembersIndexRoute
-  '/pots/': typeof PotsIndexRoute
-  '/transactions/': typeof TransactionsIndexRoute
-  '/card-accounts/$id/edit': typeof CardAccountsIdEditRoute
-  '/pots/$id/edit': typeof PotsIdEditRoute
-  '/pots/$id/reserve': typeof PotsIdReserveRoute
-  '/transactions/$id/allocate': typeof TransactionsIdAllocateRoute
-  '/transactions/$id/edit': typeof TransactionsIdEditRoute
-  '/transactions/$id/pay': typeof TransactionsIdPayRoute
-  '/card-accounts/$id/': typeof CardAccountsIdIndexRoute
-  '/pots/$id/': typeof PotsIdIndexRoute
-  '/transactions/$id/': typeof TransactionsIdIndexRoute
+  '/_authenticated/auth/invite': typeof AuthenticatedAuthInviteRoute
+  '/_authenticated/card-accounts/new': typeof AuthenticatedCardAccountsNewRoute
+  '/_authenticated/details/activity': typeof AuthenticatedDetailsActivityRoute
+  '/_authenticated/details/ledger': typeof AuthenticatedDetailsLedgerRoute
+  '/_authenticated/members/$id': typeof AuthenticatedMembersIdRoute
+  '/_authenticated/pots/new': typeof AuthenticatedPotsNewRoute
+  '/_authenticated/transactions/new': typeof AuthenticatedTransactionsNewRoute
+  '/_authenticated/card-accounts/': typeof AuthenticatedCardAccountsIndexRoute
+  '/_authenticated/dashboard/': typeof AuthenticatedDashboardIndexRoute
+  '/_authenticated/members/': typeof AuthenticatedMembersIndexRoute
+  '/_authenticated/pots/': typeof AuthenticatedPotsIndexRoute
+  '/_authenticated/transactions/': typeof AuthenticatedTransactionsIndexRoute
+  '/_authenticated/card-accounts/$id/edit': typeof AuthenticatedCardAccountsIdEditRoute
+  '/_authenticated/pots/$id/edit': typeof AuthenticatedPotsIdEditRoute
+  '/_authenticated/pots/$id/reserve': typeof AuthenticatedPotsIdReserveRoute
+  '/_authenticated/transactions/$id/allocate': typeof AuthenticatedTransactionsIdAllocateRoute
+  '/_authenticated/transactions/$id/edit': typeof AuthenticatedTransactionsIdEditRoute
+  '/_authenticated/transactions/$id/pay': typeof AuthenticatedTransactionsIdPayRoute
+  '/_authenticated/card-accounts/$id/': typeof AuthenticatedCardAccountsIdIndexRoute
+  '/_authenticated/pots/$id/': typeof AuthenticatedPotsIdIndexRoute
+  '/_authenticated/transactions/$id/': typeof AuthenticatedTransactionsIdIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -249,9 +280,9 @@ export interface FileRouteTypes {
     | '/'
     | '/auth/accept-invite'
     | '/auth/bootstrap'
-    | '/auth/invite'
     | '/auth/login'
     | '/auth/reset-password'
+    | '/auth/invite'
     | '/card-accounts/new'
     | '/details/activity'
     | '/details/ledger'
@@ -259,6 +290,7 @@ export interface FileRouteTypes {
     | '/pots/new'
     | '/transactions/new'
     | '/card-accounts'
+    | '/dashboard'
     | '/members'
     | '/pots'
     | '/transactions'
@@ -276,9 +308,9 @@ export interface FileRouteTypes {
     | '/'
     | '/auth/accept-invite'
     | '/auth/bootstrap'
-    | '/auth/invite'
     | '/auth/login'
     | '/auth/reset-password'
+    | '/auth/invite'
     | '/card-accounts/new'
     | '/details/activity'
     | '/details/ledger'
@@ -286,6 +318,7 @@ export interface FileRouteTypes {
     | '/pots/new'
     | '/transactions/new'
     | '/card-accounts'
+    | '/dashboard'
     | '/members'
     | '/pots'
     | '/transactions'
@@ -301,137 +334,57 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/_authenticated'
     | '/auth/accept-invite'
     | '/auth/bootstrap'
-    | '/auth/invite'
     | '/auth/login'
     | '/auth/reset-password'
-    | '/card-accounts/new'
-    | '/details/activity'
-    | '/details/ledger'
-    | '/members/$id'
-    | '/pots/new'
-    | '/transactions/new'
-    | '/card-accounts/'
-    | '/members/'
-    | '/pots/'
-    | '/transactions/'
-    | '/card-accounts/$id/edit'
-    | '/pots/$id/edit'
-    | '/pots/$id/reserve'
-    | '/transactions/$id/allocate'
-    | '/transactions/$id/edit'
-    | '/transactions/$id/pay'
-    | '/card-accounts/$id/'
-    | '/pots/$id/'
-    | '/transactions/$id/'
+    | '/_authenticated/auth/invite'
+    | '/_authenticated/card-accounts/new'
+    | '/_authenticated/details/activity'
+    | '/_authenticated/details/ledger'
+    | '/_authenticated/members/$id'
+    | '/_authenticated/pots/new'
+    | '/_authenticated/transactions/new'
+    | '/_authenticated/card-accounts/'
+    | '/_authenticated/dashboard/'
+    | '/_authenticated/members/'
+    | '/_authenticated/pots/'
+    | '/_authenticated/transactions/'
+    | '/_authenticated/card-accounts/$id/edit'
+    | '/_authenticated/pots/$id/edit'
+    | '/_authenticated/pots/$id/reserve'
+    | '/_authenticated/transactions/$id/allocate'
+    | '/_authenticated/transactions/$id/edit'
+    | '/_authenticated/transactions/$id/pay'
+    | '/_authenticated/card-accounts/$id/'
+    | '/_authenticated/pots/$id/'
+    | '/_authenticated/transactions/$id/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRoute: typeof AuthenticatedRouteWithChildren
   AuthAcceptInviteRoute: typeof AuthAcceptInviteRoute
   AuthBootstrapRoute: typeof AuthBootstrapRoute
-  AuthInviteRoute: typeof AuthInviteRoute
   AuthLoginRoute: typeof AuthLoginRoute
   AuthResetPasswordRoute: typeof AuthResetPasswordRoute
-  CardAccountsNewRoute: typeof CardAccountsNewRoute
-  DetailsActivityRoute: typeof DetailsActivityRoute
-  DetailsLedgerRoute: typeof DetailsLedgerRoute
-  MembersIdRoute: typeof MembersIdRoute
-  PotsNewRoute: typeof PotsNewRoute
-  TransactionsNewRoute: typeof TransactionsNewRoute
-  CardAccountsIndexRoute: typeof CardAccountsIndexRoute
-  MembersIndexRoute: typeof MembersIndexRoute
-  PotsIndexRoute: typeof PotsIndexRoute
-  TransactionsIndexRoute: typeof TransactionsIndexRoute
-  CardAccountsIdEditRoute: typeof CardAccountsIdEditRoute
-  PotsIdEditRoute: typeof PotsIdEditRoute
-  PotsIdReserveRoute: typeof PotsIdReserveRoute
-  TransactionsIdAllocateRoute: typeof TransactionsIdAllocateRoute
-  TransactionsIdEditRoute: typeof TransactionsIdEditRoute
-  TransactionsIdPayRoute: typeof TransactionsIdPayRoute
-  CardAccountsIdIndexRoute: typeof CardAccountsIdIndexRoute
-  PotsIdIndexRoute: typeof PotsIdIndexRoute
-  TransactionsIdIndexRoute: typeof TransactionsIdIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof AuthenticatedRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/transactions/': {
-      id: '/transactions/'
-      path: '/transactions'
-      fullPath: '/transactions'
-      preLoaderRoute: typeof TransactionsIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/pots/': {
-      id: '/pots/'
-      path: '/pots'
-      fullPath: '/pots'
-      preLoaderRoute: typeof PotsIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/members/': {
-      id: '/members/'
-      path: '/members'
-      fullPath: '/members'
-      preLoaderRoute: typeof MembersIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/card-accounts/': {
-      id: '/card-accounts/'
-      path: '/card-accounts'
-      fullPath: '/card-accounts'
-      preLoaderRoute: typeof CardAccountsIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/transactions/new': {
-      id: '/transactions/new'
-      path: '/transactions/new'
-      fullPath: '/transactions/new'
-      preLoaderRoute: typeof TransactionsNewRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/pots/new': {
-      id: '/pots/new'
-      path: '/pots/new'
-      fullPath: '/pots/new'
-      preLoaderRoute: typeof PotsNewRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/members/$id': {
-      id: '/members/$id'
-      path: '/members/$id'
-      fullPath: '/members/$id'
-      preLoaderRoute: typeof MembersIdRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/details/ledger': {
-      id: '/details/ledger'
-      path: '/details/ledger'
-      fullPath: '/details/ledger'
-      preLoaderRoute: typeof DetailsLedgerRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/details/activity': {
-      id: '/details/activity'
-      path: '/details/activity'
-      fullPath: '/details/activity'
-      preLoaderRoute: typeof DetailsActivityRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/card-accounts/new': {
-      id: '/card-accounts/new'
-      path: '/card-accounts/new'
-      fullPath: '/card-accounts/new'
-      preLoaderRoute: typeof CardAccountsNewRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/auth/reset-password': {
@@ -448,13 +401,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthLoginRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/auth/invite': {
-      id: '/auth/invite'
-      path: '/auth/invite'
-      fullPath: '/auth/invite'
-      preLoaderRoute: typeof AuthInviteRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/auth/bootstrap': {
       id: '/auth/bootstrap'
       path: '/auth/bootstrap'
@@ -469,98 +415,216 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthAcceptInviteRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/transactions/$id/': {
-      id: '/transactions/$id/'
+    '/_authenticated/transactions/': {
+      id: '/_authenticated/transactions/'
+      path: '/transactions'
+      fullPath: '/transactions'
+      preLoaderRoute: typeof AuthenticatedTransactionsIndexRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/pots/': {
+      id: '/_authenticated/pots/'
+      path: '/pots'
+      fullPath: '/pots'
+      preLoaderRoute: typeof AuthenticatedPotsIndexRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/members/': {
+      id: '/_authenticated/members/'
+      path: '/members'
+      fullPath: '/members'
+      preLoaderRoute: typeof AuthenticatedMembersIndexRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/dashboard/': {
+      id: '/_authenticated/dashboard/'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof AuthenticatedDashboardIndexRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/card-accounts/': {
+      id: '/_authenticated/card-accounts/'
+      path: '/card-accounts'
+      fullPath: '/card-accounts'
+      preLoaderRoute: typeof AuthenticatedCardAccountsIndexRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/transactions/new': {
+      id: '/_authenticated/transactions/new'
+      path: '/transactions/new'
+      fullPath: '/transactions/new'
+      preLoaderRoute: typeof AuthenticatedTransactionsNewRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/pots/new': {
+      id: '/_authenticated/pots/new'
+      path: '/pots/new'
+      fullPath: '/pots/new'
+      preLoaderRoute: typeof AuthenticatedPotsNewRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/members/$id': {
+      id: '/_authenticated/members/$id'
+      path: '/members/$id'
+      fullPath: '/members/$id'
+      preLoaderRoute: typeof AuthenticatedMembersIdRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/details/ledger': {
+      id: '/_authenticated/details/ledger'
+      path: '/details/ledger'
+      fullPath: '/details/ledger'
+      preLoaderRoute: typeof AuthenticatedDetailsLedgerRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/details/activity': {
+      id: '/_authenticated/details/activity'
+      path: '/details/activity'
+      fullPath: '/details/activity'
+      preLoaderRoute: typeof AuthenticatedDetailsActivityRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/card-accounts/new': {
+      id: '/_authenticated/card-accounts/new'
+      path: '/card-accounts/new'
+      fullPath: '/card-accounts/new'
+      preLoaderRoute: typeof AuthenticatedCardAccountsNewRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/auth/invite': {
+      id: '/_authenticated/auth/invite'
+      path: '/auth/invite'
+      fullPath: '/auth/invite'
+      preLoaderRoute: typeof AuthenticatedAuthInviteRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/transactions/$id/': {
+      id: '/_authenticated/transactions/$id/'
       path: '/transactions/$id'
       fullPath: '/transactions/$id'
-      preLoaderRoute: typeof TransactionsIdIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthenticatedTransactionsIdIndexRouteImport
+      parentRoute: typeof AuthenticatedRoute
     }
-    '/pots/$id/': {
-      id: '/pots/$id/'
+    '/_authenticated/pots/$id/': {
+      id: '/_authenticated/pots/$id/'
       path: '/pots/$id'
       fullPath: '/pots/$id'
-      preLoaderRoute: typeof PotsIdIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthenticatedPotsIdIndexRouteImport
+      parentRoute: typeof AuthenticatedRoute
     }
-    '/card-accounts/$id/': {
-      id: '/card-accounts/$id/'
+    '/_authenticated/card-accounts/$id/': {
+      id: '/_authenticated/card-accounts/$id/'
       path: '/card-accounts/$id'
       fullPath: '/card-accounts/$id'
-      preLoaderRoute: typeof CardAccountsIdIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthenticatedCardAccountsIdIndexRouteImport
+      parentRoute: typeof AuthenticatedRoute
     }
-    '/transactions/$id/pay': {
-      id: '/transactions/$id/pay'
+    '/_authenticated/transactions/$id/pay': {
+      id: '/_authenticated/transactions/$id/pay'
       path: '/transactions/$id/pay'
       fullPath: '/transactions/$id/pay'
-      preLoaderRoute: typeof TransactionsIdPayRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthenticatedTransactionsIdPayRouteImport
+      parentRoute: typeof AuthenticatedRoute
     }
-    '/transactions/$id/edit': {
-      id: '/transactions/$id/edit'
+    '/_authenticated/transactions/$id/edit': {
+      id: '/_authenticated/transactions/$id/edit'
       path: '/transactions/$id/edit'
       fullPath: '/transactions/$id/edit'
-      preLoaderRoute: typeof TransactionsIdEditRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthenticatedTransactionsIdEditRouteImport
+      parentRoute: typeof AuthenticatedRoute
     }
-    '/transactions/$id/allocate': {
-      id: '/transactions/$id/allocate'
+    '/_authenticated/transactions/$id/allocate': {
+      id: '/_authenticated/transactions/$id/allocate'
       path: '/transactions/$id/allocate'
       fullPath: '/transactions/$id/allocate'
-      preLoaderRoute: typeof TransactionsIdAllocateRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthenticatedTransactionsIdAllocateRouteImport
+      parentRoute: typeof AuthenticatedRoute
     }
-    '/pots/$id/reserve': {
-      id: '/pots/$id/reserve'
+    '/_authenticated/pots/$id/reserve': {
+      id: '/_authenticated/pots/$id/reserve'
       path: '/pots/$id/reserve'
       fullPath: '/pots/$id/reserve'
-      preLoaderRoute: typeof PotsIdReserveRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthenticatedPotsIdReserveRouteImport
+      parentRoute: typeof AuthenticatedRoute
     }
-    '/pots/$id/edit': {
-      id: '/pots/$id/edit'
+    '/_authenticated/pots/$id/edit': {
+      id: '/_authenticated/pots/$id/edit'
       path: '/pots/$id/edit'
       fullPath: '/pots/$id/edit'
-      preLoaderRoute: typeof PotsIdEditRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthenticatedPotsIdEditRouteImport
+      parentRoute: typeof AuthenticatedRoute
     }
-    '/card-accounts/$id/edit': {
-      id: '/card-accounts/$id/edit'
+    '/_authenticated/card-accounts/$id/edit': {
+      id: '/_authenticated/card-accounts/$id/edit'
       path: '/card-accounts/$id/edit'
       fullPath: '/card-accounts/$id/edit'
-      preLoaderRoute: typeof CardAccountsIdEditRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthenticatedCardAccountsIdEditRouteImport
+      parentRoute: typeof AuthenticatedRoute
     }
   }
 }
 
+interface AuthenticatedRouteChildren {
+  AuthenticatedAuthInviteRoute: typeof AuthenticatedAuthInviteRoute
+  AuthenticatedCardAccountsNewRoute: typeof AuthenticatedCardAccountsNewRoute
+  AuthenticatedDetailsActivityRoute: typeof AuthenticatedDetailsActivityRoute
+  AuthenticatedDetailsLedgerRoute: typeof AuthenticatedDetailsLedgerRoute
+  AuthenticatedMembersIdRoute: typeof AuthenticatedMembersIdRoute
+  AuthenticatedPotsNewRoute: typeof AuthenticatedPotsNewRoute
+  AuthenticatedTransactionsNewRoute: typeof AuthenticatedTransactionsNewRoute
+  AuthenticatedCardAccountsIndexRoute: typeof AuthenticatedCardAccountsIndexRoute
+  AuthenticatedDashboardIndexRoute: typeof AuthenticatedDashboardIndexRoute
+  AuthenticatedMembersIndexRoute: typeof AuthenticatedMembersIndexRoute
+  AuthenticatedPotsIndexRoute: typeof AuthenticatedPotsIndexRoute
+  AuthenticatedTransactionsIndexRoute: typeof AuthenticatedTransactionsIndexRoute
+  AuthenticatedCardAccountsIdEditRoute: typeof AuthenticatedCardAccountsIdEditRoute
+  AuthenticatedPotsIdEditRoute: typeof AuthenticatedPotsIdEditRoute
+  AuthenticatedPotsIdReserveRoute: typeof AuthenticatedPotsIdReserveRoute
+  AuthenticatedTransactionsIdAllocateRoute: typeof AuthenticatedTransactionsIdAllocateRoute
+  AuthenticatedTransactionsIdEditRoute: typeof AuthenticatedTransactionsIdEditRoute
+  AuthenticatedTransactionsIdPayRoute: typeof AuthenticatedTransactionsIdPayRoute
+  AuthenticatedCardAccountsIdIndexRoute: typeof AuthenticatedCardAccountsIdIndexRoute
+  AuthenticatedPotsIdIndexRoute: typeof AuthenticatedPotsIdIndexRoute
+  AuthenticatedTransactionsIdIndexRoute: typeof AuthenticatedTransactionsIdIndexRoute
+}
+
+const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
+  AuthenticatedAuthInviteRoute: AuthenticatedAuthInviteRoute,
+  AuthenticatedCardAccountsNewRoute: AuthenticatedCardAccountsNewRoute,
+  AuthenticatedDetailsActivityRoute: AuthenticatedDetailsActivityRoute,
+  AuthenticatedDetailsLedgerRoute: AuthenticatedDetailsLedgerRoute,
+  AuthenticatedMembersIdRoute: AuthenticatedMembersIdRoute,
+  AuthenticatedPotsNewRoute: AuthenticatedPotsNewRoute,
+  AuthenticatedTransactionsNewRoute: AuthenticatedTransactionsNewRoute,
+  AuthenticatedCardAccountsIndexRoute: AuthenticatedCardAccountsIndexRoute,
+  AuthenticatedDashboardIndexRoute: AuthenticatedDashboardIndexRoute,
+  AuthenticatedMembersIndexRoute: AuthenticatedMembersIndexRoute,
+  AuthenticatedPotsIndexRoute: AuthenticatedPotsIndexRoute,
+  AuthenticatedTransactionsIndexRoute: AuthenticatedTransactionsIndexRoute,
+  AuthenticatedCardAccountsIdEditRoute: AuthenticatedCardAccountsIdEditRoute,
+  AuthenticatedPotsIdEditRoute: AuthenticatedPotsIdEditRoute,
+  AuthenticatedPotsIdReserveRoute: AuthenticatedPotsIdReserveRoute,
+  AuthenticatedTransactionsIdAllocateRoute:
+    AuthenticatedTransactionsIdAllocateRoute,
+  AuthenticatedTransactionsIdEditRoute: AuthenticatedTransactionsIdEditRoute,
+  AuthenticatedTransactionsIdPayRoute: AuthenticatedTransactionsIdPayRoute,
+  AuthenticatedCardAccountsIdIndexRoute: AuthenticatedCardAccountsIdIndexRoute,
+  AuthenticatedPotsIdIndexRoute: AuthenticatedPotsIdIndexRoute,
+  AuthenticatedTransactionsIdIndexRoute: AuthenticatedTransactionsIdIndexRoute,
+}
+
+const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
+  AuthenticatedRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRoute: AuthenticatedRouteWithChildren,
   AuthAcceptInviteRoute: AuthAcceptInviteRoute,
   AuthBootstrapRoute: AuthBootstrapRoute,
-  AuthInviteRoute: AuthInviteRoute,
   AuthLoginRoute: AuthLoginRoute,
   AuthResetPasswordRoute: AuthResetPasswordRoute,
-  CardAccountsNewRoute: CardAccountsNewRoute,
-  DetailsActivityRoute: DetailsActivityRoute,
-  DetailsLedgerRoute: DetailsLedgerRoute,
-  MembersIdRoute: MembersIdRoute,
-  PotsNewRoute: PotsNewRoute,
-  TransactionsNewRoute: TransactionsNewRoute,
-  CardAccountsIndexRoute: CardAccountsIndexRoute,
-  MembersIndexRoute: MembersIndexRoute,
-  PotsIndexRoute: PotsIndexRoute,
-  TransactionsIndexRoute: TransactionsIndexRoute,
-  CardAccountsIdEditRoute: CardAccountsIdEditRoute,
-  PotsIdEditRoute: PotsIdEditRoute,
-  PotsIdReserveRoute: PotsIdReserveRoute,
-  TransactionsIdAllocateRoute: TransactionsIdAllocateRoute,
-  TransactionsIdEditRoute: TransactionsIdEditRoute,
-  TransactionsIdPayRoute: TransactionsIdPayRoute,
-  CardAccountsIdIndexRoute: CardAccountsIdIndexRoute,
-  PotsIdIndexRoute: PotsIdIndexRoute,
-  TransactionsIdIndexRoute: TransactionsIdIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

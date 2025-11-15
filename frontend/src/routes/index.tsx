@@ -1,29 +1,24 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { useState, useEffect } from "react";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { redirect } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/")({
   component: Index,
+  beforeLoad: (c) => {
+    const { isAuthenticated } = c.context.auth;
+    if (isAuthenticated) {
+      throw redirect({ to: "/dashboard" });
+    }
+  },
 });
 
 function Index() {
-  const [count, setCount] = useState(0);
-  const [apiMessage, setApiMessage] = useState("");
-
-  useEffect(() => {
-    fetch("/api")
-      .then((res) => res.text())
-      .then((data) => setApiMessage(data))
-      .catch((err) => console.error("API Error:", err));
-  }, []);
-
   return (
     <div className="p-2">
-      <h3>Welcome Home!</h3>
-      <p>Count: {count}</p>
-      <p>API says: {apiMessage}</p>
-      <button type="button" onClick={() => setCount(count + 1)}>
-        Increment
-      </button>
+      <h1>Welcome to Shared Card Splitter!</h1>
+      <p>Please log in or sign up to continue.</p>
+      <Link to="/auth/login">Log In</Link>
+      &emsp;{"|"}&emsp;
+      <Link to="/auth/accept-invite">Accept an Invite</Link>
     </div>
   );
 }

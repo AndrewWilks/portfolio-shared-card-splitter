@@ -1,8 +1,24 @@
 {
   "tasks": {
-    "dev": "deno run --allow-net --watch server.ts"
+    "dev": "deno run --allow-net --watch --env-file=./.env.local server.ts",
+    "start": "deno run --allow-net --env-file=./.env.local server.ts",
+
+    "db:generate": "deno run --allow-all --env-file=./.env.local npm:drizzle-kit generate --config ./.config/drizzle.config.ts",
+    "db:migrate": "deno run --allow-all --env-file=./.env.local npm:drizzle-kit migrate --config ./.config/drizzle.config.ts",
+    "db:push": "deno run --allow-all --env-file=./.env.local npm:drizzle-kit push --config ./.config/drizzle.config.ts",
+    "db:studio": "deno run --allow-all --env-file=./.env.local npm:drizzle-kit studio --config ./.config/drizzle.config.ts"
   },
   "imports": {
-    "hono": "npm:hono"
+    "@shared/": "../shared/",
+    "@backend/": "../backend/",
+    "@frontend/": "../frontend/",
+    "@hono/zod-validator": "npm:@hono/zod-validator@^0.7.4",
+    "@node-rs/argon2": "npm:@node-rs/argon2@^2.0.2",
+    "@std/http": "jsr:@std/http@^1.0.21",
+    "@types/pg": "npm:@types/pg@^8.15.6",
+    "drizzle-kit": "npm:drizzle-kit@^0.31.7",
+    "drizzle-orm": "npm:drizzle-orm@^0.44.7",
+    "hono": "npm:hono",
+    "pg": "npm:pg@^8.16.3"
   }
 }
