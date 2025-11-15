@@ -7,7 +7,7 @@ export type RouterContext = {
 };
 
 // Create a new router instance
-const router = createRouter({
+export const router = createRouter({
   routeTree,
   context: {
     auth: undefined!, // We'll inject this when we render
