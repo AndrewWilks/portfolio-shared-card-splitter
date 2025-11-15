@@ -3,7 +3,21 @@ import { z } from "zod";
 // Define individual schemas for each environment variable
 const envSchema = z.object({
   // Database configuration
-  DATABASE_URL: z.url("DATABASE_URL must be a valid URL"),
+  // Supports both pglite file paths (./data/db.pglite) and PostgreSQL URLs
+  DATABASE_URL: z
+    .string()
+    .min(1, "DATABASE_URL is required")
+    .refine(
+      (val) => {
+        // Allow pglite file paths or valid PostgreSQL URLs
+        const isFilePath = val.startsWith("./") || val.startsWith("../") ||
+          val.startsWith("/") || /^[a-zA-Z]:\\/.test(val);
+        const isUrl = val.startsWith("postgresql://") ||
+          val.startsWith("postgres://");
+        return isFilePath || isUrl;
+      },
+      "DATABASE_URL must be a pglite file path or a valid PostgreSQL URL",
+    ),
 
   // Session/Auth configuration
   SESSION_SECRET: z
