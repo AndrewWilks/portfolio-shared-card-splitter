@@ -12,13 +12,13 @@ import {
 import { STATUS_CODE } from "@std/http/status";
 
 // Entities and Types
-import { User } from "../shared/entities/user/index.ts";
-import { ApiError, type TApiError } from "../shared/entities/api/apiError.ts";
-import { ApiResponse } from "../shared/entities/api/apiResponse.ts";
+import { User } from "@shared/entities/user/index.ts";
+import { ApiError, type TApiError } from "@shared/entities/api/apiError.ts";
+import { ApiResponse } from "@shared/entities/api/apiResponse.ts";
 
 const secret = "your-secret-key"; // TODO: Use a secure secret from env variables
 const user = new User({
-  id: "1fd62b08-1360-48ca-9caf-3aa98ea0027b",
+  id: crypto.randomUUID(),
   email: "john.doe@example.com",
   firstName: "John",
   lastName: "Doe",
@@ -37,6 +37,8 @@ app.use(
 app.use("*", logger());
 
 app.get("/api", (c) => c.text("Hello Deno!"));
+
+// TODO: Protect routes that require authentication
 
 app.get("/api/v1/bootstrap/status", (c) => {
   // In a real application, replace this with actual bootstrap status check
