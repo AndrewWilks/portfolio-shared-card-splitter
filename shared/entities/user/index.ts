@@ -56,6 +56,7 @@ export class User {
       headers: {
         "Content-Type": "application/json",
       },
+      credentials: "include",
       body: JSON.stringify(body),
     });
 
@@ -84,6 +85,7 @@ export class User {
   static async logout() {
     const res = await fetch("/api/v1/auth/logout", {
       method: "POST",
+      credentials: "include",
     });
 
     const data = await res.json();
@@ -100,6 +102,7 @@ export class User {
   static async me() {
     const res = await fetch("/api/v1/auth/me", {
       method: "GET",
+      credentials: "include",
     });
 
     const data = await res.json();

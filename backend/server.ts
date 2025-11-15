@@ -124,8 +124,20 @@ app.post("/api/v1/auth/logout", async (c) => {
 });
 
 // TODO: refactor to AuthService
-app.get("/api/v1/auth/me", (c) => {
-  // TODO: Return user data as well from the Database to replace dummy data
+app.get("/api/v1/auth/me", async (c) => {
+  const isSecure = Deno.env.get("ENV") === "production" ? "secure" : undefined;
+  const sessionToken = await getSignedCookie(c, secret, "session", isSecure);
+
+  if (!sessionToken) {
+    const errorData: TApiError = {
+      message: "Not authenticated",
+      code: ApiError.InternalCodes.UNAUTHORISED_ACCESS,
+    };
+    return c.json(new ApiError(errorData), STATUS_CODE.Unauthorized);
+  }
+
+  // TODO: Validate session token and retrieve user data from Database
+  // For now, return the dummy user if session exists
   return c.json(
     new ApiResponse({
       data: user,
