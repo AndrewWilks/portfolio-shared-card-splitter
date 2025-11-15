@@ -3,6 +3,9 @@
     "dev": "deno run --allow-net --watch server.ts"
   },
   "imports": {
+    "@shared/": "../shared/",
+    "@backend/": "../backend/",
+    "@frontend/": "../frontend/",
     "@hono/zod-validator": "npm:@hono/zod-validator@^0.7.4",
     "@std/http": "jsr:@std/http@^1.0.21",
     "hono": "npm:hono"
