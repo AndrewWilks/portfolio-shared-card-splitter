@@ -15,6 +15,9 @@ dist-ssr
 .vite/
 .tanstack/
 
+.data/
+.drizzle/
+
 # Environment files
 .env
 .env.*
