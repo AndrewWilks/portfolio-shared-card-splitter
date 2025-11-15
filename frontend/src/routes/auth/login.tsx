@@ -10,12 +10,13 @@ import { useAuth } from "../../auth/AuthContext.tsx";
 import { User } from "@shared/entities/user/index.ts";
 import { ApiError } from "@shared/entities/api/apiError.ts";
 import { useRouter } from "@tanstack/react-router";
+import Button from "../../components/ui/primitives/Button.tsx";
 
 export const Route = createFileRoute("/auth/login")({
-  validateSearch: (search: Record<string, unknown>) => {
+  validateSearch: (search: Record<string, unknown> | undefined) => {
     return {
       redirectTo:
-        typeof search.redirectTo === "string" ? search.redirectTo : undefined,
+        typeof search?.redirectTo === "string" ? search?.redirectTo : undefined,
     };
   },
   component: RouteComponent,
@@ -175,14 +176,17 @@ function RouteComponent() {
           disabled={loading}
         />
         {passwordError && <ErrorBox message={passwordError} />}
-        <button
+        <Button
           type="submit"
           className={buttonClass}
           disabled={loading || !!error}
           formNoValidate
+          startIcon={
+            loading ? { name: "Loader", size: 16 } : { name: "LogIn", size: 16 }
+          }
         >
           {buttonLabel}
-        </button>
+        </Button>
 
         <Link
           to="/auth/accept-invite"
