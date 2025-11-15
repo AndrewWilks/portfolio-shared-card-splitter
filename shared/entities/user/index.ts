@@ -69,6 +69,13 @@ export class User {
 
     const parsed = ApiResponse.parse(data, User.schema);
 
+    if (!parsed.data) {
+      return new ApiError({
+        message: "Login failed: No user data returned",
+        code: ApiError.InternalCodes.INVALID_LOGIN_DATA,
+      });
+    }
+
     const returnValue = new ApiResponse({
       message: parsed.message,
       data: new User({
@@ -113,6 +120,13 @@ export class User {
     }
 
     const parsed = ApiResponse.parse(data, User.schema);
+
+    if (!parsed.data) {
+      return new ApiError({
+        message: "Me request failed: No user data returned",
+        code: ApiError.InternalCodes.INVALID_LOGIN_DATA,
+      });
+    }
 
     const returnValue = new ApiResponse({
       message: parsed.message,
