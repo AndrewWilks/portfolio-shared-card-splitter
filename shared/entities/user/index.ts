@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { ApiError } from "../api/apiError.ts";
+import { ApiResponse } from "../api/apiResponse.ts";
 
 export class User {
   private _id: string;
@@ -44,13 +45,7 @@ export class User {
     return `${this._firstName} ${this._lastName}`;
   }
 
-  static async login({
-    email,
-    password,
-  }: {
-    email: TEmail;
-    password: TPassword;
-  }): Promise<User> {
+  static async login({ email, password }: TUserLogin) {
     const parsedEmail = this.emailSchema.parse(email);
     const parsedPassword = this.passwordSchema.parse(password);
 
@@ -68,20 +63,25 @@ export class User {
 
     if (!res.ok) {
       const apiError = ApiError.parse(data);
-      throw new Error(apiError.message);
+      return apiError;
     }
 
-    const parsed = User.schema.parse(data);
+    const parsed = ApiResponse.parse(data, User.schema);
 
-    return new User({
-      id: parsed.id,
-      email: parsed.email,
-      firstName: parsed.firstName,
-      lastName: parsed.lastName,
+    const returnValue = new ApiResponse({
+      message: parsed.message,
+      data: new User({
+        id: parsed.data.id,
+        email: parsed.data.email,
+        firstName: parsed.data.firstName,
+        lastName: parsed.data.lastName,
+      }),
     });
+
+    return returnValue;
   }
 
-  async logout(): Promise<void> {
+  static async logout() {
     const res = await fetch("/api/v1/auth/logout", {
       method: "POST",
     });
@@ -90,19 +90,38 @@ export class User {
 
     if (!res.ok) {
       const apiError = ApiError.parse(data);
-      throw new Error(apiError.message);
+      return apiError;
     }
 
-    // TODO: Add response handling if needed
-
-    this.dispose();
+    const parsed = ApiResponse.parse(data, z.object({ message: z.string() }));
+    return parsed;
   }
 
-  private dispose(): void {
-    this._id = "";
-    this._email = "";
-    this._firstName = "";
-    this._lastName = "";
+  static async me() {
+    const res = await fetch("/api/v1/auth/me", {
+      method: "GET",
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      const apiError = ApiError.parse(data);
+      return apiError;
+    }
+
+    const parsed = ApiResponse.parse(data, User.schema);
+
+    const returnValue = new ApiResponse({
+      message: parsed.message,
+      data: new User({
+        id: parsed.data.id,
+        email: parsed.data.email,
+        firstName: parsed.data.firstName,
+        lastName: parsed.data.lastName,
+      }),
+    });
+
+    return returnValue;
   }
 
   static get loginSchema() {
@@ -170,3 +189,6 @@ export type TFirstName = z.infer<typeof User.firstNameSchema>;
 export type TLastName = z.infer<typeof User.lastNameSchema>;
 export type TUserId = z.infer<typeof User.idSchema>;
 export type TUser = z.infer<typeof User.schema>;
+
+export type TUserLogin = z.infer<typeof User.loginSchema>;
+export type TUserLogout = z.infer<typeof User.logoutSchema>;
