@@ -73,16 +73,14 @@ app.post(
       }
     );
 
-    return c.json(
-      new ApiResponse({
-        data: user, // TODO: Return user data as well from the Database to replace dummy data
-        message: "Login successful",
-      }),
-      STATUS_CODE.OK,
-      {
-        "Set-Cookie": cookie,
-      }
-    );
+    const apiResponse = new ApiResponse({
+      data: user,
+      message: "Login successful",
+    });
+
+    return c.json(apiResponse, STATUS_CODE.OK, {
+      "Set-Cookie": cookie,
+    });
   }
 );
 
@@ -116,7 +114,11 @@ app.post("/api/v1/auth/logout", async (c) => {
     return c.json(new ApiError(errorData), 500);
   }
 
-  return c.json({ message: "Logged out successfully" }, STATUS_CODE.OK, {
+  const apiResponse = new ApiResponse({
+    message: "Logout successful",
+  });
+
+  return c.json(apiResponse, STATUS_CODE.OK, {
     "Set-Cookie": deleteCookieHeader,
   });
 });
