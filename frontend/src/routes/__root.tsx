@@ -1,27 +1,36 @@
-import { Outlet, createRootRouteWithContext } from "@tanstack/react-router";
+import {
+  Outlet,
+  createRootRouteWithContext,
+  redirect,
+} from "@tanstack/react-router";
 
 import RootLayout from "../components/layout/index.tsx";
 import Providers from "../context/index.tsx";
-import useBootstrap from "../hooks/useBootstrap.tsx";
 import type { RouterContext } from "../router.tsx";
-// import { redirect } from "@tanstack/react-router";
 
 export const Route = createRootRouteWithContext<RouterContext>()({
   component: RootComponent,
-  // beforeLoad: ({ context }) => {
-  //   if (
-  //     context.auth.isBootstrapped === false ||
-  //     context.auth.isBootstrapped === null
-  //   ) {
-  //     throw redirect({
-  //       to: "/auth/bootstrap",
-  //     });
-  //   }
-  // },
+  beforeLoad: ({ context, location }) => {
+    // Check if bootstrap is needed
+    const isBootstrapped = context.auth.isBootstrapped;
+
+    // If not bootstrapped and not on bootstrap page, redirect
+    if (isBootstrapped === false && location.pathname !== "/auth/bootstrap") {
+      throw redirect({
+        to: "/auth/bootstrap",
+      });
+    }
+
+    // If bootstrapped and on bootstrap page, redirect to home
+    if (isBootstrapped === true && location.pathname === "/auth/bootstrap") {
+      throw redirect({
+        to: "/",
+      });
+    }
+  },
 });
 
 function RootComponent() {
-  useBootstrap();
   return (
     <Providers>
       <RootLayout>

@@ -15,7 +15,7 @@ export class AuthService {
   private snapshot: AuthSnapshot = {
     user: null,
     isAuthenticated: false,
-    isBootstrapped: false,
+    isBootstrapped: null,
     initialAuthChecked: false,
   };
 
@@ -42,10 +42,9 @@ export class AuthService {
 
   private setUser(user: User | null) {
     this.snapshot = {
+      ...this.snapshot,
       user,
       isAuthenticated: !!user,
-      isBootstrapped: this.isBootstrapped,
-      initialAuthChecked: this.checkedInitialAuth,
     };
     this.notify();
   }
@@ -85,28 +84,69 @@ export class AuthService {
   }
 
   get isBootstrapped(): boolean | null {
-    const stored = localStorage.getItem("isBootstrapped");
-
-    if (stored === null) return null;
-
-    return Boolean(stored);
+    return this.snapshot.isBootstrapped;
   }
 
-  set isBootstrapped(value: boolean) {
+  private set isBootstrapped(value: boolean) {
+    this.snapshot = {
+      ...this.snapshot,
+      isBootstrapped: value,
+    };
+    // Also cache in localStorage
     localStorage.setItem("isBootstrapped", value ? "true" : "false");
+    this.notify();
   }
 
-  async checkBootstrapped() {
-    const res = await fetch("/api/v1/bootstrap/status");
+  /**
+   * Check bootstrap status from API and update state
+   * @returns Promise<boolean> - true if bootstrapped, false otherwise
+   */
+  async checkBootstrapped(): Promise<boolean> {
+    try {
+      const res = await fetch("/api/v1/bootstrap/status");
 
-    const data = await res.json();
+      if (!res.ok) {
+        const data = await res.json();
+        const error = ApiError.parse(data);
+        console.error("Bootstrap check failed:", error.message);
+        // Return cached value if API fails
+        return this.getCachedBootstrapStatus() ?? false;
+      }
 
-    if (!res.ok) {
-      const error = ApiError.parse(data);
-      throw new Error(error.message);
+      const data = await res.json();
+      const bootstrapped = Boolean(data);
+
+      // Update state
+      this.isBootstrapped = bootstrapped;
+
+      return bootstrapped;
+    } catch (error) {
+      console.error("Bootstrap check error:", error);
+      // Return cached value if network fails
+      return this.getCachedBootstrapStatus() ?? false;
     }
+  }
 
-    this.isBootstrapped = Boolean(data);
+  /**
+   * Get cached bootstrap status from localStorage
+   */
+  private getCachedBootstrapStatus(): boolean | null {
+    const stored = localStorage.getItem("isBootstrapped");
+    if (stored === null) return null;
+    return stored === "true";
+  }
+
+  /**
+   * Initialize bootstrap state from cache
+   */
+  initializeFromCache() {
+    const cached = this.getCachedBootstrapStatus();
+    if (cached !== null) {
+      this.snapshot = {
+        ...this.snapshot,
+        isBootstrapped: cached,
+      };
+    }
   }
 
   get checkedInitialAuth() {
@@ -144,16 +184,13 @@ export class AuthService {
 // singleton for client side SPA
 export const authService = new AuthService();
 
-// if (
-//   authService.isBootstrapped === null ||
-//   authService.isBootstrapped === false
-// ) {
-//   await authService.checkBootstrapped();
-// }
+// Initialize from cache immediately (synchronous)
+authService.initializeFromCache();
 
-if (
-  authService.state.initialAuthChecked === false &&
-  authService.isBootstrapped === true
-) {
-  await authService.checkInitialAuth();
-}
+// Then check API in background (async)
+authService.checkBootstrapped().then((bootstrapped) => {
+  // Only check auth if bootstrapped
+  if (bootstrapped && !authService.state.initialAuthChecked) {
+    authService.checkInitialAuth();
+  }
+});
