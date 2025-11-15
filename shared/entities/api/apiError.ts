@@ -84,6 +84,11 @@ enum ApiErrorInternalCodes {
   // General Errors
   UNKNOWN_ERROR = -999,
 
+  // Bootstrap Errors
+  SYSTEM_ALREADY_BOOTSTRAPPED = 1,
+  SYSTEM_NOT_BOOTSTRAPPED = 2,
+  INVALID_BOOTSTRAP_DATA = 3,
+
   // Authentication and Authorization Errors
   INVALID_LOGIN_DATA = 1001,
   INVALID_LOGOUT_DATA = 1002,

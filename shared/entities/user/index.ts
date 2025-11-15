@@ -190,6 +190,15 @@ export class User {
     });
   }
 
+  static get bootstrapSchema() {
+    return z.object({
+      email: this.emailSchema,
+      password: this.passwordSchema,
+      firstName: this.firstNameSchema,
+      lastName: this.lastNameSchema,
+    });
+  }
+
   toJSON() {
     return {
       id: this._id,

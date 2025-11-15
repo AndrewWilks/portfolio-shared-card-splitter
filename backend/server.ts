@@ -14,6 +14,7 @@ import { ApiResponse } from "@shared/entities/api/apiResponse.ts";
 // Services
 import { TokenService } from "./services/tokenService.ts";
 import { TokenCookieService } from "./services/tokenCookieService.ts";
+import { BootstrapService } from "./services/bootstrapService.ts";
 import { UserService } from "./services/userService.ts";
 
 // Middleware
@@ -43,12 +44,52 @@ app.use("*", logger());
 app.get("/api", (c) => c.text("Hello Deno!"));
 
 // Public routes (no authentication required)
-app.get("/api/v1/bootstrap/status", (c) => {
-  // In a real application, replace this with actual bootstrap status check
-  // TODO: Implement in the bootstrap service
-  const isBootstrapped = true;
+app.get("/api/v1/bootstrap/status", async (c) => {
+  const isBootstrapped = await BootstrapService.isBootstrapped();
   return c.json(isBootstrapped);
 });
+
+app.post(
+  "/api/v1/bootstrap",
+  zValidator("json", User.bootstrapSchema, (result, c) => {
+    if (!result.success) {
+      const errorData: TApiError = {
+        message: "Invalid bootstrap data",
+        code: ApiError.InternalCodes.INVALID_BOOTSTRAP_DATA,
+      };
+      return c.json(new ApiError(errorData), STATUS_CODE.BadRequest);
+    }
+  }),
+  async (c) => {
+    const { email, password, firstName, lastName } = c.req.valid("json");
+
+    // Create the first user
+    const response = await BootstrapService.bootstrapFirstUser(
+      email,
+      password,
+      firstName,
+      lastName
+    );
+
+    if (response instanceof ApiError) {
+      return c.json(response, STATUS_CODE.BadRequest);
+    }
+
+    if (!response.data) {
+      const errorData: TApiError = {
+        message: "Bootstrap failed: No user data returned",
+        code: ApiError.InternalCodes.INVALID_BOOTSTRAP_DATA,
+      };
+      return c.json(new ApiError(errorData), STATUS_CODE.BadRequest);
+    }
+
+    // Create token and set cookie (auto-login after bootstrap)
+    const token = await TokenService.createToken(response.data.id);
+    TokenCookieService.setTokenCookie(c, token);
+
+    return c.json(response, STATUS_CODE.Created);
+  }
+);
 
 app.post(
   "/api/v1/auth/login",

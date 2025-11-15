@@ -53,6 +53,15 @@ export class UserRepository {
   }
 
   /**
+   * Find all users (for bootstrap check)
+   * @returns Array of user records
+   */
+  static async findAll() {
+    const result = await db.select().from(usersTable);
+    return result;
+  }
+
+  /**
    * Update a user by ID
    * @param id - User ID to update
    * @param data - Partial user data to update

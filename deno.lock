@@ -1,6 +1,7 @@
 {
   "version": "5",
   "specifiers": {
+    "jsr:@std/http@^1.0.21": "1.0.21",
     "npm:@electric-sql/pglite@*": "0.3.14",
     "npm:@hono/zod-validator@~0.7.4": "0.7.4_hono@4.10.4_zod@4.1.12",
     "npm:@tailwindcss/vite@^4.1.17": "4.1.17_vite@7.2.2__picomatch@4.0.3",
@@ -24,6 +25,11 @@
     "npm:vite@*": "7.2.2_picomatch@4.0.3",
     "npm:vite@^7.2.2": "7.2.2_picomatch@4.0.3",
     "npm:zod@^4.1.12": "4.1.12"
+  },
+  "jsr": {
+    "@std/http@1.0.21": {
+      "integrity": "abb5c747651ee6e3ea6139858fd9b1810d2c97f53a5e6722f3b6d27a6d263edc"
+    }
   },
   "npm": {
     "@babel/code-frame@7.27.1": {
