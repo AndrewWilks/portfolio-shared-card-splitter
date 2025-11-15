@@ -9,6 +9,7 @@ import classname from "classnames";
 import { useAuth } from "../../auth/AuthContext.tsx";
 import { User } from "@shared/entities/user/index.ts";
 import { ApiError } from "@shared/entities/api/apiError.ts";
+import { useRouter } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/auth/login")({
   validateSearch: (search: Record<string, unknown>) => {
@@ -30,6 +31,7 @@ export const Route = createFileRoute("/auth/login")({
 function RouteComponent() {
   const { login } = useAuth();
   const navigate = useNavigate();
+  const router = useRouter();
   const search = useSearch({ from: Route.id });
 
   const [email, setEmail] = useState<string>("");
@@ -134,6 +136,7 @@ function RouteComponent() {
 
       // Redirect after login
       const redirectTo = search.redirectTo || "/dashboard";
+      await router.invalidate();
       navigate({ to: redirectTo });
     } catch (error) {
       console.error(error);
