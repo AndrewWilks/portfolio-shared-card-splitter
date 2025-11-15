@@ -4,11 +4,6 @@ import { cors } from "hono/cors";
 import { zValidator } from "@hono/zod-validator";
 
 // helpers
-import {
-  generateSignedCookie,
-  getSignedCookie,
-  deleteCookie,
-} from "hono/cookie";
 import { STATUS_CODE } from "@std/http/status";
 
 // Entities and Types
@@ -16,7 +11,16 @@ import { User } from "@shared/entities/user/index.ts";
 import { ApiError, type TApiError } from "@shared/entities/api/apiError.ts";
 import { ApiResponse } from "@shared/entities/api/apiResponse.ts";
 
-const secret = "your-secret-key"; // TODO: Use a secure secret from env variables
+// Services
+import { TokenService } from "./services/tokenService.ts";
+import { TokenCookieService } from "./services/tokenCookieService.ts";
+import { UserService } from "./services/userService.ts";
+
+// Middleware
+import { requireAuth } from "./middleware/auth.ts";
+
+// Config
+import { config } from "./.config/evnLoader.ts";
 const user = new User({
   id: crypto.randomUUID(),
   email: "john.doe@example.com",
@@ -29,7 +33,7 @@ const app = new Hono();
 app.use(
   "*",
   cors({
-    origin: "http://localhost:3000",
+    origin: config().CORS_ORIGIN,
     credentials: true,
   })
 );
@@ -38,8 +42,7 @@ app.use("*", logger());
 
 app.get("/api", (c) => c.text("Hello Deno!"));
 
-// TODO: Protect routes that require authentication
-
+// Public routes (no authentication required)
 app.get("/api/v1/bootstrap/status", (c) => {
   // In a real application, replace this with actual bootstrap status check
   // TODO: Implement in the bootstrap service
@@ -47,7 +50,6 @@ app.get("/api/v1/bootstrap/status", (c) => {
   return c.json(isBootstrapped);
 });
 
-// TODO: refactor to AuthService, needs to validate user credentials and create session
 app.post(
   "/api/v1/auth/login",
   zValidator("json", User.loginSchema, (result, c) => {
@@ -60,84 +62,46 @@ app.post(
     }
   }),
   async (c) => {
-    const cookie = await generateSignedCookie(
-      "session",
-      "dummy-session-token", // TODO: Replace with real session token
-      secret,
-      {
-        path: "/",
-        secure: Deno.env.get("ENV") === "production",
-        httpOnly: true,
-        maxAge: 60 * 60 * 24, // 1 day
-        expires: new Date(Date.now() + 60 * 60 * 24 * 1000), // 1 day
-      }
-    );
+    // TODO: Validate user credentials against database
+    // For now, create token with dummy user ID
+    const token = await TokenService.createToken(user.id);
+    TokenCookieService.setTokenCookie(c, token);
 
     const apiResponse = new ApiResponse({
       data: user,
       message: "Login successful",
     });
 
-    return c.json(apiResponse, STATUS_CODE.OK, {
-      "Set-Cookie": cookie,
-    });
+    return c.json(apiResponse, STATUS_CODE.OK);
   }
 );
 
-// TODO: refactor to AuthService, needs to invalidate session server-side
-app.post("/api/v1/auth/logout", async (c) => {
-  const isSecure = Deno.env.get("ENV") === "production" ? "secure" : undefined;
+// Apply authentication middleware to all /api/v1/* routes except public ones
+app.use("/api/v1/*", requireAuth());
 
-  const cookie = await getSignedCookie(c, secret, "session", isSecure);
-  const parseResult = User.logoutSchema.safeParse(cookie);
-  if (!parseResult.success) {
-    const errorData: TApiError = {
-      message: "Invalid logout data",
-      code: ApiError.InternalCodes.INVALID_LOGOUT_DATA,
-      details: JSON.stringify(parseResult.error.issues),
-    };
-    return c.json(new ApiError(errorData), STATUS_CODE.BadRequest);
-  }
+// Protected routes (authentication required)
 
-  const deleteCookieHeader = deleteCookie(c, "session", {
-    path: "/",
-    secure: Deno.env.get("ENV") === "production",
-    httpOnly: true,
-    expires: new Date(0),
-  });
-
-  if (!deleteCookieHeader) {
-    const errorData: TApiError = {
-      message: "Failed to delete session cookie",
-      code: ApiError.InternalCodes.UNKNOWN_ERROR,
-    };
-    return c.json(new ApiError(errorData), 500);
-  }
+app.post("/api/v1/auth/logout", (c) => {
+  TokenCookieService.clearTokenCookie(c);
 
   const apiResponse = new ApiResponse({
     message: "Logout successful",
   });
 
-  return c.json(apiResponse, STATUS_CODE.OK, {
-    "Set-Cookie": deleteCookieHeader,
-  });
+  return c.json(apiResponse, STATUS_CODE.OK);
 });
 
-// TODO: refactor to AuthService
 app.get("/api/v1/auth/me", async (c) => {
-  const isSecure = Deno.env.get("ENV") === "production" ? "secure" : undefined;
-  const sessionToken = await getSignedCookie(c, secret, "session", isSecure);
+  // User is already authenticated and attached to context by middleware
+  const tokenPayload = c.get("user");
 
-  if (!sessionToken) {
-    const errorData: TApiError = {
-      message: "Not authenticated",
-      code: ApiError.InternalCodes.UNAUTHORISED_ACCESS,
-    };
-    return c.json(new ApiError(errorData), STATUS_CODE.Unauthorized);
+  // Get user from database using the service
+  const user = await UserService.getUserById(tokenPayload.userId);
+
+  if (user instanceof ApiError) {
+    return c.json(user, STATUS_CODE.NotFound);
   }
 
-  // TODO: Validate session token and retrieve user data from Database
-  // For now, return the dummy user if session exists
   return c.json(
     new ApiResponse({
       data: user,

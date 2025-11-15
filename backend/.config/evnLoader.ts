@@ -44,6 +44,19 @@ const envSchema = z.object({
     .default("86400")
     .transform((val) => parseInt(val, 10))
     .pipe(z.number().int().positive()),
+
+  // Token configuration
+  TOKEN_REFRESH_THRESHOLD: z
+    .string()
+    .default("0.5")
+    .transform((val) => parseFloat(val))
+    .pipe(z.number().min(0).max(1)),
+
+  TOKEN_MAX_REFRESHES_PER_HOUR: z
+    .string()
+    .default("1")
+    .transform((val) => parseInt(val, 10))
+    .pipe(z.number().int().positive()),
 });
 
 // Infer the TypeScript type from the schema
@@ -80,6 +93,10 @@ class EnvLoader {
         PORT: Deno.env.get("PORT"),
         CORS_ORIGIN: Deno.env.get("CORS_ORIGIN"),
         SESSION_MAX_AGE: Deno.env.get("SESSION_MAX_AGE"),
+        TOKEN_REFRESH_THRESHOLD: Deno.env.get("TOKEN_REFRESH_THRESHOLD"),
+        TOKEN_MAX_REFRESHES_PER_HOUR: Deno.env.get(
+          "TOKEN_MAX_REFRESHES_PER_HOUR"
+        ),
       };
 
       // Parse and validate with Zod
