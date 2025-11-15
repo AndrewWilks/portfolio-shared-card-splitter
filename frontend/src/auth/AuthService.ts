@@ -1,5 +1,6 @@
 import { User, TUserLogin } from "@shared/entities/user/index.ts";
 import { ApiError } from "@shared/entities/api/apiError.ts";
+import { router } from "../router.tsx";
 
 export interface AuthSnapshot {
   user: User | null;
@@ -53,6 +54,13 @@ export class AuthService {
       return res;
     }
 
+    if (!res.data) {
+      return new ApiError({
+        message: "Login failed: No user data returned",
+        code: ApiError.InternalCodes.INVALID_LOGIN_DATA,
+      });
+    }
+
     this.setUser(res.data);
     return res;
   }
@@ -65,6 +73,11 @@ export class AuthService {
     }
 
     this.setUser(null);
+    await router.navigate({
+      to: "/auth/login",
+      replace: true,
+      search: () => ({ redirectTo: router.latestLocation.pathname }),
+    });
     return res;
   }
 
@@ -84,6 +97,12 @@ export class AuthService {
     const res = await User.me();
 
     if (res instanceof ApiError) {
+      this.checkedInitialAuth = true;
+      this.notify();
+      return;
+    }
+
+    if (!res.data) {
       this.checkedInitialAuth = true;
       this.notify();
       return;
