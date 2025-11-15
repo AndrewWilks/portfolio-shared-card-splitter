@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export class ApiResponse<T> implements IApiResponse<T> {
-  public readonly data: T;
+  public readonly data?: T;
   public readonly message?: string;
 
   constructor({ data, message }: TApiResponseData<T>) {
@@ -16,18 +16,21 @@ export class ApiResponse<T> implements IApiResponse<T> {
     },
     schema: Z
   ): ApiResponse<T> {
-    const parsed = schema.parse(payload.data);
-    return new ApiResponse<T>({ data: parsed as T, message: payload.message });
+    const parsed = this.schema(schema).parse(payload);
+    return new ApiResponse<T>({
+      data: parsed.data as T,
+      message: parsed.message,
+    });
   }
 
   static safeParse<Z extends z.ZodTypeAny, T extends z.infer<Z>>(
     payload: {
-      data: T;
+      data?: T;
       message?: string;
     },
     schema: Z
   ) {
-    const parsed = schema.safeParse(payload.data);
+    const parsed = this.schema(schema).safeParse(payload);
 
     if (!parsed.success) {
       return {
@@ -40,9 +43,16 @@ export class ApiResponse<T> implements IApiResponse<T> {
       successful: true,
       data: new ApiResponse<T>({
         data: parsed.data as T,
-        message: payload.message,
+        message: parsed.data.message,
       }),
     };
+  }
+
+  static schema<Z extends z.ZodTypeAny>(dataSchema: Z) {
+    return z.object({
+      data: dataSchema.optional(),
+      message: z.string().optional(),
+    });
   }
 
   toString(): string {
@@ -60,12 +70,12 @@ export class ApiResponse<T> implements IApiResponse<T> {
 export type TApiResponse<T> = IApiResponse<T>;
 
 type TApiResponseData<T> = {
-  data: T;
+  data?: T;
   message?: string;
 };
 
 interface IApiResponse<T> {
-  data: T;
+  data?: T;
   message?: string;
 
   toString(): string;
