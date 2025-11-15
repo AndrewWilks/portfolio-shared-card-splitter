@@ -15,12 +15,10 @@
       "runtimeArgs": [
         "run",
         "--inspect-wait",
-        "--allow-all",
+        // "--allow-all",
         "--env-file=${workspaceFolder}/backend/.env.local",
         "--watch"
       ],
-      "attachSimplePort": 9229,
-      "envFile": "${workspaceFolder}/backend/.env.local",
       "outputCapture": "console"
     },
     // Run Vite frontend
@@ -32,7 +30,6 @@
       "runtimeExecutable": "deno",
       "runtimeArgs": [
         "--allow-all",
-        "--inspect-brk",
         "npm:vite",
         "--config",
         "./.config/vite.config.ts"
@@ -40,7 +37,7 @@
       "presentation": {
         "hidden": true
       },
-      "attachSimplePort": 9229
+      "attachSimplePort": 9228
     },
     // Debug Frontend in Chrome
     {
@@ -48,9 +45,7 @@
       "name": "Debug Frontend (Chrome)",
       "type": "chrome",
       "url": "http://localhost:3000",
-      "webRoot": "${workspaceFolder}/frontend/src",
-      "sourceMaps": true,
-      "skipFiles": ["<node_internals>/**"],
+      "webRoot": "${workspaceFolder}",
       "presentation": {
         "hidden": true
       }
@@ -75,7 +70,6 @@
       "configurations": ["Frontend Server (Vite)", "Debug Frontend (Chrome)"],
       "presentation": {
         "hidden": false,
-        // "group": "Frontend",
         "order": 2
       },
       "stopAll": true
