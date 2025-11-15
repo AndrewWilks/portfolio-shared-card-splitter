@@ -9,17 +9,25 @@ export class ApiResponse<T> implements IApiResponse<T> {
     this.message = message;
   }
 
-  static parse<T>(
-    data: unknown,
-    schema: z.ZodTypeAny,
-    message?: string
+  static parse<Z extends z.ZodTypeAny, T extends z.infer<Z>>(
+    payload: {
+      data: T;
+      message?: string;
+    },
+    schema: Z
   ): ApiResponse<T> {
-    const parsed = schema.parse(data);
-    return new ApiResponse<T>({ data: parsed as T, message });
+    const parsed = schema.parse(payload.data);
+    return new ApiResponse<T>({ data: parsed as T, message: payload.message });
   }
 
-  static safeParse<T>(data: unknown, schema: z.ZodTypeAny, message?: string) {
-    const parsed = schema.safeParse(data);
+  static safeParse<Z extends z.ZodTypeAny, T extends z.infer<Z>>(
+    payload: {
+      data: T;
+      message?: string;
+    },
+    schema: Z
+  ) {
+    const parsed = schema.safeParse(payload.data);
 
     if (!parsed.success) {
       return {
@@ -32,17 +40,13 @@ export class ApiResponse<T> implements IApiResponse<T> {
       successful: true,
       data: new ApiResponse<T>({
         data: parsed.data as T,
-        message,
+        message: payload.message,
       }),
     };
   }
 
   toString(): string {
     return `ApiResponse: [data=${JSON.stringify(this.data)}]`;
-  }
-
-  serialize(): string {
-    return JSON.stringify(this.data);
   }
 
   toJSON() {
@@ -65,5 +69,4 @@ interface IApiResponse<T> {
   message?: string;
 
   toString(): string;
-  serialize(): string;
 }
