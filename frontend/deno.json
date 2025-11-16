@@ -6,6 +6,7 @@
     "jsxImportSource": "react"
   },
   "imports": {
+    "@/": "./src/",
     "@shared/": "../shared/",
     "@backend/": "../backend/",
     "@frontend/": "../frontend/",
@@ -25,7 +26,7 @@
     "@vitejs/plugin-react": "npm:@vitejs/plugin-react@^5.1.0"
   },
   "tasks": {
-    "dev": "deno run -A npm:vite --config ./.config/vite.config.ts",
+    "dev": "deno run -A --watch npm:vite --config ./.config/vite.config.ts",
     "build": "deno run -A npm:vite build --config ./.config/vite.config.ts",
     "preview": "deno run -A npm:vite preview --config ./.config/vite.config.ts"
   }
