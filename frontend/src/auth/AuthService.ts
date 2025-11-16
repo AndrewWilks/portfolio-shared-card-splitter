@@ -126,9 +126,24 @@ export class AuthService {
 
   /**
    * Check bootstrap status from API and update state
+   * Only calls API if cached value is null
    * @returns Promise<boolean> - true if bootstrapped, false otherwise
    */
-  async checkBootstrapped(): Promise<boolean> {
+  async checkBootstrapped(force: boolean = false): Promise<boolean> {
+    // Check cache first
+    const cached = this.getCachedBootstrapStatus();
+
+    // If we have a cached value, use it and skip API call
+    if (cached !== null && !force) {
+      this.snapshot = {
+        ...this.snapshot,
+        isBootstrapped: cached,
+      };
+      this.notify();
+      return cached;
+    }
+
+    // Only call API if cache is null
     try {
       const res = await fetch("/api/v1/bootstrap/status");
 
@@ -136,21 +151,23 @@ export class AuthService {
         const data = await res.json();
         const error = ApiError.parse(data);
         console.error("Bootstrap check failed:", error.message);
-        // Return cached value if API fails
-        return this.getCachedBootstrapStatus() ?? false;
+        // Default to false if API fails and no cache
+        this.isBootstrapped = false;
+        return false;
       }
 
       const data = await res.json();
       const bootstrapped = Boolean(data);
 
-      // Update state
+      // Update state and cache
       this.isBootstrapped = bootstrapped;
 
       return bootstrapped;
     } catch (error) {
       console.error("Bootstrap check error:", error);
-      // Return cached value if network fails
-      return this.getCachedBootstrapStatus() ?? false;
+      // Default to false if network fails and no cache
+      this.isBootstrapped = false;
+      return false;
     }
   }
 
@@ -176,48 +193,45 @@ export class AuthService {
     }
   }
 
-  get checkedInitialAuth() {
-    return sessionStorage.getItem("initialAuthChecked") === "true";
-  }
-
-  set checkedInitialAuth(value: boolean) {
-    sessionStorage.setItem("initialAuthChecked", value ? "true" : "false");
-  }
-
   async checkInitialAuth() {
-    if (this.checkedInitialAuth) {
+    // Always check on first call (resets on page refresh)
+    if (this.snapshot.initialAuthChecked) {
       return;
     }
 
     const res = await User.me();
 
     if (res instanceof ApiError) {
-      this.checkedInitialAuth = true;
-      this.notify();
+      // Only mark as checked if it's an unauthorized error
+      // This allows retries for network/server errors
+      if (res.code === ApiError.InternalCodes.UNAUTHORISED_ACCESS) {
+        this.snapshot = {
+          ...this.snapshot,
+          initialAuthChecked: true,
+        };
+        this.notify();
+      }
       return;
     }
 
     if (!res.data) {
-      this.checkedInitialAuth = true;
+      // No user data but request succeeded - mark as checked
+      this.snapshot = {
+        ...this.snapshot,
+        initialAuthChecked: true,
+      };
       this.notify();
       return;
     }
 
-    this.checkedInitialAuth = true;
+    // Success - set user and mark as checked
+    this.snapshot = {
+      ...this.snapshot,
+      initialAuthChecked: true,
+    };
     this.setUser(res.data);
   }
 }
 
 // singleton for client side SPA
 export const authService = new AuthService();
-
-// Initialize from cache immediately (synchronous)
-authService.initializeFromCache();
-
-// Then check API in background (async)
-authService.checkBootstrapped().then((bootstrapped) => {
-  // Only check auth if bootstrapped
-  if (bootstrapped && !authService.state.initialAuthChecked) {
-    authService.checkInitialAuth();
-  }
-});
