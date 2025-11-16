@@ -1,21 +1,22 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState, useMemo, useEffect } from "react";
 import classname from "classnames";
-import { useAuth } from "../../auth/AuthContext.tsx";
+import { useAuth } from "@/auth/AuthContext.tsx";
 import { User } from "@shared/entities/user/index.ts";
 import { ApiError } from "@shared/entities/api/apiError.ts";
 import { useRouter } from "@tanstack/react-router";
-import Button from "../../components/ui/primitives/Button.tsx";
-import PasswordRequirements from "../../components/ui/PasswordRequirements.tsx";
-import { FormErrorBox } from "../../components/ui/form/FormErrorBox.tsx";
+import Button from "@/components/ui/primitives/Button.tsx";
+import PasswordRequirements from "@/components/ui/PasswordRequirements.tsx";
+import { FormErrorBox } from "@/components/ui/form/FormErrorBox.tsx";
+import { redirect } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/auth/bootstrap")({
+export const Route = createFileRoute("/_publicForms/auth/bootstrap")({
   component: RouteComponent,
   beforeLoad: ({ context }) => {
     const { isBootstrapped } = context.auth;
 
     if (isBootstrapped === true) {
-      return { redirectTo: "/" };
+      throw redirect({ to: "/" });
     }
   },
 });

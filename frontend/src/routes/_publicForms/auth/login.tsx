@@ -3,17 +3,18 @@ import {
   useSearch,
   useNavigate,
   Link,
+  redirect,
 } from "@tanstack/react-router";
 import { useState, useMemo, useEffect } from "react";
 import classname from "classnames";
-import { useAuth } from "../../auth/AuthContext.tsx";
+import { useAuth } from "@/auth/AuthContext.tsx";
 import { User } from "@shared/entities/user/index.ts";
 import { ApiError } from "@shared/entities/api/apiError.ts";
 import { useRouter } from "@tanstack/react-router";
-import Button from "../../components/ui/primitives/Button.tsx";
-import { FormErrorBox } from "../../components/ui/form/FormErrorBox.tsx";
+import Button from "@/components/ui/primitives/Button.tsx";
+import { FormErrorBox } from "@/components/ui/form/FormErrorBox.tsx";
 
-export const Route = createFileRoute("/auth/login")({
+export const Route = createFileRoute("/_publicForms/auth/login")({
   validateSearch: (search: Record<string, unknown> | undefined) => {
     return {
       redirectTo:
@@ -25,7 +26,7 @@ export const Route = createFileRoute("/auth/login")({
     const { isAuthenticated } = context.auth;
 
     if (isAuthenticated) {
-      return { redirectTo: "/" };
+      throw redirect({ to: "/dashboard" });
     }
   },
 });
