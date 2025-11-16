@@ -7,6 +7,7 @@ import { ApiError } from "@shared/entities/api/apiError.ts";
 import { useRouter } from "@tanstack/react-router";
 import Button from "../../components/ui/primitives/Button.tsx";
 import PasswordRequirements from "../../components/ui/PasswordRequirements.tsx";
+import { FormErrorBox } from "../../components/ui/form/FormErrorBox.tsx";
 
 export const Route = createFileRoute("/auth/bootstrap")({
   component: RouteComponent,
@@ -235,7 +236,7 @@ function RouteComponent() {
       </div>
 
       <form onSubmit={handleSubmit} className="mt-4">
-        {error && <ErrorBox message={error} />}
+        {error && <FormErrorBox message={error} />}
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
@@ -250,7 +251,7 @@ function RouteComponent() {
               className={inputClass(!!firstNameError)}
               disabled={loading}
             />
-            {firstNameError && <ErrorBox message={firstNameError} />}
+            {firstNameError && <FormErrorBox message={firstNameError} />}
           </div>
 
           <div>
@@ -265,7 +266,7 @@ function RouteComponent() {
               className={inputClass(!!lastNameError)}
               disabled={loading}
             />
-            {lastNameError && <ErrorBox message={lastNameError} />}
+            {lastNameError && <FormErrorBox message={lastNameError} />}
           </div>
         </div>
 
@@ -280,7 +281,7 @@ function RouteComponent() {
           className={inputClass(!!emailError)}
           disabled={loading}
         />
-        {emailError && <ErrorBox message={emailError} />}
+        {emailError && <FormErrorBox message={emailError} />}
 
         <input
           type="password"
@@ -293,7 +294,7 @@ function RouteComponent() {
           className={inputClass(!!passwordError)}
           disabled={loading}
         />
-        {passwordError && <ErrorBox message={passwordError} />}
+        {passwordError && <FormErrorBox message={passwordError} />}
         <PasswordRequirements password={password} />
 
         <input
@@ -307,7 +308,9 @@ function RouteComponent() {
           className={inputClass(!!confirmPasswordError)}
           disabled={loading}
         />
-        {confirmPasswordError && <ErrorBox message={confirmPasswordError} />}
+        {confirmPasswordError && (
+          <FormErrorBox message={confirmPasswordError} />
+        )}
 
         <Button
           type="submit"
@@ -323,14 +326,6 @@ function RouteComponent() {
           {buttonLabel}
         </Button>
       </form>
-    </div>
-  );
-}
-
-function ErrorBox({ message }: { message: string }) {
-  return (
-    <div className="w-full bg-red-100 border border-red-400 text-red-700 px-4 py-1 rounded-lg relative mt-2">
-      <span className="text-red-500">{message}</span>
     </div>
   );
 }
