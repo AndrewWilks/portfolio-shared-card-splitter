@@ -11,6 +11,7 @@ import { User } from "@shared/entities/user/index.ts";
 import { ApiError } from "@shared/entities/api/apiError.ts";
 import { useRouter } from "@tanstack/react-router";
 import Button from "../../components/ui/primitives/Button.tsx";
+import { FormErrorBox } from "../../components/ui/form/FormErrorBox.tsx";
 
 export const Route = createFileRoute("/auth/login")({
   validateSearch: (search: Record<string, unknown> | undefined) => {
@@ -151,7 +152,7 @@ function RouteComponent() {
     <div className="max-w-lg mx-auto p-4">
       <h1 className="text-center">Login Page</h1>
       <form onSubmit={handleSubmit} className="mt-4">
-        {error && <ErrorBox message={error} />}
+        {error && <FormErrorBox message={error} />}
         <input
           type="email"
           placeholder="Email"
@@ -163,7 +164,7 @@ function RouteComponent() {
           className={emailInputClass}
           disabled={loading}
         />
-        {emailError && <ErrorBox message={emailError} />}
+        {emailError && <FormErrorBox message={emailError} />}
         <input
           type="password"
           placeholder="Password"
@@ -175,7 +176,7 @@ function RouteComponent() {
           className={passwordInputClass}
           disabled={loading}
         />
-        {passwordError && <ErrorBox message={passwordError} />}
+        {passwordError && <FormErrorBox message={passwordError} />}
         <Button
           type="submit"
           className={buttonClass}
@@ -195,14 +196,6 @@ function RouteComponent() {
           Accept Invitation
         </Link>
       </form>
-    </div>
-  );
-}
-
-function ErrorBox({ message }: { message: string }) {
-  return (
-    <div className="w-full bg-red-100 border border-red-400 text-red-700 px-4 py-1 rounded-lg relative mt-2">
-      <span className="text-red-500">{message}</span>
     </div>
   );
 }
