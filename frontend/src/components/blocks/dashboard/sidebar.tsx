@@ -7,6 +7,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarMenuContent,
 } from "@/components/ui/sidebar/index.tsx";
 import { useLocation } from "@tanstack/react-router";
 import { Link, LinkProps } from "@tanstack/react-router";
@@ -40,10 +41,12 @@ export function DashboardSidebar() {
       <SidebarHeader className="border-b mb-2">
         <SidebarMenu>
           <SidebarMenuItem>
-            <Wallet />
-            <span className="text-lg font-semibold leading-none">
-              FairShare
-            </span>
+            <SidebarMenuContent>
+              <Wallet />
+              <span className="text-lg font-semibold leading-none">
+                FairShare
+              </span>
+            </SidebarMenuContent>
           </SidebarMenuItem>
         </SidebarMenu>
         <CardSwitcher cards={[]} />

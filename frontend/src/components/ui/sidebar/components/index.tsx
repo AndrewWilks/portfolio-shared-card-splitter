@@ -19,3 +19,4 @@ export * from "./sidebarMenuSubButton.tsx";
 export * from "./sidebarMenuSubItem.tsx";
 export * from "./sidebarRail.tsx";
 export * from "./sidebarSeparator.tsx";
+export * from "./sidebarMenuContent.tsx";
