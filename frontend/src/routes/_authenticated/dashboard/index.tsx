@@ -1,7 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
-import { useAuth } from "../../../auth/AuthContext.tsx";
-import Button from "../../../components/ui/primitives/Button.tsx";
+import { useAuth } from "@/auth/AuthContext.tsx";
+import { Button } from "@/components/ui/primitives/button.tsx";
+import { CirclePlus } from "lucide-react";
 
 export const Route = createFileRoute("/_authenticated/dashboard/")({
   component: Dashboard,
@@ -27,11 +28,9 @@ function Dashboard() {
       <Button
         type="button"
         onClick={() => setCount(count + 1)}
-        outlined
-        variant="ghost"
-        startIcon={{ name: "CirclePlus", size: 16 }}
+        variant="outline"
       >
-        Increment
+        <CirclePlus size={16} /> Increment
       </Button>
     </div>
   );

@@ -2,7 +2,8 @@ import { useCallback, useMemo, useState } from "react";
 import { useAuth } from "../AuthContext.tsx";
 import { ApiError } from "@shared/entities/api/apiError.ts";
 import { useRouter } from "@tanstack/react-router";
-import Button from "../../components/ui/primitives/Button.tsx";
+import { Button } from "@/components/ui/primitives/button.tsx";
+import { Ban, LogOut } from "lucide-react";
 
 export default function LogoutBtn() {
   const { logout } = useAuth();
@@ -33,11 +34,10 @@ export default function LogoutBtn() {
       type="button"
       title={title}
       disabled={hasError}
-      variant={hasError ? "danger" : "ghost"}
-      size="sm"
-      startIcon={
-        hasError ? { name: "Ban", size: 12 } : { name: "LogOut", size: 12 }
-      }
-    />
+      variant={hasError ? "destructive" : "ghost"}
+      size="icon"
+    >
+      {hasError ? <Ban /> : <LogOut />}
+    </Button>
   );
 }

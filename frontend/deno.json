@@ -1,11 +1,17 @@
 {
   "compilerOptions": {
-    "types": ["react", "react-dom", "@types/react"],
+    "types": ["npm:react", "npm:react-dom", "npm:@types/react"],
     "lib": ["dom", "dom.iterable", "deno.ns"],
     "jsx": "react-jsx",
-    "jsxImportSource": "react"
+    "jsxImportSource": "react",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./*"]
+    }
   },
   "imports": {
+    "@/": "./src/",
+
     "@shared/": "../shared/",
     "@backend/": "../backend/",
     "@frontend/": "../frontend/",
@@ -13,19 +19,28 @@
     "@tailwindcss/vite": "npm:@tailwindcss/vite@^4.1.17",
     "@tanstack/react-router": "npm:@tanstack/react-router@^1.135.2",
     "@tanstack/react-router-devtools": "npm:@tanstack/react-router-devtools@^1.135.2",
-    "@tanstack/router-plugin": "npm:@tanstack/router-plugin@^1.135.2",
-    "classnames": "npm:classnames@^2.5.1",
+    "@tanstack/router-plugin": "npm:@tanstack/router-plugin@^1.136.8",
     "lucide-react": "npm:lucide-react@^0.553.0",
     "react": "npm:react@^19.2.0",
-    "@types/react": "npm:@types/react@^19.2.2",
     "react-dom": "npm:react-dom@^19.2.0",
     "react-responsive": "npm:react-responsive@^10.0.1",
-    "tailwindcss": "npm:tailwindcss@^4.1.17",
-    "vite": "npm:vite@^7.2.2",
-    "@vitejs/plugin-react": "npm:@vitejs/plugin-react@^5.1.0"
+    "tailwindcss": "npm:tailwindcss",
+    "vite": "npm:vite",
+    "@vitejs/plugin-react": "npm:@vitejs/plugin-react",
+    "class-variance-authority": "npm:class-variance-authority",
+    "clsx": "npm:clsx",
+    "tailwind-merge": "npm:tailwind-merge",
+    "tw-animate-css": "npm:tw-animate-css",
+
+    "@radix-ui/react-avatar": "npm:@radix-ui/react-avatar",
+    "@radix-ui/react-dialog": "npm:@radix-ui/react-dialog",
+    "@radix-ui/react-dropdown-menu": "npm:@radix-ui/react-dropdown-menu",
+    "@radix-ui/react-separator": "npm:@radix-ui/react-separator",
+    "@radix-ui/react-slot": "npm:@radix-ui/react-slot",
+    "@radix-ui/react-tooltip": "npm:@radix-ui/react-tooltip"
   },
   "tasks": {
-    "dev": "deno run -A npm:vite --config ./.config/vite.config.ts",
+    "dev": "deno run -A --watch npm:vite --config ./.config/vite.config.ts",
     "build": "deno run -A npm:vite build --config ./.config/vite.config.ts",
     "preview": "deno run -A npm:vite preview --config ./.config/vite.config.ts"
   }
