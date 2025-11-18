@@ -1,38 +1,30 @@
 import { createFileRoute, Outlet } from "@tanstack/react-router";
-import { useBreakpoints } from "@/context/breakpoints.tsx";
-import { useMemo } from "react";
-import classNames from "classnames";
-import { Sidebar } from "@/components/blocks/dashboard/sidebar/index.tsx";
+import { DashboardSidebar } from "@/components/blocks/dashboard/sidebar.tsx";
+import {
+  SidebarProvider,
+  SidebarTrigger,
+} from "@/components/ui/sidebar/index.tsx";
+import { ModeToggle } from "@/components/ui/theme/mode-toggle.tsx";
 
 export const Route = createFileRoute("/_authenticated/dashboard")({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  const { isXs, isSm, isMd } = useBreakpoints();
-
-  const isMobile = useMemo(() => isXs || isSm || isMd, [isXs, isSm, isMd]);
-  const isDesktop = useMemo(() => !isMobile, [isMobile]);
-
-  const containerClasses = useMemo(() => {
-    return classNames("flex h-full", {
-      "flex-col bg-red-900": isMobile,
-      "flex-row bg-green-900": isDesktop,
-    });
-  }, [isMobile, isDesktop]);
-
+  const defaultOpen = document.cookie.includes("sidebar_state=true") || false;
   return (
-    <div className={containerClasses}>
-      {/* App Sidebar */}
-      {isDesktop && <Sidebar />}
-      <main className="flex-1 p-4 overflow-auto">
-        <Outlet />
-      </main>
-      {isMobile && <Dock />}
-    </div>
+    <SidebarProvider defaultOpen={defaultOpen}>
+      {/* Dashboard Sidebar */}
+      <DashboardSidebar />
+      <div className="relative w-full">
+        <header className="sticky top-0 z-20 border-b pt-4 pb-3 pl-2 pr-4 bg-background">
+          <SidebarTrigger />
+          <ModeToggle className="ml-2" />
+        </header>
+        <main className="px-4 pt-2 pb-6 h-[200vh]">
+          <Outlet />
+        </main>
+      </div>
+    </SidebarProvider>
   );
-}
-
-function Dock() {
-  return <footer>Dock</footer>;
 }

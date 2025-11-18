@@ -6,13 +6,14 @@ import {
   redirect,
 } from "@tanstack/react-router";
 import { useState, useMemo, useEffect } from "react";
-import classname from "classnames";
+import { Loader, LogIn } from "lucide-react";
 import { useAuth } from "@/auth/AuthContext.tsx";
 import { User } from "@shared/entities/user/index.ts";
 import { ApiError } from "@shared/entities/api/apiError.ts";
 import { useRouter } from "@tanstack/react-router";
-import Button from "@/components/ui/primitives/Button.tsx";
-import { FormErrorBox } from "@/components/ui/form/FormErrorBox.tsx";
+import { Button } from "@/components/ui/primitives/button.tsx";
+import { FormErrorBox } from "@/components/ui/form/formErrorBox.tsx";
+import { cn } from "@/lib/utils.ts";
 
 export const Route = createFileRoute("/_publicForms/auth/login")({
   validateSearch: (search: Record<string, unknown> | undefined) => {
@@ -80,7 +81,7 @@ function RouteComponent() {
 
   const emailInputClass = useMemo(
     () =>
-      classname(
+      cn(
         "p-2 border rounded w-full mt-4",
         emailError ? "border-red-500" : "border-gray-300",
         loading && "bg-gray-100 cursor-not-allowed cursor-progress"
@@ -90,7 +91,7 @@ function RouteComponent() {
 
   const passwordInputClass = useMemo(
     () =>
-      classname(
+      cn(
         "p-2 border rounded w-full mt-4",
         passwordError ? "border-red-500" : "border-gray-300",
         loading && "bg-gray-100 cursor-not-allowed cursor-progress"
@@ -106,7 +107,7 @@ function RouteComponent() {
 
     const isError = !!emailError || !!passwordError || !!error;
 
-    return classname(
+    return cn(
       baseClass,
       loading ? loadingClass : isError ? errorClass : normalClass
     );
@@ -183,10 +184,9 @@ function RouteComponent() {
           className={buttonClass}
           disabled={loading || !!error}
           formNoValidate
-          startIcon={
-            loading ? { name: "Loader", size: 16 } : { name: "LogIn", size: 16 }
-          }
         >
+          {loading ? <Loader size={16} /> : <LogIn size={16} />}
+          &nbsp;
           {buttonLabel}
         </Button>
 

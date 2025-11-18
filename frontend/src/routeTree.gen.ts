@@ -8,736 +8,325 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { Route as rootRouteImport } from "./routes/__root.tsx";
-import { Route as PublicFormsRouteImport } from "./routes/_publicForms.tsx";
-import { Route as PublicRouteImport } from "./routes/_public.tsx";
-import { Route as AuthenticatedRouteImport } from "./routes/_authenticated.tsx";
-import { Route as PublicIndexRouteImport } from "./routes/_public/index.tsx";
-import { Route as AuthenticatedDashboardRouteRouteImport } from "./routes/_authenticated/dashboard/route.tsx";
-import { Route as AuthenticatedDashboardIndexRouteImport } from "./routes/_authenticated/dashboard/index.tsx";
-import { Route as PublicFormsAuthResetPasswordRouteImport } from "./routes/_publicForms/auth/reset-password.tsx";
-import { Route as PublicFormsAuthLoginRouteImport } from "./routes/_publicForms/auth/login.tsx";
-import { Route as PublicFormsAuthBootstrapRouteImport } from "./routes/_publicForms/auth/bootstrap.tsx";
-import { Route as PublicFormsAuthAcceptInviteRouteImport } from "./routes/_publicForms/auth/accept-invite.tsx";
-import { Route as AuthenticatedDashboardTransactionsIndexRouteImport } from "./routes/_authenticated/dashboard/transactions/index.tsx";
-import { Route as AuthenticatedDashboardProfileIndexRouteImport } from "./routes/_authenticated/dashboard/profile/index.tsx";
-import { Route as AuthenticatedDashboardPotsIndexRouteImport } from "./routes/_authenticated/dashboard/pots/index.tsx";
-import { Route as AuthenticatedDashboardMembersIndexRouteImport } from "./routes/_authenticated/dashboard/members/index.tsx";
-import { Route as AuthenticatedDashboardCardAccountsIndexRouteImport } from "./routes/_authenticated/dashboard/card-accounts/index.tsx";
-import { Route as AuthenticatedDashboardTransactionsNewRouteImport } from "./routes/_authenticated/dashboard/transactions/new.tsx";
-import { Route as AuthenticatedDashboardPotsNewRouteImport } from "./routes/_authenticated/dashboard/pots/new.tsx";
-import { Route as AuthenticatedDashboardMembersIdRouteImport } from "./routes/_authenticated/dashboard/members/$id.tsx";
-import { Route as AuthenticatedDashboardDetailsLedgerRouteImport } from "./routes/_authenticated/dashboard/details/ledger.tsx";
-import { Route as AuthenticatedDashboardDetailsActivityRouteImport } from "./routes/_authenticated/dashboard/details/activity.tsx";
-import { Route as AuthenticatedDashboardCardAccountsNewRouteImport } from "./routes/_authenticated/dashboard/card-accounts/new.tsx";
-import { Route as AuthenticatedFormsAuthInviteRouteImport } from "./routes/_authenticated/_forms/auth/invite.tsx";
-import { Route as AuthenticatedDashboardTransactionsIdIndexRouteImport } from "./routes/_authenticated/dashboard/transactions/$id.index.tsx";
-import { Route as AuthenticatedDashboardPotsIdIndexRouteImport } from "./routes/_authenticated/dashboard/pots/$id.index.tsx";
-import { Route as AuthenticatedDashboardCardAccountsIdIndexRouteImport } from "./routes/_authenticated/dashboard/card-accounts/$id.index.tsx";
-import { Route as AuthenticatedDashboardTransactionsIdPayRouteImport } from "./routes/_authenticated/dashboard/transactions/$id.pay.tsx";
-import { Route as AuthenticatedDashboardTransactionsIdEditRouteImport } from "./routes/_authenticated/dashboard/transactions/$id.edit.tsx";
-import { Route as AuthenticatedDashboardTransactionsIdAllocateRouteImport } from "./routes/_authenticated/dashboard/transactions/$id.allocate.tsx";
-import { Route as AuthenticatedDashboardPotsIdReserveRouteImport } from "./routes/_authenticated/dashboard/pots/$id.reserve.tsx";
-import { Route as AuthenticatedDashboardPotsIdEditRouteImport } from "./routes/_authenticated/dashboard/pots/$id.edit.tsx";
-import { Route as AuthenticatedDashboardCardAccountsIdEditRouteImport } from "./routes/_authenticated/dashboard/card-accounts/$id.edit.tsx";
+import { Route as rootRouteImport } from './routes/__root.tsx'
+import { Route as PublicFormsRouteImport } from './routes/_publicForms.tsx'
+import { Route as PublicRouteImport } from './routes/_public.tsx'
+import { Route as AuthenticatedRouteImport } from './routes/_authenticated.tsx'
+import { Route as PublicIndexRouteImport } from './routes/_public/index.tsx'
+import { Route as AuthenticatedDashboardRouteRouteImport } from './routes/_authenticated/dashboard/route.tsx'
+import { Route as AuthenticatedDashboardIndexRouteImport } from './routes/_authenticated/dashboard/index.tsx'
+import { Route as PublicFormsAuthResetPasswordRouteImport } from './routes/_publicForms/auth/reset-password.tsx'
+import { Route as PublicFormsAuthLoginRouteImport } from './routes/_publicForms/auth/login.tsx'
+import { Route as PublicFormsAuthBootstrapRouteImport } from './routes/_publicForms/auth/bootstrap.tsx'
+import { Route as PublicFormsAuthAcceptInviteRouteImport } from './routes/_publicForms/auth/accept-invite.tsx'
+import { Route as AuthenticatedDashboardProfileIndexRouteImport } from './routes/_authenticated/dashboard/profile/index.tsx'
+import { Route as AuthenticatedDashboardCardIdIndexRouteImport } from './routes/_authenticated/dashboard/$cardId/index.tsx'
+import { Route as AuthenticatedFormsAuthInviteRouteImport } from './routes/_authenticated/_forms/auth/invite.tsx'
 
 const PublicFormsRoute = PublicFormsRouteImport.update({
-  id: "/_publicForms",
+  id: '/_publicForms',
   getParentRoute: () => rootRouteImport,
-} as any);
+} as any)
 const PublicRoute = PublicRouteImport.update({
-  id: "/_public",
+  id: '/_public',
   getParentRoute: () => rootRouteImport,
-} as any);
+} as any)
 const AuthenticatedRoute = AuthenticatedRouteImport.update({
-  id: "/_authenticated",
+  id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
-} as any);
+} as any)
 const PublicIndexRoute = PublicIndexRouteImport.update({
-  id: "/",
-  path: "/",
+  id: '/',
+  path: '/',
   getParentRoute: () => PublicRoute,
-} as any);
+} as any)
 const AuthenticatedDashboardRouteRoute =
   AuthenticatedDashboardRouteRouteImport.update({
-    id: "/dashboard",
-    path: "/dashboard",
+    id: '/dashboard',
+    path: '/dashboard',
     getParentRoute: () => AuthenticatedRoute,
-  } as any);
+  } as any)
 const AuthenticatedDashboardIndexRoute =
   AuthenticatedDashboardIndexRouteImport.update({
-    id: "/",
-    path: "/",
+    id: '/',
+    path: '/',
     getParentRoute: () => AuthenticatedDashboardRouteRoute,
-  } as any);
+  } as any)
 const PublicFormsAuthResetPasswordRoute =
   PublicFormsAuthResetPasswordRouteImport.update({
-    id: "/auth/reset-password",
-    path: "/auth/reset-password",
+    id: '/auth/reset-password',
+    path: '/auth/reset-password',
     getParentRoute: () => PublicFormsRoute,
-  } as any);
+  } as any)
 const PublicFormsAuthLoginRoute = PublicFormsAuthLoginRouteImport.update({
-  id: "/auth/login",
-  path: "/auth/login",
+  id: '/auth/login',
+  path: '/auth/login',
   getParentRoute: () => PublicFormsRoute,
-} as any);
+} as any)
 const PublicFormsAuthBootstrapRoute =
   PublicFormsAuthBootstrapRouteImport.update({
-    id: "/auth/bootstrap",
-    path: "/auth/bootstrap",
+    id: '/auth/bootstrap',
+    path: '/auth/bootstrap',
     getParentRoute: () => PublicFormsRoute,
-  } as any);
+  } as any)
 const PublicFormsAuthAcceptInviteRoute =
   PublicFormsAuthAcceptInviteRouteImport.update({
-    id: "/auth/accept-invite",
-    path: "/auth/accept-invite",
+    id: '/auth/accept-invite',
+    path: '/auth/accept-invite',
     getParentRoute: () => PublicFormsRoute,
-  } as any);
-const AuthenticatedDashboardTransactionsIndexRoute =
-  AuthenticatedDashboardTransactionsIndexRouteImport.update({
-    id: "/transactions/",
-    path: "/transactions/",
-    getParentRoute: () => AuthenticatedDashboardRouteRoute,
-  } as any);
+  } as any)
 const AuthenticatedDashboardProfileIndexRoute =
   AuthenticatedDashboardProfileIndexRouteImport.update({
-    id: "/profile/",
-    path: "/profile/",
+    id: '/profile/',
+    path: '/profile/',
     getParentRoute: () => AuthenticatedDashboardRouteRoute,
-  } as any);
-const AuthenticatedDashboardPotsIndexRoute =
-  AuthenticatedDashboardPotsIndexRouteImport.update({
-    id: "/pots/",
-    path: "/pots/",
+  } as any)
+const AuthenticatedDashboardCardIdIndexRoute =
+  AuthenticatedDashboardCardIdIndexRouteImport.update({
+    id: '/$cardId/',
+    path: '/$cardId/',
     getParentRoute: () => AuthenticatedDashboardRouteRoute,
-  } as any);
-const AuthenticatedDashboardMembersIndexRoute =
-  AuthenticatedDashboardMembersIndexRouteImport.update({
-    id: "/members/",
-    path: "/members/",
-    getParentRoute: () => AuthenticatedDashboardRouteRoute,
-  } as any);
-const AuthenticatedDashboardCardAccountsIndexRoute =
-  AuthenticatedDashboardCardAccountsIndexRouteImport.update({
-    id: "/card-accounts/",
-    path: "/card-accounts/",
-    getParentRoute: () => AuthenticatedDashboardRouteRoute,
-  } as any);
-const AuthenticatedDashboardTransactionsNewRoute =
-  AuthenticatedDashboardTransactionsNewRouteImport.update({
-    id: "/transactions/new",
-    path: "/transactions/new",
-    getParentRoute: () => AuthenticatedDashboardRouteRoute,
-  } as any);
-const AuthenticatedDashboardPotsNewRoute =
-  AuthenticatedDashboardPotsNewRouteImport.update({
-    id: "/pots/new",
-    path: "/pots/new",
-    getParentRoute: () => AuthenticatedDashboardRouteRoute,
-  } as any);
-const AuthenticatedDashboardMembersIdRoute =
-  AuthenticatedDashboardMembersIdRouteImport.update({
-    id: "/members/$id",
-    path: "/members/$id",
-    getParentRoute: () => AuthenticatedDashboardRouteRoute,
-  } as any);
-const AuthenticatedDashboardDetailsLedgerRoute =
-  AuthenticatedDashboardDetailsLedgerRouteImport.update({
-    id: "/details/ledger",
-    path: "/details/ledger",
-    getParentRoute: () => AuthenticatedDashboardRouteRoute,
-  } as any);
-const AuthenticatedDashboardDetailsActivityRoute =
-  AuthenticatedDashboardDetailsActivityRouteImport.update({
-    id: "/details/activity",
-    path: "/details/activity",
-    getParentRoute: () => AuthenticatedDashboardRouteRoute,
-  } as any);
-const AuthenticatedDashboardCardAccountsNewRoute =
-  AuthenticatedDashboardCardAccountsNewRouteImport.update({
-    id: "/card-accounts/new",
-    path: "/card-accounts/new",
-    getParentRoute: () => AuthenticatedDashboardRouteRoute,
-  } as any);
+  } as any)
 const AuthenticatedFormsAuthInviteRoute =
   AuthenticatedFormsAuthInviteRouteImport.update({
-    id: "/_forms/auth/invite",
-    path: "/auth/invite",
+    id: '/_forms/auth/invite',
+    path: '/auth/invite',
     getParentRoute: () => AuthenticatedRoute,
-  } as any);
-const AuthenticatedDashboardTransactionsIdIndexRoute =
-  AuthenticatedDashboardTransactionsIdIndexRouteImport.update({
-    id: "/transactions/$id/",
-    path: "/transactions/$id/",
-    getParentRoute: () => AuthenticatedDashboardRouteRoute,
-  } as any);
-const AuthenticatedDashboardPotsIdIndexRoute =
-  AuthenticatedDashboardPotsIdIndexRouteImport.update({
-    id: "/pots/$id/",
-    path: "/pots/$id/",
-    getParentRoute: () => AuthenticatedDashboardRouteRoute,
-  } as any);
-const AuthenticatedDashboardCardAccountsIdIndexRoute =
-  AuthenticatedDashboardCardAccountsIdIndexRouteImport.update({
-    id: "/card-accounts/$id/",
-    path: "/card-accounts/$id/",
-    getParentRoute: () => AuthenticatedDashboardRouteRoute,
-  } as any);
-const AuthenticatedDashboardTransactionsIdPayRoute =
-  AuthenticatedDashboardTransactionsIdPayRouteImport.update({
-    id: "/transactions/$id/pay",
-    path: "/transactions/$id/pay",
-    getParentRoute: () => AuthenticatedDashboardRouteRoute,
-  } as any);
-const AuthenticatedDashboardTransactionsIdEditRoute =
-  AuthenticatedDashboardTransactionsIdEditRouteImport.update({
-    id: "/transactions/$id/edit",
-    path: "/transactions/$id/edit",
-    getParentRoute: () => AuthenticatedDashboardRouteRoute,
-  } as any);
-const AuthenticatedDashboardTransactionsIdAllocateRoute =
-  AuthenticatedDashboardTransactionsIdAllocateRouteImport.update({
-    id: "/transactions/$id/allocate",
-    path: "/transactions/$id/allocate",
-    getParentRoute: () => AuthenticatedDashboardRouteRoute,
-  } as any);
-const AuthenticatedDashboardPotsIdReserveRoute =
-  AuthenticatedDashboardPotsIdReserveRouteImport.update({
-    id: "/pots/$id/reserve",
-    path: "/pots/$id/reserve",
-    getParentRoute: () => AuthenticatedDashboardRouteRoute,
-  } as any);
-const AuthenticatedDashboardPotsIdEditRoute =
-  AuthenticatedDashboardPotsIdEditRouteImport.update({
-    id: "/pots/$id/edit",
-    path: "/pots/$id/edit",
-    getParentRoute: () => AuthenticatedDashboardRouteRoute,
-  } as any);
-const AuthenticatedDashboardCardAccountsIdEditRoute =
-  AuthenticatedDashboardCardAccountsIdEditRouteImport.update({
-    id: "/card-accounts/$id/edit",
-    path: "/card-accounts/$id/edit",
-    getParentRoute: () => AuthenticatedDashboardRouteRoute,
-  } as any);
+  } as any)
 
 export interface FileRoutesByFullPath {
-  "/dashboard": typeof AuthenticatedDashboardRouteRouteWithChildren;
-  "/": typeof PublicIndexRoute;
-  "/auth/accept-invite": typeof PublicFormsAuthAcceptInviteRoute;
-  "/auth/bootstrap": typeof PublicFormsAuthBootstrapRoute;
-  "/auth/login": typeof PublicFormsAuthLoginRoute;
-  "/auth/reset-password": typeof PublicFormsAuthResetPasswordRoute;
-  "/dashboard/": typeof AuthenticatedDashboardIndexRoute;
-  "/auth/invite": typeof AuthenticatedFormsAuthInviteRoute;
-  "/dashboard/card-accounts/new": typeof AuthenticatedDashboardCardAccountsNewRoute;
-  "/dashboard/details/activity": typeof AuthenticatedDashboardDetailsActivityRoute;
-  "/dashboard/details/ledger": typeof AuthenticatedDashboardDetailsLedgerRoute;
-  "/dashboard/members/$id": typeof AuthenticatedDashboardMembersIdRoute;
-  "/dashboard/pots/new": typeof AuthenticatedDashboardPotsNewRoute;
-  "/dashboard/transactions/new": typeof AuthenticatedDashboardTransactionsNewRoute;
-  "/dashboard/card-accounts": typeof AuthenticatedDashboardCardAccountsIndexRoute;
-  "/dashboard/members": typeof AuthenticatedDashboardMembersIndexRoute;
-  "/dashboard/pots": typeof AuthenticatedDashboardPotsIndexRoute;
-  "/dashboard/profile": typeof AuthenticatedDashboardProfileIndexRoute;
-  "/dashboard/transactions": typeof AuthenticatedDashboardTransactionsIndexRoute;
-  "/dashboard/card-accounts/$id/edit": typeof AuthenticatedDashboardCardAccountsIdEditRoute;
-  "/dashboard/pots/$id/edit": typeof AuthenticatedDashboardPotsIdEditRoute;
-  "/dashboard/pots/$id/reserve": typeof AuthenticatedDashboardPotsIdReserveRoute;
-  "/dashboard/transactions/$id/allocate": typeof AuthenticatedDashboardTransactionsIdAllocateRoute;
-  "/dashboard/transactions/$id/edit": typeof AuthenticatedDashboardTransactionsIdEditRoute;
-  "/dashboard/transactions/$id/pay": typeof AuthenticatedDashboardTransactionsIdPayRoute;
-  "/dashboard/card-accounts/$id": typeof AuthenticatedDashboardCardAccountsIdIndexRoute;
-  "/dashboard/pots/$id": typeof AuthenticatedDashboardPotsIdIndexRoute;
-  "/dashboard/transactions/$id": typeof AuthenticatedDashboardTransactionsIdIndexRoute;
+  '/dashboard': typeof AuthenticatedDashboardRouteRouteWithChildren
+  '/': typeof PublicIndexRoute
+  '/auth/accept-invite': typeof PublicFormsAuthAcceptInviteRoute
+  '/auth/bootstrap': typeof PublicFormsAuthBootstrapRoute
+  '/auth/login': typeof PublicFormsAuthLoginRoute
+  '/auth/reset-password': typeof PublicFormsAuthResetPasswordRoute
+  '/dashboard/': typeof AuthenticatedDashboardIndexRoute
+  '/auth/invite': typeof AuthenticatedFormsAuthInviteRoute
+  '/dashboard/$cardId': typeof AuthenticatedDashboardCardIdIndexRoute
+  '/dashboard/profile': typeof AuthenticatedDashboardProfileIndexRoute
 }
 export interface FileRoutesByTo {
-  "/": typeof PublicIndexRoute;
-  "/auth/accept-invite": typeof PublicFormsAuthAcceptInviteRoute;
-  "/auth/bootstrap": typeof PublicFormsAuthBootstrapRoute;
-  "/auth/login": typeof PublicFormsAuthLoginRoute;
-  "/auth/reset-password": typeof PublicFormsAuthResetPasswordRoute;
-  "/dashboard": typeof AuthenticatedDashboardIndexRoute;
-  "/auth/invite": typeof AuthenticatedFormsAuthInviteRoute;
-  "/dashboard/card-accounts/new": typeof AuthenticatedDashboardCardAccountsNewRoute;
-  "/dashboard/details/activity": typeof AuthenticatedDashboardDetailsActivityRoute;
-  "/dashboard/details/ledger": typeof AuthenticatedDashboardDetailsLedgerRoute;
-  "/dashboard/members/$id": typeof AuthenticatedDashboardMembersIdRoute;
-  "/dashboard/pots/new": typeof AuthenticatedDashboardPotsNewRoute;
-  "/dashboard/transactions/new": typeof AuthenticatedDashboardTransactionsNewRoute;
-  "/dashboard/card-accounts": typeof AuthenticatedDashboardCardAccountsIndexRoute;
-  "/dashboard/members": typeof AuthenticatedDashboardMembersIndexRoute;
-  "/dashboard/pots": typeof AuthenticatedDashboardPotsIndexRoute;
-  "/dashboard/profile": typeof AuthenticatedDashboardProfileIndexRoute;
-  "/dashboard/transactions": typeof AuthenticatedDashboardTransactionsIndexRoute;
-  "/dashboard/card-accounts/$id/edit": typeof AuthenticatedDashboardCardAccountsIdEditRoute;
-  "/dashboard/pots/$id/edit": typeof AuthenticatedDashboardPotsIdEditRoute;
-  "/dashboard/pots/$id/reserve": typeof AuthenticatedDashboardPotsIdReserveRoute;
-  "/dashboard/transactions/$id/allocate": typeof AuthenticatedDashboardTransactionsIdAllocateRoute;
-  "/dashboard/transactions/$id/edit": typeof AuthenticatedDashboardTransactionsIdEditRoute;
-  "/dashboard/transactions/$id/pay": typeof AuthenticatedDashboardTransactionsIdPayRoute;
-  "/dashboard/card-accounts/$id": typeof AuthenticatedDashboardCardAccountsIdIndexRoute;
-  "/dashboard/pots/$id": typeof AuthenticatedDashboardPotsIdIndexRoute;
-  "/dashboard/transactions/$id": typeof AuthenticatedDashboardTransactionsIdIndexRoute;
+  '/': typeof PublicIndexRoute
+  '/auth/accept-invite': typeof PublicFormsAuthAcceptInviteRoute
+  '/auth/bootstrap': typeof PublicFormsAuthBootstrapRoute
+  '/auth/login': typeof PublicFormsAuthLoginRoute
+  '/auth/reset-password': typeof PublicFormsAuthResetPasswordRoute
+  '/dashboard': typeof AuthenticatedDashboardIndexRoute
+  '/auth/invite': typeof AuthenticatedFormsAuthInviteRoute
+  '/dashboard/$cardId': typeof AuthenticatedDashboardCardIdIndexRoute
+  '/dashboard/profile': typeof AuthenticatedDashboardProfileIndexRoute
 }
 export interface FileRoutesById {
-  __root__: typeof rootRouteImport;
-  "/_authenticated": typeof AuthenticatedRouteWithChildren;
-  "/_public": typeof PublicRouteWithChildren;
-  "/_publicForms": typeof PublicFormsRouteWithChildren;
-  "/_authenticated/dashboard": typeof AuthenticatedDashboardRouteRouteWithChildren;
-  "/_public/": typeof PublicIndexRoute;
-  "/_publicForms/auth/accept-invite": typeof PublicFormsAuthAcceptInviteRoute;
-  "/_publicForms/auth/bootstrap": typeof PublicFormsAuthBootstrapRoute;
-  "/_publicForms/auth/login": typeof PublicFormsAuthLoginRoute;
-  "/_publicForms/auth/reset-password": typeof PublicFormsAuthResetPasswordRoute;
-  "/_authenticated/dashboard/": typeof AuthenticatedDashboardIndexRoute;
-  "/_authenticated/_forms/auth/invite": typeof AuthenticatedFormsAuthInviteRoute;
-  "/_authenticated/dashboard/card-accounts/new": typeof AuthenticatedDashboardCardAccountsNewRoute;
-  "/_authenticated/dashboard/details/activity": typeof AuthenticatedDashboardDetailsActivityRoute;
-  "/_authenticated/dashboard/details/ledger": typeof AuthenticatedDashboardDetailsLedgerRoute;
-  "/_authenticated/dashboard/members/$id": typeof AuthenticatedDashboardMembersIdRoute;
-  "/_authenticated/dashboard/pots/new": typeof AuthenticatedDashboardPotsNewRoute;
-  "/_authenticated/dashboard/transactions/new": typeof AuthenticatedDashboardTransactionsNewRoute;
-  "/_authenticated/dashboard/card-accounts/": typeof AuthenticatedDashboardCardAccountsIndexRoute;
-  "/_authenticated/dashboard/members/": typeof AuthenticatedDashboardMembersIndexRoute;
-  "/_authenticated/dashboard/pots/": typeof AuthenticatedDashboardPotsIndexRoute;
-  "/_authenticated/dashboard/profile/": typeof AuthenticatedDashboardProfileIndexRoute;
-  "/_authenticated/dashboard/transactions/": typeof AuthenticatedDashboardTransactionsIndexRoute;
-  "/_authenticated/dashboard/card-accounts/$id/edit": typeof AuthenticatedDashboardCardAccountsIdEditRoute;
-  "/_authenticated/dashboard/pots/$id/edit": typeof AuthenticatedDashboardPotsIdEditRoute;
-  "/_authenticated/dashboard/pots/$id/reserve": typeof AuthenticatedDashboardPotsIdReserveRoute;
-  "/_authenticated/dashboard/transactions/$id/allocate": typeof AuthenticatedDashboardTransactionsIdAllocateRoute;
-  "/_authenticated/dashboard/transactions/$id/edit": typeof AuthenticatedDashboardTransactionsIdEditRoute;
-  "/_authenticated/dashboard/transactions/$id/pay": typeof AuthenticatedDashboardTransactionsIdPayRoute;
-  "/_authenticated/dashboard/card-accounts/$id/": typeof AuthenticatedDashboardCardAccountsIdIndexRoute;
-  "/_authenticated/dashboard/pots/$id/": typeof AuthenticatedDashboardPotsIdIndexRoute;
-  "/_authenticated/dashboard/transactions/$id/": typeof AuthenticatedDashboardTransactionsIdIndexRoute;
+  __root__: typeof rootRouteImport
+  '/_authenticated': typeof AuthenticatedRouteWithChildren
+  '/_public': typeof PublicRouteWithChildren
+  '/_publicForms': typeof PublicFormsRouteWithChildren
+  '/_authenticated/dashboard': typeof AuthenticatedDashboardRouteRouteWithChildren
+  '/_public/': typeof PublicIndexRoute
+  '/_publicForms/auth/accept-invite': typeof PublicFormsAuthAcceptInviteRoute
+  '/_publicForms/auth/bootstrap': typeof PublicFormsAuthBootstrapRoute
+  '/_publicForms/auth/login': typeof PublicFormsAuthLoginRoute
+  '/_publicForms/auth/reset-password': typeof PublicFormsAuthResetPasswordRoute
+  '/_authenticated/dashboard/': typeof AuthenticatedDashboardIndexRoute
+  '/_authenticated/_forms/auth/invite': typeof AuthenticatedFormsAuthInviteRoute
+  '/_authenticated/dashboard/$cardId/': typeof AuthenticatedDashboardCardIdIndexRoute
+  '/_authenticated/dashboard/profile/': typeof AuthenticatedDashboardProfileIndexRoute
 }
 export interface FileRouteTypes {
-  fileRoutesByFullPath: FileRoutesByFullPath;
+  fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    | "/dashboard"
-    | "/"
-    | "/auth/accept-invite"
-    | "/auth/bootstrap"
-    | "/auth/login"
-    | "/auth/reset-password"
-    | "/dashboard/"
-    | "/auth/invite"
-    | "/dashboard/card-accounts/new"
-    | "/dashboard/details/activity"
-    | "/dashboard/details/ledger"
-    | "/dashboard/members/$id"
-    | "/dashboard/pots/new"
-    | "/dashboard/transactions/new"
-    | "/dashboard/card-accounts"
-    | "/dashboard/members"
-    | "/dashboard/pots"
-    | "/dashboard/profile"
-    | "/dashboard/transactions"
-    | "/dashboard/card-accounts/$id/edit"
-    | "/dashboard/pots/$id/edit"
-    | "/dashboard/pots/$id/reserve"
-    | "/dashboard/transactions/$id/allocate"
-    | "/dashboard/transactions/$id/edit"
-    | "/dashboard/transactions/$id/pay"
-    | "/dashboard/card-accounts/$id"
-    | "/dashboard/pots/$id"
-    | "/dashboard/transactions/$id";
-  fileRoutesByTo: FileRoutesByTo;
+    | '/dashboard'
+    | '/'
+    | '/auth/accept-invite'
+    | '/auth/bootstrap'
+    | '/auth/login'
+    | '/auth/reset-password'
+    | '/dashboard/'
+    | '/auth/invite'
+    | '/dashboard/$cardId'
+    | '/dashboard/profile'
+  fileRoutesByTo: FileRoutesByTo
   to:
-    | "/"
-    | "/auth/accept-invite"
-    | "/auth/bootstrap"
-    | "/auth/login"
-    | "/auth/reset-password"
-    | "/dashboard"
-    | "/auth/invite"
-    | "/dashboard/card-accounts/new"
-    | "/dashboard/details/activity"
-    | "/dashboard/details/ledger"
-    | "/dashboard/members/$id"
-    | "/dashboard/pots/new"
-    | "/dashboard/transactions/new"
-    | "/dashboard/card-accounts"
-    | "/dashboard/members"
-    | "/dashboard/pots"
-    | "/dashboard/profile"
-    | "/dashboard/transactions"
-    | "/dashboard/card-accounts/$id/edit"
-    | "/dashboard/pots/$id/edit"
-    | "/dashboard/pots/$id/reserve"
-    | "/dashboard/transactions/$id/allocate"
-    | "/dashboard/transactions/$id/edit"
-    | "/dashboard/transactions/$id/pay"
-    | "/dashboard/card-accounts/$id"
-    | "/dashboard/pots/$id"
-    | "/dashboard/transactions/$id";
+    | '/'
+    | '/auth/accept-invite'
+    | '/auth/bootstrap'
+    | '/auth/login'
+    | '/auth/reset-password'
+    | '/dashboard'
+    | '/auth/invite'
+    | '/dashboard/$cardId'
+    | '/dashboard/profile'
   id:
-    | "__root__"
-    | "/_authenticated"
-    | "/_public"
-    | "/_publicForms"
-    | "/_authenticated/dashboard"
-    | "/_public/"
-    | "/_publicForms/auth/accept-invite"
-    | "/_publicForms/auth/bootstrap"
-    | "/_publicForms/auth/login"
-    | "/_publicForms/auth/reset-password"
-    | "/_authenticated/dashboard/"
-    | "/_authenticated/_forms/auth/invite"
-    | "/_authenticated/dashboard/card-accounts/new"
-    | "/_authenticated/dashboard/details/activity"
-    | "/_authenticated/dashboard/details/ledger"
-    | "/_authenticated/dashboard/members/$id"
-    | "/_authenticated/dashboard/pots/new"
-    | "/_authenticated/dashboard/transactions/new"
-    | "/_authenticated/dashboard/card-accounts/"
-    | "/_authenticated/dashboard/members/"
-    | "/_authenticated/dashboard/pots/"
-    | "/_authenticated/dashboard/profile/"
-    | "/_authenticated/dashboard/transactions/"
-    | "/_authenticated/dashboard/card-accounts/$id/edit"
-    | "/_authenticated/dashboard/pots/$id/edit"
-    | "/_authenticated/dashboard/pots/$id/reserve"
-    | "/_authenticated/dashboard/transactions/$id/allocate"
-    | "/_authenticated/dashboard/transactions/$id/edit"
-    | "/_authenticated/dashboard/transactions/$id/pay"
-    | "/_authenticated/dashboard/card-accounts/$id/"
-    | "/_authenticated/dashboard/pots/$id/"
-    | "/_authenticated/dashboard/transactions/$id/";
-  fileRoutesById: FileRoutesById;
+    | '__root__'
+    | '/_authenticated'
+    | '/_public'
+    | '/_publicForms'
+    | '/_authenticated/dashboard'
+    | '/_public/'
+    | '/_publicForms/auth/accept-invite'
+    | '/_publicForms/auth/bootstrap'
+    | '/_publicForms/auth/login'
+    | '/_publicForms/auth/reset-password'
+    | '/_authenticated/dashboard/'
+    | '/_authenticated/_forms/auth/invite'
+    | '/_authenticated/dashboard/$cardId/'
+    | '/_authenticated/dashboard/profile/'
+  fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  AuthenticatedRoute: typeof AuthenticatedRouteWithChildren;
-  PublicRoute: typeof PublicRouteWithChildren;
-  PublicFormsRoute: typeof PublicFormsRouteWithChildren;
+  AuthenticatedRoute: typeof AuthenticatedRouteWithChildren
+  PublicRoute: typeof PublicRouteWithChildren
+  PublicFormsRoute: typeof PublicFormsRouteWithChildren
 }
 
-declare module "@tanstack/react-router" {
+declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    "/_publicForms": {
-      id: "/_publicForms";
-      path: "";
-      fullPath: "";
-      preLoaderRoute: typeof PublicFormsRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
-    "/_public": {
-      id: "/_public";
-      path: "";
-      fullPath: "";
-      preLoaderRoute: typeof PublicRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
-    "/_authenticated": {
-      id: "/_authenticated";
-      path: "";
-      fullPath: "";
-      preLoaderRoute: typeof AuthenticatedRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
-    "/_public/": {
-      id: "/_public/";
-      path: "/";
-      fullPath: "/";
-      preLoaderRoute: typeof PublicIndexRouteImport;
-      parentRoute: typeof PublicRoute;
-    };
-    "/_authenticated/dashboard": {
-      id: "/_authenticated/dashboard";
-      path: "/dashboard";
-      fullPath: "/dashboard";
-      preLoaderRoute: typeof AuthenticatedDashboardRouteRouteImport;
-      parentRoute: typeof AuthenticatedRoute;
-    };
-    "/_authenticated/dashboard/": {
-      id: "/_authenticated/dashboard/";
-      path: "/";
-      fullPath: "/dashboard/";
-      preLoaderRoute: typeof AuthenticatedDashboardIndexRouteImport;
-      parentRoute: typeof AuthenticatedDashboardRouteRoute;
-    };
-    "/_publicForms/auth/reset-password": {
-      id: "/_publicForms/auth/reset-password";
-      path: "/auth/reset-password";
-      fullPath: "/auth/reset-password";
-      preLoaderRoute: typeof PublicFormsAuthResetPasswordRouteImport;
-      parentRoute: typeof PublicFormsRoute;
-    };
-    "/_publicForms/auth/login": {
-      id: "/_publicForms/auth/login";
-      path: "/auth/login";
-      fullPath: "/auth/login";
-      preLoaderRoute: typeof PublicFormsAuthLoginRouteImport;
-      parentRoute: typeof PublicFormsRoute;
-    };
-    "/_publicForms/auth/bootstrap": {
-      id: "/_publicForms/auth/bootstrap";
-      path: "/auth/bootstrap";
-      fullPath: "/auth/bootstrap";
-      preLoaderRoute: typeof PublicFormsAuthBootstrapRouteImport;
-      parentRoute: typeof PublicFormsRoute;
-    };
-    "/_publicForms/auth/accept-invite": {
-      id: "/_publicForms/auth/accept-invite";
-      path: "/auth/accept-invite";
-      fullPath: "/auth/accept-invite";
-      preLoaderRoute: typeof PublicFormsAuthAcceptInviteRouteImport;
-      parentRoute: typeof PublicFormsRoute;
-    };
-    "/_authenticated/dashboard/transactions/": {
-      id: "/_authenticated/dashboard/transactions/";
-      path: "/transactions";
-      fullPath: "/dashboard/transactions";
-      preLoaderRoute: typeof AuthenticatedDashboardTransactionsIndexRouteImport;
-      parentRoute: typeof AuthenticatedDashboardRouteRoute;
-    };
-    "/_authenticated/dashboard/profile/": {
-      id: "/_authenticated/dashboard/profile/";
-      path: "/profile";
-      fullPath: "/dashboard/profile";
-      preLoaderRoute: typeof AuthenticatedDashboardProfileIndexRouteImport;
-      parentRoute: typeof AuthenticatedDashboardRouteRoute;
-    };
-    "/_authenticated/dashboard/pots/": {
-      id: "/_authenticated/dashboard/pots/";
-      path: "/pots";
-      fullPath: "/dashboard/pots";
-      preLoaderRoute: typeof AuthenticatedDashboardPotsIndexRouteImport;
-      parentRoute: typeof AuthenticatedDashboardRouteRoute;
-    };
-    "/_authenticated/dashboard/members/": {
-      id: "/_authenticated/dashboard/members/";
-      path: "/members";
-      fullPath: "/dashboard/members";
-      preLoaderRoute: typeof AuthenticatedDashboardMembersIndexRouteImport;
-      parentRoute: typeof AuthenticatedDashboardRouteRoute;
-    };
-    "/_authenticated/dashboard/card-accounts/": {
-      id: "/_authenticated/dashboard/card-accounts/";
-      path: "/card-accounts";
-      fullPath: "/dashboard/card-accounts";
-      preLoaderRoute: typeof AuthenticatedDashboardCardAccountsIndexRouteImport;
-      parentRoute: typeof AuthenticatedDashboardRouteRoute;
-    };
-    "/_authenticated/dashboard/transactions/new": {
-      id: "/_authenticated/dashboard/transactions/new";
-      path: "/transactions/new";
-      fullPath: "/dashboard/transactions/new";
-      preLoaderRoute: typeof AuthenticatedDashboardTransactionsNewRouteImport;
-      parentRoute: typeof AuthenticatedDashboardRouteRoute;
-    };
-    "/_authenticated/dashboard/pots/new": {
-      id: "/_authenticated/dashboard/pots/new";
-      path: "/pots/new";
-      fullPath: "/dashboard/pots/new";
-      preLoaderRoute: typeof AuthenticatedDashboardPotsNewRouteImport;
-      parentRoute: typeof AuthenticatedDashboardRouteRoute;
-    };
-    "/_authenticated/dashboard/members/$id": {
-      id: "/_authenticated/dashboard/members/$id";
-      path: "/members/$id";
-      fullPath: "/dashboard/members/$id";
-      preLoaderRoute: typeof AuthenticatedDashboardMembersIdRouteImport;
-      parentRoute: typeof AuthenticatedDashboardRouteRoute;
-    };
-    "/_authenticated/dashboard/details/ledger": {
-      id: "/_authenticated/dashboard/details/ledger";
-      path: "/details/ledger";
-      fullPath: "/dashboard/details/ledger";
-      preLoaderRoute: typeof AuthenticatedDashboardDetailsLedgerRouteImport;
-      parentRoute: typeof AuthenticatedDashboardRouteRoute;
-    };
-    "/_authenticated/dashboard/details/activity": {
-      id: "/_authenticated/dashboard/details/activity";
-      path: "/details/activity";
-      fullPath: "/dashboard/details/activity";
-      preLoaderRoute: typeof AuthenticatedDashboardDetailsActivityRouteImport;
-      parentRoute: typeof AuthenticatedDashboardRouteRoute;
-    };
-    "/_authenticated/dashboard/card-accounts/new": {
-      id: "/_authenticated/dashboard/card-accounts/new";
-      path: "/card-accounts/new";
-      fullPath: "/dashboard/card-accounts/new";
-      preLoaderRoute: typeof AuthenticatedDashboardCardAccountsNewRouteImport;
-      parentRoute: typeof AuthenticatedDashboardRouteRoute;
-    };
-    "/_authenticated/_forms/auth/invite": {
-      id: "/_authenticated/_forms/auth/invite";
-      path: "/auth/invite";
-      fullPath: "/auth/invite";
-      preLoaderRoute: typeof AuthenticatedFormsAuthInviteRouteImport;
-      parentRoute: typeof AuthenticatedRoute;
-    };
-    "/_authenticated/dashboard/transactions/$id/": {
-      id: "/_authenticated/dashboard/transactions/$id/";
-      path: "/transactions/$id";
-      fullPath: "/dashboard/transactions/$id";
-      preLoaderRoute: typeof AuthenticatedDashboardTransactionsIdIndexRouteImport;
-      parentRoute: typeof AuthenticatedDashboardRouteRoute;
-    };
-    "/_authenticated/dashboard/pots/$id/": {
-      id: "/_authenticated/dashboard/pots/$id/";
-      path: "/pots/$id";
-      fullPath: "/dashboard/pots/$id";
-      preLoaderRoute: typeof AuthenticatedDashboardPotsIdIndexRouteImport;
-      parentRoute: typeof AuthenticatedDashboardRouteRoute;
-    };
-    "/_authenticated/dashboard/card-accounts/$id/": {
-      id: "/_authenticated/dashboard/card-accounts/$id/";
-      path: "/card-accounts/$id";
-      fullPath: "/dashboard/card-accounts/$id";
-      preLoaderRoute: typeof AuthenticatedDashboardCardAccountsIdIndexRouteImport;
-      parentRoute: typeof AuthenticatedDashboardRouteRoute;
-    };
-    "/_authenticated/dashboard/transactions/$id/pay": {
-      id: "/_authenticated/dashboard/transactions/$id/pay";
-      path: "/transactions/$id/pay";
-      fullPath: "/dashboard/transactions/$id/pay";
-      preLoaderRoute: typeof AuthenticatedDashboardTransactionsIdPayRouteImport;
-      parentRoute: typeof AuthenticatedDashboardRouteRoute;
-    };
-    "/_authenticated/dashboard/transactions/$id/edit": {
-      id: "/_authenticated/dashboard/transactions/$id/edit";
-      path: "/transactions/$id/edit";
-      fullPath: "/dashboard/transactions/$id/edit";
-      preLoaderRoute: typeof AuthenticatedDashboardTransactionsIdEditRouteImport;
-      parentRoute: typeof AuthenticatedDashboardRouteRoute;
-    };
-    "/_authenticated/dashboard/transactions/$id/allocate": {
-      id: "/_authenticated/dashboard/transactions/$id/allocate";
-      path: "/transactions/$id/allocate";
-      fullPath: "/dashboard/transactions/$id/allocate";
-      preLoaderRoute: typeof AuthenticatedDashboardTransactionsIdAllocateRouteImport;
-      parentRoute: typeof AuthenticatedDashboardRouteRoute;
-    };
-    "/_authenticated/dashboard/pots/$id/reserve": {
-      id: "/_authenticated/dashboard/pots/$id/reserve";
-      path: "/pots/$id/reserve";
-      fullPath: "/dashboard/pots/$id/reserve";
-      preLoaderRoute: typeof AuthenticatedDashboardPotsIdReserveRouteImport;
-      parentRoute: typeof AuthenticatedDashboardRouteRoute;
-    };
-    "/_authenticated/dashboard/pots/$id/edit": {
-      id: "/_authenticated/dashboard/pots/$id/edit";
-      path: "/pots/$id/edit";
-      fullPath: "/dashboard/pots/$id/edit";
-      preLoaderRoute: typeof AuthenticatedDashboardPotsIdEditRouteImport;
-      parentRoute: typeof AuthenticatedDashboardRouteRoute;
-    };
-    "/_authenticated/dashboard/card-accounts/$id/edit": {
-      id: "/_authenticated/dashboard/card-accounts/$id/edit";
-      path: "/card-accounts/$id/edit";
-      fullPath: "/dashboard/card-accounts/$id/edit";
-      preLoaderRoute: typeof AuthenticatedDashboardCardAccountsIdEditRouteImport;
-      parentRoute: typeof AuthenticatedDashboardRouteRoute;
-    };
+    '/_publicForms': {
+      id: '/_publicForms'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof PublicFormsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_public': {
+      id: '/_public'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof PublicRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof AuthenticatedRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_public/': {
+      id: '/_public/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof PublicIndexRouteImport
+      parentRoute: typeof PublicRoute
+    }
+    '/_authenticated/dashboard': {
+      id: '/_authenticated/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof AuthenticatedDashboardRouteRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/dashboard/': {
+      id: '/_authenticated/dashboard/'
+      path: '/'
+      fullPath: '/dashboard/'
+      preLoaderRoute: typeof AuthenticatedDashboardIndexRouteImport
+      parentRoute: typeof AuthenticatedDashboardRouteRoute
+    }
+    '/_publicForms/auth/reset-password': {
+      id: '/_publicForms/auth/reset-password'
+      path: '/auth/reset-password'
+      fullPath: '/auth/reset-password'
+      preLoaderRoute: typeof PublicFormsAuthResetPasswordRouteImport
+      parentRoute: typeof PublicFormsRoute
+    }
+    '/_publicForms/auth/login': {
+      id: '/_publicForms/auth/login'
+      path: '/auth/login'
+      fullPath: '/auth/login'
+      preLoaderRoute: typeof PublicFormsAuthLoginRouteImport
+      parentRoute: typeof PublicFormsRoute
+    }
+    '/_publicForms/auth/bootstrap': {
+      id: '/_publicForms/auth/bootstrap'
+      path: '/auth/bootstrap'
+      fullPath: '/auth/bootstrap'
+      preLoaderRoute: typeof PublicFormsAuthBootstrapRouteImport
+      parentRoute: typeof PublicFormsRoute
+    }
+    '/_publicForms/auth/accept-invite': {
+      id: '/_publicForms/auth/accept-invite'
+      path: '/auth/accept-invite'
+      fullPath: '/auth/accept-invite'
+      preLoaderRoute: typeof PublicFormsAuthAcceptInviteRouteImport
+      parentRoute: typeof PublicFormsRoute
+    }
+    '/_authenticated/dashboard/profile/': {
+      id: '/_authenticated/dashboard/profile/'
+      path: '/profile'
+      fullPath: '/dashboard/profile'
+      preLoaderRoute: typeof AuthenticatedDashboardProfileIndexRouteImport
+      parentRoute: typeof AuthenticatedDashboardRouteRoute
+    }
+    '/_authenticated/dashboard/$cardId/': {
+      id: '/_authenticated/dashboard/$cardId/'
+      path: '/$cardId'
+      fullPath: '/dashboard/$cardId'
+      preLoaderRoute: typeof AuthenticatedDashboardCardIdIndexRouteImport
+      parentRoute: typeof AuthenticatedDashboardRouteRoute
+    }
+    '/_authenticated/_forms/auth/invite': {
+      id: '/_authenticated/_forms/auth/invite'
+      path: '/auth/invite'
+      fullPath: '/auth/invite'
+      preLoaderRoute: typeof AuthenticatedFormsAuthInviteRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
   }
 }
 
 interface AuthenticatedDashboardRouteRouteChildren {
-  AuthenticatedDashboardIndexRoute: typeof AuthenticatedDashboardIndexRoute;
-  AuthenticatedDashboardCardAccountsNewRoute: typeof AuthenticatedDashboardCardAccountsNewRoute;
-  AuthenticatedDashboardDetailsActivityRoute: typeof AuthenticatedDashboardDetailsActivityRoute;
-  AuthenticatedDashboardDetailsLedgerRoute: typeof AuthenticatedDashboardDetailsLedgerRoute;
-  AuthenticatedDashboardMembersIdRoute: typeof AuthenticatedDashboardMembersIdRoute;
-  AuthenticatedDashboardPotsNewRoute: typeof AuthenticatedDashboardPotsNewRoute;
-  AuthenticatedDashboardTransactionsNewRoute: typeof AuthenticatedDashboardTransactionsNewRoute;
-  AuthenticatedDashboardCardAccountsIndexRoute: typeof AuthenticatedDashboardCardAccountsIndexRoute;
-  AuthenticatedDashboardMembersIndexRoute: typeof AuthenticatedDashboardMembersIndexRoute;
-  AuthenticatedDashboardPotsIndexRoute: typeof AuthenticatedDashboardPotsIndexRoute;
-  AuthenticatedDashboardProfileIndexRoute: typeof AuthenticatedDashboardProfileIndexRoute;
-  AuthenticatedDashboardTransactionsIndexRoute: typeof AuthenticatedDashboardTransactionsIndexRoute;
-  AuthenticatedDashboardCardAccountsIdEditRoute: typeof AuthenticatedDashboardCardAccountsIdEditRoute;
-  AuthenticatedDashboardPotsIdEditRoute: typeof AuthenticatedDashboardPotsIdEditRoute;
-  AuthenticatedDashboardPotsIdReserveRoute: typeof AuthenticatedDashboardPotsIdReserveRoute;
-  AuthenticatedDashboardTransactionsIdAllocateRoute: typeof AuthenticatedDashboardTransactionsIdAllocateRoute;
-  AuthenticatedDashboardTransactionsIdEditRoute: typeof AuthenticatedDashboardTransactionsIdEditRoute;
-  AuthenticatedDashboardTransactionsIdPayRoute: typeof AuthenticatedDashboardTransactionsIdPayRoute;
-  AuthenticatedDashboardCardAccountsIdIndexRoute: typeof AuthenticatedDashboardCardAccountsIdIndexRoute;
-  AuthenticatedDashboardPotsIdIndexRoute: typeof AuthenticatedDashboardPotsIdIndexRoute;
-  AuthenticatedDashboardTransactionsIdIndexRoute: typeof AuthenticatedDashboardTransactionsIdIndexRoute;
+  AuthenticatedDashboardIndexRoute: typeof AuthenticatedDashboardIndexRoute
+  AuthenticatedDashboardCardIdIndexRoute: typeof AuthenticatedDashboardCardIdIndexRoute
+  AuthenticatedDashboardProfileIndexRoute: typeof AuthenticatedDashboardProfileIndexRoute
 }
 
 const AuthenticatedDashboardRouteRouteChildren: AuthenticatedDashboardRouteRouteChildren =
   {
     AuthenticatedDashboardIndexRoute: AuthenticatedDashboardIndexRoute,
-    AuthenticatedDashboardCardAccountsNewRoute:
-      AuthenticatedDashboardCardAccountsNewRoute,
-    AuthenticatedDashboardDetailsActivityRoute:
-      AuthenticatedDashboardDetailsActivityRoute,
-    AuthenticatedDashboardDetailsLedgerRoute:
-      AuthenticatedDashboardDetailsLedgerRoute,
-    AuthenticatedDashboardMembersIdRoute: AuthenticatedDashboardMembersIdRoute,
-    AuthenticatedDashboardPotsNewRoute: AuthenticatedDashboardPotsNewRoute,
-    AuthenticatedDashboardTransactionsNewRoute:
-      AuthenticatedDashboardTransactionsNewRoute,
-    AuthenticatedDashboardCardAccountsIndexRoute:
-      AuthenticatedDashboardCardAccountsIndexRoute,
-    AuthenticatedDashboardMembersIndexRoute:
-      AuthenticatedDashboardMembersIndexRoute,
-    AuthenticatedDashboardPotsIndexRoute: AuthenticatedDashboardPotsIndexRoute,
+    AuthenticatedDashboardCardIdIndexRoute:
+      AuthenticatedDashboardCardIdIndexRoute,
     AuthenticatedDashboardProfileIndexRoute:
       AuthenticatedDashboardProfileIndexRoute,
-    AuthenticatedDashboardTransactionsIndexRoute:
-      AuthenticatedDashboardTransactionsIndexRoute,
-    AuthenticatedDashboardCardAccountsIdEditRoute:
-      AuthenticatedDashboardCardAccountsIdEditRoute,
-    AuthenticatedDashboardPotsIdEditRoute:
-      AuthenticatedDashboardPotsIdEditRoute,
-    AuthenticatedDashboardPotsIdReserveRoute:
-      AuthenticatedDashboardPotsIdReserveRoute,
-    AuthenticatedDashboardTransactionsIdAllocateRoute:
-      AuthenticatedDashboardTransactionsIdAllocateRoute,
-    AuthenticatedDashboardTransactionsIdEditRoute:
-      AuthenticatedDashboardTransactionsIdEditRoute,
-    AuthenticatedDashboardTransactionsIdPayRoute:
-      AuthenticatedDashboardTransactionsIdPayRoute,
-    AuthenticatedDashboardCardAccountsIdIndexRoute:
-      AuthenticatedDashboardCardAccountsIdIndexRoute,
-    AuthenticatedDashboardPotsIdIndexRoute:
-      AuthenticatedDashboardPotsIdIndexRoute,
-    AuthenticatedDashboardTransactionsIdIndexRoute:
-      AuthenticatedDashboardTransactionsIdIndexRoute,
-  };
+  }
 
 const AuthenticatedDashboardRouteRouteWithChildren =
   AuthenticatedDashboardRouteRoute._addFileChildren(
-    AuthenticatedDashboardRouteRouteChildren
-  );
+    AuthenticatedDashboardRouteRouteChildren,
+  )
 
 interface AuthenticatedRouteChildren {
-  AuthenticatedDashboardRouteRoute: typeof AuthenticatedDashboardRouteRouteWithChildren;
-  AuthenticatedFormsAuthInviteRoute: typeof AuthenticatedFormsAuthInviteRoute;
+  AuthenticatedDashboardRouteRoute: typeof AuthenticatedDashboardRouteRouteWithChildren
+  AuthenticatedFormsAuthInviteRoute: typeof AuthenticatedFormsAuthInviteRoute
 }
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedDashboardRouteRoute:
     AuthenticatedDashboardRouteRouteWithChildren,
   AuthenticatedFormsAuthInviteRoute: AuthenticatedFormsAuthInviteRoute,
-};
+}
 
 const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
-  AuthenticatedRouteChildren
-);
+  AuthenticatedRouteChildren,
+)
 
 interface PublicRouteChildren {
-  PublicIndexRoute: typeof PublicIndexRoute;
+  PublicIndexRoute: typeof PublicIndexRoute
 }
 
 const PublicRouteChildren: PublicRouteChildren = {
   PublicIndexRoute: PublicIndexRoute,
-};
+}
 
 const PublicRouteWithChildren =
-  PublicRoute._addFileChildren(PublicRouteChildren);
+  PublicRoute._addFileChildren(PublicRouteChildren)
 
 interface PublicFormsRouteChildren {
-  PublicFormsAuthAcceptInviteRoute: typeof PublicFormsAuthAcceptInviteRoute;
-  PublicFormsAuthBootstrapRoute: typeof PublicFormsAuthBootstrapRoute;
-  PublicFormsAuthLoginRoute: typeof PublicFormsAuthLoginRoute;
-  PublicFormsAuthResetPasswordRoute: typeof PublicFormsAuthResetPasswordRoute;
+  PublicFormsAuthAcceptInviteRoute: typeof PublicFormsAuthAcceptInviteRoute
+  PublicFormsAuthBootstrapRoute: typeof PublicFormsAuthBootstrapRoute
+  PublicFormsAuthLoginRoute: typeof PublicFormsAuthLoginRoute
+  PublicFormsAuthResetPasswordRoute: typeof PublicFormsAuthResetPasswordRoute
 }
 
 const PublicFormsRouteChildren: PublicFormsRouteChildren = {
@@ -745,17 +334,17 @@ const PublicFormsRouteChildren: PublicFormsRouteChildren = {
   PublicFormsAuthBootstrapRoute: PublicFormsAuthBootstrapRoute,
   PublicFormsAuthLoginRoute: PublicFormsAuthLoginRoute,
   PublicFormsAuthResetPasswordRoute: PublicFormsAuthResetPasswordRoute,
-};
+}
 
 const PublicFormsRouteWithChildren = PublicFormsRoute._addFileChildren(
-  PublicFormsRouteChildren
-);
+  PublicFormsRouteChildren,
+)
 
 const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRoute: AuthenticatedRouteWithChildren,
   PublicRoute: PublicRouteWithChildren,
   PublicFormsRoute: PublicFormsRouteWithChildren,
-};
+}
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
-  ._addFileTypes<FileRouteTypes>();
+  ._addFileTypes<FileRouteTypes>()

@@ -1,14 +1,15 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState, useMemo, useEffect } from "react";
-import classname from "classnames";
+import { Loader, UserPlus } from "lucide-react";
 import { useAuth } from "@/auth/AuthContext.tsx";
 import { User } from "@shared/entities/user/index.ts";
 import { ApiError } from "@shared/entities/api/apiError.ts";
 import { useRouter } from "@tanstack/react-router";
-import Button from "@/components/ui/primitives/Button.tsx";
-import PasswordRequirements from "@/components/ui/PasswordRequirements.tsx";
-import { FormErrorBox } from "@/components/ui/form/FormErrorBox.tsx";
+import { Button } from "@/components/ui/primitives/button.tsx";
+import { FormErrorBox } from "@/components/ui/form/formErrorBox.tsx";
 import { redirect } from "@tanstack/react-router";
+import { PasswordRequirements } from "@/components/ui/form/passwordRequirements.tsx";
+import { cn } from "@/lib/utils.ts";
 
 export const Route = createFileRoute("/_publicForms/auth/bootstrap")({
   component: RouteComponent,
@@ -124,7 +125,7 @@ function RouteComponent() {
   }, [firstName, lastName, email, password, confirmPassword]);
 
   const inputClass = (hasError: boolean) =>
-    classname(
+    cn(
       "p-2 border rounded w-full mt-4",
       hasError ? "border-red-500" : "border-gray-300",
       loading && "bg-gray-100 cursor-not-allowed cursor-progress"
@@ -144,7 +145,7 @@ function RouteComponent() {
       !!confirmPasswordError ||
       !!error;
 
-    return classname(
+    return cn(
       baseClass,
       loading ? loadingClass : isError ? errorClass : normalClass
     );
@@ -318,12 +319,9 @@ function RouteComponent() {
           className={buttonClass}
           disabled={loading || !!error}
           formNoValidate
-          startIcon={
-            loading
-              ? { name: "Loader", size: 16 }
-              : { name: "UserPlus", size: 16 }
-          }
         >
+          {loading ? <Loader size={16} /> : <UserPlus size={16} />}
+          &nbsp;
           {buttonLabel}
         </Button>
       </form>
