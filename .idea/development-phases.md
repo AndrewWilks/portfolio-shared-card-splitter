@@ -1,34 +1,96 @@
 # Development Phases
 
-## Phase 1: User Invitations + Nav Links
+## Phase 1: Navigation & Sidebar ✅ (Completed)
 
-- Build user invitation system (backend + frontend)
-  - Database schema for invitations
-  - Invitation routes, service, repository
-  - Invitation UI (create, send, accept)
-- Add navigation links to existing nav
-  - Desktop nav: links to dashboard/transactions/pots/accounts/members
-  - Mobile nav: basic menu toggle
-- **Goal**: Multi-user functionality + navigable app
-- **Estimated**: 8-10 hours
+- ✅ Shadcn sidebar implementation
+  - Code-split sidebar components
+  - Collapsible sidebar (icon mode)
+  - Mobile responsive sidebar
+  - `SidebarMenuContent` component for static content
+- ✅ Dashboard sidebar with branding
+  - FairShare logo/name
+  - Navigation structure in place
+  - User profile in footer
+- ✅ Card switcher UI component
+  - Dropdown menu with card selection
+  - Card icon display (Visa/Mastercard/Amex)
+  - Mock data in place
+- **Status**: Navigation infrastructure complete
 
-## Phase 2: Notifications
+## Phase 2: Card Selection Feature (Current Phase)
+
+- Backend: Card management system
+  - Card routes (GET /cards, POST /cards, GET /cards/:id)
+  - Card service layer
+  - Card repository (database operations)
+  - Connect to existing cards schema
+- Frontend: Connect card switcher
+  - Card service/API client
+  - Fetch user's cards
+  - Handle card selection state
+  - Update routes with active cardId
+  - Persist selected card (cookie/local storage)
+- Dashboard card context
+  - Pass active card to dashboard routes
+  - Update `$cardId` param handling
+- **Goal**: Fully functional card selection with backend integration
+- **Estimated**: 4-6 hours
+
+## Phase 3: User Invitations System
+
+- Database schema for invitations
+  - Invitations table (inviterId, inviteeEmail, cardId, status, token)
+  - Invitation status enum (pending, accepted, rejected, expired)
+- Backend invitation system
+  - Invitation routes (POST, GET, PATCH)
+  - Invitation service (create, send, accept, list)
+  - Invitation repository
+  - Email service integration (optional for now)
+- Frontend invitation UI
+  - Create invitation form/modal
+  - Invitation list view
+  - Accept invitation page
+  - Pending invitations indicator
+- **Goal**: Multi-user card sharing
+- **Estimated**: 6-8 hours
+
+## Phase 4: Extended Navigation Links
+
+- Add remaining navigation items
+  - Transactions page + route
+  - Pots page + route
+  - Accounts page + route
+  - Members page + route
+- Update sidebar navigation
+  - Add nav items with icons
+  - Active state handling
+  - Card context for all routes
+- Mobile navigation improvements
+  - Ensure all links work on mobile
+  - Touch-friendly interactions
+- **Goal**: Complete app navigation
+- **Estimated**: 3-4 hours
+
+## Phase 5: Notifications
 
 - Database schema for notifications
 - Notification CRUD (routes, service, repository)
 - Notification UI components
 - Notification preferences
+- **Estimated**: 4-6 hours
 
-## Phase 3: SSE (Real-time)
+## Phase 6: SSE (Real-time)
 
 - SSE endpoint in Hono
 - Event publishing service
 - EventSource client in frontend
 - Connect notifications to SSE stream
 - Connection management/reconnection
+- **Estimated**: 4-5 hours
 
 ## Notes
 
 - Build UI primitives as needed (avoid premature abstraction)
 - Focus: fast progress without bloat
 - Let real features drive component requirements
+- Each phase builds on the previous one
