@@ -7,7 +7,6 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  SidebarSeparator,
 } from "@/components/ui/sidebar/index.tsx";
 import { useLocation } from "@tanstack/react-router";
 import { Link, LinkProps } from "@tanstack/react-router";
@@ -15,6 +14,7 @@ import { icons, Wallet } from "lucide-react";
 import { NavUser } from "../../ui/user/nav.tsx";
 import { useAuth } from "../../../auth/AuthContext.tsx";
 import { CardSwitcher } from "../../ui/card/card-switcher.tsx";
+import { useParams } from "@tanstack/react-router";
 
 type NavItem = {
   title: string;
@@ -22,13 +22,18 @@ type NavItem = {
   icon: keyof typeof icons;
 };
 
-const mainNav: NavItem[] = [
-  { title: "Dashboard", to: "/dashboard", icon: "House" },
-];
-
 export function DashboardSidebar() {
   const location = useLocation();
+  const { cardId } = useParams({ strict: false });
   const { user, isAuthenticated } = useAuth();
+
+  const mainNav: NavItem[] = [
+    {
+      title: "Dashboard",
+      to: cardId ? "/dashboard/$cardId" : "/dashboard",
+      icon: "House",
+    },
+  ];
 
   return (
     <Sidebar collapsible="icon" variant="floating" className="">
@@ -50,7 +55,11 @@ export function DashboardSidebar() {
             const isActive = location.pathname === item.to;
             return (
               <SidebarMenuButton key={item.title} asChild isActive={isActive}>
-                <Link to={item.to}>
+                <Link
+                  to={item.to}
+                  // deno-lint-ignore no-explicit-any
+                  params={cardId ? ({ cardId } as any) : undefined}
+                >
                   <Icon />
                   <span>{item.title}</span>
                 </Link>
