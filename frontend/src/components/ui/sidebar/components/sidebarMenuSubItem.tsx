@@ -1,7 +1,7 @@
 import * as React from "react";
 import { cn } from "@/lib/utils.ts";
 
-function SidebarMenuSubItem({
+export function SidebarMenuSubItem({
   className,
   ...props
 }: React.ComponentProps<"li">) {
