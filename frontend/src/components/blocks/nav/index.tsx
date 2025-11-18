@@ -1,4 +1,4 @@
-import { useBreakpoints } from "../../../context/breakpoints.tsx";
+import { useBreakpoints } from "@/hooks/useBreakpoints.tsx";
 import NavDesktop from "./desktop.tsx";
 import NavMobile from "./mobile.tsx";
 

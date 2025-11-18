@@ -55,11 +55,3 @@ export function BreakpointProvider({
     </BreakpointContext.Provider>
   );
 }
-
-export function useBreakpoints() {
-  const context = React.useContext(BreakpointContext);
-  if (!context) {
-    throw new Error("useBreakpoints must be used within a BreakpointProvider");
-  }
-  return context;
-}

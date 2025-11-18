@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
-import ThemeBtn from "../../ui/theme/btn.tsx";
 import { useAuth } from "../../../auth/AuthContext.tsx";
 import LogoutBtn from "../../../auth/ui/logoutBtn.tsx";
+import { ModeToggle } from "../../ui/theme/mode-toggle.tsx";
 
 export default function NavDesktop() {
   const { isAuthenticated } = useAuth();
@@ -11,7 +11,7 @@ export default function NavDesktop() {
         <Link to="/">Shared Card Splitter</Link>
         <nav>
           {isAuthenticated && <LogoutBtn />}
-          <ThemeBtn />
+          <ModeToggle />
         </nav>
       </div>
     </header>

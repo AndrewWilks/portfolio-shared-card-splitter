@@ -9,9 +9,7 @@ interface PasswordRequirementsProps {
   password: string;
 }
 
-export default function PasswordRequirements({
-  password,
-}: PasswordRequirementsProps) {
+export function PasswordRequirements({ password }: PasswordRequirementsProps) {
   const requirements = useMemo<PasswordRequirement[]>(
     () => [
       {
