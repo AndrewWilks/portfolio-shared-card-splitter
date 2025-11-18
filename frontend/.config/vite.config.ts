@@ -15,7 +15,6 @@ export default defineConfig({
     react(),
     tailwindcss(),
   ],
-  // base: "./",
   resolve: {
     alias: [
       {
