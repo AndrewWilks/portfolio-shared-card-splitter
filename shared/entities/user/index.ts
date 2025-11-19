@@ -2,6 +2,8 @@ import { z } from "zod";
 import { ApiError } from "../api/apiError.ts";
 import { ApiResponse } from "../api/apiResponse.ts";
 
+// TODO: Split the auth logic into its own class as Auth Class.
+// TODO: Split the users detials into its own class as the Profile Class.
 export class User {
   private _id: string;
   private _email: string;
