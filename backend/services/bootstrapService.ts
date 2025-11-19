@@ -14,8 +14,8 @@ export class BootstrapService {
    * @returns True if system is bootstrapped, false otherwise
    */
   static async isBootstrapped(): Promise<boolean> {
-    const users = await UserRepository.findAll();
-    return users.length > 0;
+    const users = await UserRepository.getAll();
+    return users !== null && users.length > 0;
   }
 
   /**
