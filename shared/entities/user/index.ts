@@ -234,7 +234,7 @@ export class User {
   }
 
   static get idSchema() {
-    return z.uuid("Invalid UUID format for ID");
+    return z.uuid("Invalid UUID format for User ID");
   }
 
   static get schema() {
