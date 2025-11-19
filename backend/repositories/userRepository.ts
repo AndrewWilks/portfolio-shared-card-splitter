@@ -1,5 +1,11 @@
 import { eq } from "drizzle-orm";
 import { db } from "../db/index.ts";
+import {
+  DB_User,
+  DB_UserCreate,
+  DB_UserUpdate,
+  DB_UserKey,
+} from "../db/types.ts";
 import { usersTable } from "../db/schema.ts";
 
 /**
@@ -12,14 +18,14 @@ export class UserRepository {
    * @param id - User ID (UUID)
    * @returns User record or undefined if not found
    */
-  static async findById(id: string) {
+  static async getById(id: DB_UserKey): Promise<DB_User | null> {
     const result = await db
       .select()
       .from(usersTable)
       .where(eq(usersTable.id, id))
       .limit(1);
 
-    return result[0];
+    return result[0] ?? null;
   }
 
   /**
@@ -27,14 +33,23 @@ export class UserRepository {
    * @param email - User email address
    * @returns User record or undefined if not found
    */
-  static async findByEmail(email: string) {
+  static async getByEmail(email: DB_User["email"]): Promise<DB_User | null> {
     const result = await db
       .select()
       .from(usersTable)
       .where(eq(usersTable.email, email))
       .limit(1);
 
-    return result[0];
+    return result[0] ?? null;
+  }
+
+  /**
+   * Find all users (for bootstrap check)
+   * @returns Array of user records
+   */
+  static async getAll(): Promise<DB_User[] | null> {
+    const result = await db.select().from(usersTable);
+    return result.length > 0 ? result : null;
   }
 
   /**
@@ -42,23 +57,9 @@ export class UserRepository {
    * @param data - User data (email, passwordHash, firstName, lastName)
    * @returns Created user record
    */
-  static async create(data: {
-    email: string;
-    passwordHash: string;
-    firstName: string;
-    lastName: string;
-  }) {
+  static async create(data: DB_UserCreate): Promise<DB_User | null> {
     const result = await db.insert(usersTable).values(data).returning();
-    return result[0];
-  }
-
-  /**
-   * Find all users (for bootstrap check)
-   * @returns Array of user records
-   */
-  static async findAll() {
-    const result = await db.select().from(usersTable);
-    return result;
+    return result[0] ?? null;
   }
 
   /**
@@ -68,21 +69,16 @@ export class UserRepository {
    * @returns Updated user record or undefined if not found
    */
   static async update(
-    id: string,
-    data: Partial<{
-      email: string;
-      passwordHash: string;
-      firstName: string;
-      lastName: string;
-    }>
-  ) {
+    id: DB_UserKey,
+    data: DB_UserUpdate
+  ): Promise<DB_User | null> {
     const result = await db
       .update(usersTable)
       .set(data)
       .where(eq(usersTable.id, id))
       .returning();
 
-    return result[0];
+    return result[0] ?? null;
   }
 
   /**
@@ -90,12 +86,11 @@ export class UserRepository {
    * @param id - User ID to delete
    * @returns Deleted user record or undefined if not found
    */
-  static async delete(id: string) {
+  static async delete(id: DB_UserKey): Promise<boolean> {
     const result = await db
       .delete(usersTable)
       .where(eq(usersTable.id, id))
       .returning();
-
-    return result[0];
+    return result.length > 0;
   }
 }

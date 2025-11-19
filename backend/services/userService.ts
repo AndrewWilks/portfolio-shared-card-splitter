@@ -3,6 +3,8 @@ import { ApiError } from "@shared/entities/api/apiError.ts";
 import { UserRepository } from "../repositories/userRepository.ts";
 import { hash, verify } from "@node-rs/argon2";
 
+// TODO: Move the Auth services to a separate AuthService file and class
+
 /**
  * UserService handles business logic for user operations
  * Sits between routes and repository for validation and transformation
@@ -15,7 +17,7 @@ export class UserService {
    */
   static async getUserById(userId: string): Promise<User | ApiError> {
     // Fetch from database
-    const dbUser = await UserRepository.findById(userId);
+    const dbUser = await UserRepository.getById(userId);
 
     if (!dbUser) {
       return new ApiError({
@@ -39,7 +41,7 @@ export class UserService {
    * @returns User entity or ApiError
    */
   static async getUserByEmail(email: string): Promise<User | ApiError> {
-    const dbUser = await UserRepository.findByEmail(email);
+    const dbUser = await UserRepository.getByEmail(email);
 
     if (!dbUser) {
       return new ApiError({
@@ -97,7 +99,7 @@ export class UserService {
     email: string,
     password: string
   ): Promise<boolean> {
-    const dbUser = await UserRepository.findByEmail(email);
+    const dbUser = await UserRepository.getByEmail(email);
 
     if (!dbUser) {
       return false;
