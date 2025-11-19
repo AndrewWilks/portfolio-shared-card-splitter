@@ -2,6 +2,7 @@
   "workspace": ["frontend", "backend", "shared"],
   "nodeModulesDir": "auto",
   "imports": {
-    "zod": "npm:zod@^4.1.12"
+    "zod": "npm:zod@^4.1.12",
+    "@std/http": "jsr:@std/http@^1.0.21"
   }
 }
