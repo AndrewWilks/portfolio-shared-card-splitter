@@ -1,4 +1,5 @@
 import { pgTable, uuid, varchar, pgEnum } from "drizzle-orm/pg-core";
+import { cardTypeEnumValues } from "./constants.ts";
 
 export const usersTable = pgTable("users", {
   id: uuid().primaryKey().defaultRandom(),
@@ -8,11 +9,11 @@ export const usersTable = pgTable("users", {
   lastName: varchar({ length: 100 }).notNull(),
 });
 
-export const cardTypeEnum = pgEnum("card_type", ["visa", "mastercard", "amex"]);
+export const cardTypeEnum = pgEnum("card_type", cardTypeEnumValues);
 
 export const cardsTable = pgTable("cards", {
   id: uuid().primaryKey().defaultRandom(),
-  userId: uuid()
+  owner: uuid()
     .notNull()
     .references(() => usersTable.id),
   name: varchar({ length: 100 }).notNull(),
