@@ -1,0 +1,7 @@
+{
+  "imports": {
+    "@shared/": "../shared/",
+    "@backend/": "../backend/",
+    "@frontend/": "../frontend/"
+  }
+}
