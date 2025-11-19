@@ -5,6 +5,7 @@ import { cors } from "hono/cors";
 // Routes
 import * as bootstrapRoutes from "./routes/bootstrap.routes.ts";
 import * as authRoutes from "./routes/auth.routes.ts";
+import * as card from "./routes/card.routes.ts";
 
 // Middleware
 import { requireAuth } from "./middleware/auth.ts";
@@ -44,6 +45,13 @@ app.use("/api/v1/*", requireAuth());
 // -- Auth routes --------------------------------------------//
 app.post("/api/v1/auth/logout", authRoutes.logout);
 app.get("/api/v1/auth/me", authRoutes.me);
+
+// -- Card routes --------------------------------------------//
+app.get("/api/v1/cards", ...card.getCards);
+app.post("/api/v1/cards", ...card.createCard);
+app.get("/api/v1/cards/:id", ...card.getCardById);
+app.post("/api/v1/cards/:id", ...card.updateCardById);
+app.delete("/api/v1/cards/:id", ...card.deleteCardById);
 // =============================================================
 // Add a catch-all to see what's being requested
 // =============================================================
