@@ -2,6 +2,7 @@ import { User, type TPassword } from "@shared/entities/user/index.ts";
 import { ApiError } from "@shared/entities/api/apiError.ts";
 import { UserRepository } from "../repositories/userRepository.ts";
 import { hash, verify } from "@node-rs/argon2";
+import { STATUS_CODE } from "@std/http";
 
 // TODO: Move the Auth services to a separate AuthService file and class
 
@@ -27,12 +28,7 @@ export class UserService {
     }
 
     // Transform database record to User entity
-    return new User({
-      id: dbUser.id,
-      email: dbUser.email,
-      firstName: dbUser.firstName,
-      lastName: dbUser.lastName,
-    });
+    return User.create(dbUser);
   }
 
   /**
@@ -50,12 +46,7 @@ export class UserService {
       });
     }
 
-    return new User({
-      id: dbUser.id,
-      email: dbUser.email,
-      firstName: dbUser.firstName,
-      lastName: dbUser.lastName,
-    });
+    return User.create(dbUser);
   }
 
   /**
@@ -128,6 +119,48 @@ export class UserService {
     } catch (error) {
       console.error(`Password verification error for ${email}:`, error);
       return false;
+    }
+  }
+
+  /**
+   * Onboard a user by marking them as having completed onboarding
+   * @param userId - User ID to onboard
+   * @returns Updated User entity or ApiError
+   */
+  static async onboardUser(userId: string): Promise<User | ApiError> {
+    const parsedUserId = User.idSchema.safeParse(userId);
+
+    if (!parsedUserId.success) {
+      return new ApiError({
+        message: "Invalid user ID format",
+        code: ApiError.InternalCodes.INVALID_USER_ID,
+      });
+    }
+
+    const dbUser = await UserRepository.onboardUser(userId);
+
+    if (!dbUser) {
+      return new ApiError({
+        message: "User not found for onboarding",
+        code: ApiError.InternalCodes.USER_NOT_FOUND,
+      });
+    }
+
+    return User.create(dbUser);
+  }
+
+  static mapErrorToStatusCode(error: ApiError) {
+    switch (error.code) {
+      case ApiError.InternalCodes.USER_NOT_FOUND:
+        return STATUS_CODE.NotFound; // Not Found
+      case ApiError.InternalCodes.USER_ALREADY_EXISTS:
+        return STATUS_CODE.Conflict; // Conflict
+      case ApiError.InternalCodes.INVALID_USER_DATA:
+      case ApiError.InternalCodes.USER_CREATION_FAILED:
+      case ApiError.InternalCodes.INVALID_USER_ID:
+        return STATUS_CODE.BadRequest; // Bad Request
+      default:
+        return STATUS_CODE.InternalServerError; // Internal Server Error
     }
   }
 }

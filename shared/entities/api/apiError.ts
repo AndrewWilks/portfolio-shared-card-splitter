@@ -104,6 +104,9 @@ enum ApiErrorInternalCodes {
   // User Errors
   USER_NOT_FOUND = 3001,
   USER_ALREADY_EXISTS = 3002,
+  INVALID_USER_DATA = 3003,
+  USER_CREATION_FAILED = 3004,
+  INVALID_USER_ID = 3005,
 
   // Card Errors
   INVALID_CARD_DATA = 4001,

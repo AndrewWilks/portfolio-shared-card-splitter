@@ -1,4 +1,4 @@
-import { pgTable, uuid, varchar, pgEnum } from "drizzle-orm/pg-core";
+import { pgTable, uuid, varchar, pgEnum, boolean } from "drizzle-orm/pg-core";
 import { cardTypeEnumValues } from "./constants.ts";
 
 export const usersTable = pgTable("users", {
@@ -7,6 +7,7 @@ export const usersTable = pgTable("users", {
   passwordHash: varchar({ length: 255 }).notNull(),
   firstName: varchar({ length: 100 }).notNull(),
   lastName: varchar({ length: 100 }).notNull(),
+  hasOnboarded: boolean().notNull().default(false),
 });
 
 export const cardTypeEnum = pgEnum("card_type", cardTypeEnumValues);

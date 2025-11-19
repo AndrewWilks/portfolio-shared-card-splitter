@@ -53,6 +53,20 @@ export class UserRepository {
   }
 
   /**
+   * Mark a user as having completed onboarding
+   * @param id - User ID to onboard
+   * @returns Updated user record or null if not found
+   */
+  static async onboardUser(id: DB_UserKey): Promise<DB_User | null> {
+    const result = await db
+      .update(usersTable)
+      .set({ hasOnboarded: true })
+      .where(eq(usersTable.id, id))
+      .returning();
+    return result[0] ?? null;
+  }
+
+  /**
    * Create a new user
    * @param data - User data (email, passwordHash, firstName, lastName)
    * @returns Created user record

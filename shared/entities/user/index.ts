@@ -2,29 +2,31 @@ import { z } from "zod";
 import { ApiError } from "../api/apiError.ts";
 import { ApiResponse } from "../api/apiResponse.ts";
 
-// TODO: Split the auth logic into its own class as Auth Class.
-// TODO: Split the users detials into its own class as the Profile Class.
 export class User {
   private _id: string;
   private _email: string;
   private _firstName: string;
   private _lastName: string;
+  private _hasOnboarded: boolean;
 
   constructor({
     email,
     firstName,
     lastName,
     id,
+    hasOnboarded,
   }: {
     id?: string;
     email: string;
     firstName: string;
     lastName: string;
+    hasOnboarded?: boolean;
   }) {
     this._id = User.idSchema.optional().parse(id) ?? crypto.randomUUID();
     this._email = User.emailSchema.parse(email);
     this._firstName = User.firstNameSchema.parse(firstName);
     this._lastName = User.lastNameSchema.parse(lastName);
+    this._hasOnboarded = User.hasOnboardedSchema.parse(hasOnboarded) ?? false;
   }
 
   get id(): string {
@@ -80,12 +82,7 @@ export class User {
 
     const returnValue = new ApiResponse({
       message: parsed.message,
-      data: new User({
-        id: parsed.data.id,
-        email: parsed.data.email,
-        firstName: parsed.data.firstName,
-        lastName: parsed.data.lastName,
-      }),
+      data: User.create(parsed.data),
     });
 
     return returnValue;
@@ -132,12 +129,7 @@ export class User {
 
     const returnValue = new ApiResponse({
       message: parsed.message,
-      data: new User({
-        id: parsed.data.id,
-        email: parsed.data.email,
-        firstName: parsed.data.firstName,
-        lastName: parsed.data.lastName,
-      }),
+      data: User.create(parsed.data),
     });
 
     return returnValue;
@@ -188,12 +180,7 @@ export class User {
 
     const returnValue = new ApiResponse({
       message: parsed.message,
-      data: new User({
-        id: parsed.data.id,
-        email: parsed.data.email,
-        firstName: parsed.data.firstName,
-        lastName: parsed.data.lastName,
-      }),
+      data: User.create(parsed.data),
     });
 
     return returnValue;
@@ -210,10 +197,6 @@ export class User {
     return z.string().min(1, "Logout token is required");
   }
 
-  static get emailSchema() {
-    return z.email("Invalid email address");
-  }
-
   static get passwordSchema() {
     return z
       .string()
@@ -225,6 +208,10 @@ export class User {
         /[^A-Za-z0-9]/,
         "Password must contain at least one special character"
       );
+  }
+
+  static get emailSchema() {
+    return z.email("Invalid email address");
   }
 
   static get firstNameSchema() {
@@ -245,6 +232,7 @@ export class User {
       email: this.emailSchema,
       firstName: this.firstNameSchema,
       lastName: this.lastNameSchema,
+      hasOnboarded: this.hasOnboardedSchema,
     });
   }
 
@@ -257,13 +245,23 @@ export class User {
     });
   }
 
+  static get hasOnboardedSchema() {
+    return z.boolean();
+  }
+
   toJSON() {
     return {
       id: this._id,
       email: this._email,
       firstName: this._firstName,
       lastName: this._lastName,
+      hasOnboarded: this._hasOnboarded,
     };
+  }
+
+  static create(data: TUser) {
+    const parsed = this.schema.parse(data);
+    return new User(parsed);
   }
 }
 
@@ -277,3 +275,4 @@ export type TUser = z.infer<typeof User.schema>;
 export type TUserLogin = z.infer<typeof User.loginSchema>;
 export type TUserLogout = z.infer<typeof User.logoutSchema>;
 export type TUserBootstrap = z.infer<typeof User.bootstrapSchema>;
+export type THasOnboarded = z.infer<typeof User.hasOnboardedSchema>;

@@ -25,6 +25,13 @@
   - Card repository (database operations) ✅
   - Connect to existing cards schema ✅
 - Frontend: User First Card UX
+  - **Suggested Flow:**
+    1. User logs in/bootstraps
+    2. Check `user.hasOnboarded` flag
+    3. If `false`, redirect to `/onboarding`
+    4. Complete onboarding wizard (create first card)
+    5. Call `POST /api/v1/onboarding` to mark complete
+    6. Redirect to dashboard with auto-selected card
   - Check if user has any cards on app load
   - Create onboarding wizard component (multi-step form)
     - Step 1: Welcome screen with explanation

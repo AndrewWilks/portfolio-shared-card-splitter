@@ -5,7 +5,8 @@ import { cors } from "hono/cors";
 // Routes
 import * as bootstrapRoutes from "./routes/bootstrap.routes.ts";
 import * as authRoutes from "./routes/auth.routes.ts";
-import * as card from "./routes/card.routes.ts";
+import * as cardRoutes from "./routes/card.routes.ts";
+import * as onboardingRoutes from "./routes/onboarding.routes.ts";
 
 // Middleware
 import { requireAuth } from "./middleware/auth.ts";
@@ -46,12 +47,15 @@ app.use("/api/v1/*", requireAuth());
 app.post("/api/v1/auth/logout", authRoutes.logout);
 app.get("/api/v1/auth/me", authRoutes.me);
 
+// -- Onboarding routes --------------------------------------//
+app.post("/api/v1/onboarding", ...onboardingRoutes.onboardUser);
+
 // -- Card routes --------------------------------------------//
-app.get("/api/v1/cards", ...card.getCards);
-app.post("/api/v1/cards", ...card.createCard);
-app.get("/api/v1/cards/:id", ...card.getCardById);
-app.post("/api/v1/cards/:id", ...card.updateCardById);
-app.delete("/api/v1/cards/:id", ...card.deleteCardById);
+app.get("/api/v1/cards", ...cardRoutes.getCards);
+app.post("/api/v1/cards", ...cardRoutes.createCard);
+app.get("/api/v1/cards/:id", ...cardRoutes.getCardById);
+app.post("/api/v1/cards/:id", ...cardRoutes.updateCardById);
+app.delete("/api/v1/cards/:id", ...cardRoutes.deleteCardById);
 // =============================================================
 // Add a catch-all to see what's being requested
 // =============================================================
