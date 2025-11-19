@@ -19,33 +19,39 @@
 
 ## Phase 2: Card Selection Feature (Current Phase)
 
-- Backend: Card management system
+- Backend: Card management system ✅
   - Card routes (GET /cards, POST /cards, GET /cards/:id, etc.) ✅
   - Card service layer ✅
   - Card repository (database operations) ✅
   - Connect to existing cards schema ✅
+  - Onboarding endpoint (POST /api/v1/onboarding) ✅
+  - User.hasOnboarded flag in database ✅
 - Frontend: User First Card UX
-  - **Suggested Flow:**
-    1. User logs in/bootstraps
-    2. Check `user.hasOnboarded` flag
-    3. If `false`, redirect to `/onboarding`
-    4. Complete onboarding wizard (create first card)
-    5. Call `POST /api/v1/onboarding` to mark complete
-    6. Redirect to dashboard with auto-selected card
-  - Check if user has any cards on app load
+  - **Recommended Flow:**
+    1. User logs in/bootstraps → receives user object with `hasOnboarded` flag
+    2. Check `user.hasOnboarded` in AuthContext/route guard
+    3. If `false`, redirect to `/onboarding` route
+    4. Show onboarding wizard (create first card)
+    5. On successful card creation, call `POST /api/v1/onboarding` to mark user as onboarded
+    6. Redirect to dashboard with newly created card auto-selected
+    7. Future logins skip onboarding if `hasOnboarded === true`
   - Create onboarding wizard component (multi-step form)
     - Step 1: Welcome screen with explanation
     - Step 2: Card creation form (name, type, last4)
     - Step 3: Success/confirmation screen
   - Implement routing logic
-    - Redirect to `/onboarding` if no cards exist
-    - Skip onboarding if user already has cards
+    - Add `/onboarding` route (public but authenticated)
+    - Create route guard to check `hasOnboarded` flag
+    - Redirect to `/onboarding` if `hasOnboarded === false`
+    - Skip onboarding if `hasOnboarded === true`
   - Onboarding state management
-    - Track current step in wizard
+    - Track current step in wizard (local state)
     - Validate each step before proceeding
     - Handle form submission to create first card
+    - Call onboarding endpoint after card creation
   - Post-onboarding flow
-    - Redirect to dashboard after card creation
+    - Update user context with `hasOnboarded: true`
+    - Redirect to dashboard after completion
     - Auto-select newly created card as active
     - Show success message/toast
 - Frontend: Connect card switcher
