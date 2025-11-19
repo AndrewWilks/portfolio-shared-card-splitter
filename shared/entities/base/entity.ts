@@ -1,11 +1,35 @@
-export default class Entity {
-  private _id: string;
+import { uuid, object } from "zod";
+export type EntityAction = "create" | "update";
 
-  constructor(id?: string) {
-    this._id = id ?? crypto.randomUUID();
+export default class Entity {
+  public readonly _id: string;
+
+  constructor({ id }: { id?: string }) {
+    const parsed = Entity.createSchema.parse({ id });
+    this._id = parsed.id;
   }
 
-  get id(): string {
-    return this._id;
+  toJSON() {
+    return {
+      id: this._id,
+    };
+  }
+
+  static get idSchema() {
+    return uuid("Entity ID must be a valid UUID");
+  }
+
+  static get createSchema() {
+    return object({
+      id: this.idSchema.optional().default(() => crypto.randomUUID()),
+    });
+  }
+
+  static get updateSchema() {
+    return object({ id: this.idSchema });
+  }
+
+  static get schema() {
+    return object({ id: this.idSchema });
   }
 }
