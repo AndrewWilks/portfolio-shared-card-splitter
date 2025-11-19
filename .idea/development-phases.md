@@ -20,10 +20,27 @@
 ## Phase 2: Card Selection Feature (Current Phase)
 
 - Backend: Card management system
-  - Card routes (GET /cards, POST /cards, GET /cards/:id)
-  - Card service layer
-  - Card repository (database operations)
-  - Connect to existing cards schema
+  - Card routes (GET /cards, POST /cards, GET /cards/:id, etc.) ✅
+  - Card service layer ✅
+  - Card repository (database operations) ✅
+  - Connect to existing cards schema ✅
+- Frontend: User First Card UX
+  - Check if user has any cards on app load
+  - Create onboarding wizard component (multi-step form)
+    - Step 1: Welcome screen with explanation
+    - Step 2: Card creation form (name, type, last4)
+    - Step 3: Success/confirmation screen
+  - Implement routing logic
+    - Redirect to `/onboarding` if no cards exist
+    - Skip onboarding if user already has cards
+  - Onboarding state management
+    - Track current step in wizard
+    - Validate each step before proceeding
+    - Handle form submission to create first card
+  - Post-onboarding flow
+    - Redirect to dashboard after card creation
+    - Auto-select newly created card as active
+    - Show success message/toast
 - Frontend: Connect card switcher
   - Card service/API client
   - Fetch user's cards
