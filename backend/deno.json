@@ -14,7 +14,6 @@
     "@frontend/": "../frontend/",
     "@hono/zod-validator": "npm:@hono/zod-validator@^0.7.4",
     "@node-rs/argon2": "npm:@node-rs/argon2@^2.0.2",
-    "@std/http": "jsr:@std/http@^1.0.21",
     "@types/pg": "npm:@types/pg@^8.15.6",
     "drizzle-kit": "npm:drizzle-kit@^0.31.7",
     "drizzle-orm": "npm:drizzle-orm@^0.44.7",

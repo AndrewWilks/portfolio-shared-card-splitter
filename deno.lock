@@ -2411,12 +2411,12 @@
   },
   "workspace": {
     "dependencies": [
+      "jsr:@std/http@^1.0.21",
       "npm:zod@^4.1.12"
     ],
     "members": {
       "backend": {
         "dependencies": [
-          "jsr:@std/http@^1.0.21",
           "npm:@hono/zod-validator@~0.7.4",
           "npm:@node-rs/argon2@^2.0.2",
           "npm:@types/pg@^8.15.6",
