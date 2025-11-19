@@ -21,6 +21,7 @@ import { Route as PublicFormsAuthBootstrapRouteImport } from './routes/_publicFo
 import { Route as PublicFormsAuthAcceptInviteRouteImport } from './routes/_publicForms/auth/accept-invite.tsx'
 import { Route as AuthenticatedDashboardProfileIndexRouteImport } from './routes/_authenticated/dashboard/profile/index.tsx'
 import { Route as AuthenticatedDashboardCardIdIndexRouteImport } from './routes/_authenticated/dashboard/$cardId/index.tsx'
+import { Route as AuthenticatedFormsOnboardingIndexRouteImport } from './routes/_authenticated/_forms/onboarding/index.tsx'
 import { Route as AuthenticatedFormsAuthInviteRouteImport } from './routes/_authenticated/_forms/auth/invite.tsx'
 
 const PublicFormsRoute = PublicFormsRouteImport.update({
@@ -87,6 +88,12 @@ const AuthenticatedDashboardCardIdIndexRoute =
     path: '/$cardId/',
     getParentRoute: () => AuthenticatedDashboardRouteRoute,
   } as any)
+const AuthenticatedFormsOnboardingIndexRoute =
+  AuthenticatedFormsOnboardingIndexRouteImport.update({
+    id: '/_forms/onboarding/',
+    path: '/onboarding/',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
 const AuthenticatedFormsAuthInviteRoute =
   AuthenticatedFormsAuthInviteRouteImport.update({
     id: '/_forms/auth/invite',
@@ -103,6 +110,7 @@ export interface FileRoutesByFullPath {
   '/auth/reset-password': typeof PublicFormsAuthResetPasswordRoute
   '/dashboard/': typeof AuthenticatedDashboardIndexRoute
   '/auth/invite': typeof AuthenticatedFormsAuthInviteRoute
+  '/onboarding': typeof AuthenticatedFormsOnboardingIndexRoute
   '/dashboard/$cardId': typeof AuthenticatedDashboardCardIdIndexRoute
   '/dashboard/profile': typeof AuthenticatedDashboardProfileIndexRoute
 }
@@ -114,6 +122,7 @@ export interface FileRoutesByTo {
   '/auth/reset-password': typeof PublicFormsAuthResetPasswordRoute
   '/dashboard': typeof AuthenticatedDashboardIndexRoute
   '/auth/invite': typeof AuthenticatedFormsAuthInviteRoute
+  '/onboarding': typeof AuthenticatedFormsOnboardingIndexRoute
   '/dashboard/$cardId': typeof AuthenticatedDashboardCardIdIndexRoute
   '/dashboard/profile': typeof AuthenticatedDashboardProfileIndexRoute
 }
@@ -130,6 +139,7 @@ export interface FileRoutesById {
   '/_publicForms/auth/reset-password': typeof PublicFormsAuthResetPasswordRoute
   '/_authenticated/dashboard/': typeof AuthenticatedDashboardIndexRoute
   '/_authenticated/_forms/auth/invite': typeof AuthenticatedFormsAuthInviteRoute
+  '/_authenticated/_forms/onboarding/': typeof AuthenticatedFormsOnboardingIndexRoute
   '/_authenticated/dashboard/$cardId/': typeof AuthenticatedDashboardCardIdIndexRoute
   '/_authenticated/dashboard/profile/': typeof AuthenticatedDashboardProfileIndexRoute
 }
@@ -144,6 +154,7 @@ export interface FileRouteTypes {
     | '/auth/reset-password'
     | '/dashboard/'
     | '/auth/invite'
+    | '/onboarding'
     | '/dashboard/$cardId'
     | '/dashboard/profile'
   fileRoutesByTo: FileRoutesByTo
@@ -155,6 +166,7 @@ export interface FileRouteTypes {
     | '/auth/reset-password'
     | '/dashboard'
     | '/auth/invite'
+    | '/onboarding'
     | '/dashboard/$cardId'
     | '/dashboard/profile'
   id:
@@ -170,6 +182,7 @@ export interface FileRouteTypes {
     | '/_publicForms/auth/reset-password'
     | '/_authenticated/dashboard/'
     | '/_authenticated/_forms/auth/invite'
+    | '/_authenticated/_forms/onboarding/'
     | '/_authenticated/dashboard/$cardId/'
     | '/_authenticated/dashboard/profile/'
   fileRoutesById: FileRoutesById
@@ -266,6 +279,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDashboardCardIdIndexRouteImport
       parentRoute: typeof AuthenticatedDashboardRouteRoute
     }
+    '/_authenticated/_forms/onboarding/': {
+      id: '/_authenticated/_forms/onboarding/'
+      path: '/onboarding'
+      fullPath: '/onboarding'
+      preLoaderRoute: typeof AuthenticatedFormsOnboardingIndexRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
     '/_authenticated/_forms/auth/invite': {
       id: '/_authenticated/_forms/auth/invite'
       path: '/auth/invite'
@@ -299,12 +319,15 @@ const AuthenticatedDashboardRouteRouteWithChildren =
 interface AuthenticatedRouteChildren {
   AuthenticatedDashboardRouteRoute: typeof AuthenticatedDashboardRouteRouteWithChildren
   AuthenticatedFormsAuthInviteRoute: typeof AuthenticatedFormsAuthInviteRoute
+  AuthenticatedFormsOnboardingIndexRoute: typeof AuthenticatedFormsOnboardingIndexRoute
 }
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedDashboardRouteRoute:
     AuthenticatedDashboardRouteRouteWithChildren,
   AuthenticatedFormsAuthInviteRoute: AuthenticatedFormsAuthInviteRoute,
+  AuthenticatedFormsOnboardingIndexRoute:
+    AuthenticatedFormsOnboardingIndexRoute,
 }
 
 const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
