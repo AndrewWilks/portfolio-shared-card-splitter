@@ -26,7 +26,7 @@ export class ApiError implements IApiError {
   }
 
   static parse(data: unknown): ApiError {
-    const parsed = ApiError.schema.parse(data) as IApiError;
+    const parsed = ApiError.schema.parse(data);
     return new ApiError(parsed);
   }
 
@@ -36,7 +36,7 @@ export class ApiError implements IApiError {
     const parsed = ApiError.schema.safeParse(data);
 
     if (parsed.success) {
-      return { success: true, data: new ApiError(parsed.data as IApiError) };
+      return { success: true, data: new ApiError(parsed.data) };
     }
 
     return parsed;
