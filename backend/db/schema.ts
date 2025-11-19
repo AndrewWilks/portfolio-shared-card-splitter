@@ -13,7 +13,7 @@ export const cardTypeEnum = pgEnum("card_type", cardTypeEnumValues);
 
 export const cardsTable = pgTable("cards", {
   id: uuid().primaryKey().defaultRandom(),
-  owner: uuid()
+  ownerId: uuid()
     .notNull()
     .references(() => usersTable.id),
   name: varchar({ length: 100 }).notNull(),
