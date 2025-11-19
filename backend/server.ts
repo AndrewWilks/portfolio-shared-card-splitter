@@ -23,12 +23,15 @@ app.use(
 );
 
 app.use("*", logger());
-app.get("/api", (c) => c.text("Hello Deno!"));
+app.get("/api", (c) => c.text("Hello!"));
 // =============================================================
 // Public routes (no authentication required)
 // =============================================================
+// -- Bootstrap routes ---------------------------------------//
 app.get("/api/v1/bootstrap/status", bootstrapRoutes.getBootstrapStatus);
 app.post("/api/v1/bootstrap", ...bootstrapRoutes.createBootstrap);
+
+// -- Auth routes --------------------------------------------//
 app.post("/api/v1/auth/login", ...authRoutes.login);
 
 // =============================================================
@@ -38,6 +41,7 @@ app.use("/api/v1/*", requireAuth());
 // =============================================================
 // Protected routes (authentication required)
 // =============================================================
+// -- Auth routes --------------------------------------------//
 app.post("/api/v1/auth/logout", authRoutes.logout);
 app.get("/api/v1/auth/me", authRoutes.me);
 // =============================================================
