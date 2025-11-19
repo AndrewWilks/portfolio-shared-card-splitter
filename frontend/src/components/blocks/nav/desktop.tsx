@@ -8,7 +8,7 @@ export default function NavDesktop() {
   return (
     <header className=" border-b">
       <div className="flex items-center justify-between container mx-auto p-4">
-        <Link to="/">Shared Card Splitter</Link>
+        <Link to="/">FairShare</Link>
         <nav>
           {isAuthenticated && <LogoutBtn />}
           <ModeToggle />
