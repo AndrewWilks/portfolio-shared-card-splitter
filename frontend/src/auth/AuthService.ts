@@ -11,6 +11,7 @@ export interface AuthSnapshot {
   isAuthenticated: boolean;
   isBootstrapped: boolean | null;
   initialAuthChecked: boolean;
+  hasOnboarded: boolean;
 }
 
 type Listener = (snapshot: AuthSnapshot) => void;
@@ -21,6 +22,7 @@ export class AuthService {
     isAuthenticated: false,
     isBootstrapped: null,
     initialAuthChecked: false,
+    hasOnboarded: false,
   };
 
   private listeners = new Set<Listener>();
@@ -49,6 +51,7 @@ export class AuthService {
       ...this.snapshot,
       user,
       isAuthenticated: !!user,
+      hasOnboarded: user ? user.hasOnboarded : false,
     };
     this.notify();
   }
@@ -108,6 +111,48 @@ export class AuthService {
     this.isBootstrapped = true;
 
     return res;
+  }
+
+  async onboardUser() {
+    const res = await User.onboardUser();
+
+    if (res instanceof ApiError) {
+      return res;
+    }
+
+    if (!res.data) {
+      return new ApiError({
+        message: "Onboarding failed: No user data returned",
+        code: ApiError.InternalCodes.ONBOARDING_FAILED,
+      });
+    }
+
+    this.setUser(res.data);
+
+    return res;
+  }
+
+  async offboardUser() {
+    const res = await User.offboardUser();
+
+    if (res instanceof ApiError) {
+      return res;
+    }
+
+    if (!res.data) {
+      return new ApiError({
+        message: "Offboarding failed: No user data returned",
+        code: ApiError.InternalCodes.OFFBOARDING_FAILED,
+      });
+    }
+
+    this.setUser(res.data);
+
+    return res;
+  }
+
+  get hasOnboarded(): boolean {
+    return this.snapshot.hasOnboarded;
   }
 
   get isBootstrapped(): boolean | null {

@@ -13,6 +13,8 @@ export interface AuthContextValue extends AuthSnapshot {
   logout: typeof authService.logout;
   bootstrap: typeof authService.bootstrap;
   checkInitialAuth: typeof authService.checkInitialAuth;
+  onboardUser: typeof authService.onboardUser;
+  offboardUser: typeof authService.offboardUser;
 }
 
 const AuthContext = createContext<AuthContextValue | null>(null);
@@ -39,6 +41,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       logout: () => authService.logout(),
       bootstrap: (data) => authService.bootstrap(data),
       checkInitialAuth: async () => await authService.checkInitialAuth(),
+      onboardUser: () => authService.onboardUser(),
+      offboardUser: () => authService.offboardUser(),
     }),
     [snapshot]
   );

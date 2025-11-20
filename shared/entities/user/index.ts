@@ -49,6 +49,70 @@ export class User {
     return `${this._firstName} ${this._lastName}`;
   }
 
+  get hasOnboarded(): boolean {
+    return this._hasOnboarded;
+  }
+
+  static async onboardUser() {
+    const res = await fetch("/api/v1/onboard", {
+      method: "POST",
+      credentials: "include",
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      const apiError = ApiError.parse(data);
+      return apiError;
+    }
+
+    const parsed = ApiResponse.parse(data, User.schema);
+
+    if (!parsed.data) {
+      return new ApiError({
+        message: "Login failed: No user data returned",
+        code: ApiError.InternalCodes.INVALID_LOGIN_DATA,
+      });
+    }
+
+    const returnValue = new ApiResponse({
+      message: parsed.message,
+      data: User.create(parsed.data),
+    });
+
+    return returnValue;
+  }
+
+  static async offboardUser() {
+    const res = await fetch("/api/v1/offboard", {
+      method: "POST",
+      credentials: "include",
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      const apiError = ApiError.parse(data);
+      return apiError;
+    }
+
+    const parsed = ApiResponse.parse(data, User.schema);
+
+    if (!parsed.data) {
+      return new ApiError({
+        message: "Login failed: No user data returned",
+        code: ApiError.InternalCodes.INVALID_LOGIN_DATA,
+      });
+    }
+
+    const returnValue = new ApiResponse({
+      message: parsed.message,
+      data: User.create(parsed.data),
+    });
+
+    return returnValue;
+  }
+
   static async login({ email, password }: TUserLogin) {
     const parsedEmail = this.emailSchema.parse(email);
     const parsedPassword = this.passwordSchema.parse(password);
