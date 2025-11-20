@@ -71,7 +71,7 @@ export const login = factory.createHandlers(
  * POST /api/v1/auth/logout
  * Clear authentication cookie
  */
-export const logout = (c: Context) => {
+export const logout = factory.createHandlers((c) => {
   TokenCookieService.clearTokenCookie(c);
 
   const apiResponse = new ApiResponse({
@@ -79,13 +79,13 @@ export const logout = (c: Context) => {
   });
 
   return c.json(apiResponse, STATUS_CODE.OK);
-};
+});
 
 /**
  * GET /api/v1/auth/me
  * Get current authenticated user
  */
-export const me = async (c: Context) => {
+export const me = factory.createHandlers(async (c) => {
   // User is already authenticated and attached to context by middleware
   const tokenPayload = c.get("user");
 
@@ -103,4 +103,4 @@ export const me = async (c: Context) => {
     }),
     STATUS_CODE.OK
   );
-};
+});

@@ -44,8 +44,8 @@ app.use("/api/v1/*", requireAuth());
 // Protected routes (authentication required)
 // =============================================================
 // -- Auth routes --------------------------------------------//
-app.post("/api/v1/auth/logout", authRoutes.logout);
-app.get("/api/v1/auth/me", authRoutes.me);
+app.post("/api/v1/auth/logout", ...authRoutes.logout);
+app.get("/api/v1/auth/me", ...authRoutes.me);
 
 // -- Onboarding routes --------------------------------------//
 app.post("/api/v1/onboarding", ...onboardingRoutes.onboardUser);
