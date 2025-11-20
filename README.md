@@ -1,10 +1,14 @@
-# Portfolio Card Splitter
+# Portfolio Card Splitter named Fair Share
 
-A production-ready web application for managing shared credit card expenses with clean tracking, allocation, and settlement.
+A production-ready web application for managing shared credit card expenses with
+clean tracking, allocation, and settlement.
 
 ## Overview
 
-Portfolio Card Splitter helps two or more people share a credit card cleanly, assign each charge, park money elsewhere while the card is interest-free, then settle with zero guesswork. Built with Clean Architecture principles, SOLID design patterns, and a mobile-first approach.
+Fair Share helps two or more people share a credit card cleanly, assign each
+charge, park money elsewhere while the card is interest-free, then settle with
+zero guesswork. Built with Clean Architecture principles, SOLID design patterns,
+and a mobile-first approach.
 
 ## Technology Stack
 

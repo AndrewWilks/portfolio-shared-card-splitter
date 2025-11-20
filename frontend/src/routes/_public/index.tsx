@@ -14,7 +14,7 @@ export const Route = createFileRoute("/_public/")({
 function Index() {
   return (
     <div className="p-2">
-      <h1>Welcome to Shared Card Splitter!</h1>
+      <h1>Welcome to Fair Share!</h1>
       <p>Please log in or sign up to continue.</p>
       <Link to="/auth/login" search={() => ({ redirectTo: "/" })}>
         Log In

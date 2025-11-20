@@ -230,7 +230,7 @@ function RouteComponent() {
         <h1 className="text-3xl font-bold">
           Welcome to
           <br />
-          Shared Card Splitter
+          Fair Share
         </h1>
         <p className="text-gray-600 mt-2">
           Let's set up your first administrator account to get started
