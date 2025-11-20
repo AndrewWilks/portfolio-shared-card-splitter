@@ -39,11 +39,11 @@
     - Step 1: Welcome screen with explanation
     - Step 2: Card creation form (name, type, last4)
     - Step 3: Success/confirmation screen
-  - Implement routing logic
-    - Add `/onboarding` route (public but authenticated)
-    - Create route guard to check `hasOnboarded` flag
-    - Redirect to `/onboarding` if `hasOnboarded === false`
-    - Skip onboarding if `hasOnboarded === true`
+  - Implement routing logic ✅
+    - Add `/onboarding` route (public but authenticated) ✅
+    - Create route guard to check `hasOnboarded` flag ✅
+    - Redirect to `/onboarding` if `hasOnboarded === false` ✅
+    - Skip onboarding if `hasOnboarded === true` ✅
   - Onboarding state management
     - Track current step in wizard (local state)
     - Validate each step before proceeding
