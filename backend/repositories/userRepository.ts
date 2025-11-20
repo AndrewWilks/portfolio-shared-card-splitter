@@ -67,6 +67,20 @@ export class UserRepository {
   }
 
   /**
+   * Mark a user as having offboarded
+   * @param id - User ID to offboard
+   * @returns Updated user record or null if not found
+   */
+  static async offboardUser(id: DB_UserKey): Promise<DB_User | null> {
+    const result = await db
+      .update(usersTable)
+      .set({ hasOnboarded: false })
+      .where(eq(usersTable.id, id))
+      .returning();
+    return result[0] ?? null;
+  }
+
+  /**
    * Create a new user
    * @param data - User data (email, passwordHash, firstName, lastName)
    * @returns Created user record

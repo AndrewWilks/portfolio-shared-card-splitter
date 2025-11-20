@@ -48,7 +48,8 @@ app.post("/api/v1/auth/logout", ...authRoutes.logout);
 app.get("/api/v1/auth/me", ...authRoutes.me);
 
 // -- Onboarding routes --------------------------------------//
-app.post("/api/v1/onboarding", ...onboardingRoutes.onboardUser);
+app.post("/api/v1/onboard", ...onboardingRoutes.onboardUser);
+app.post("/api/v1/offboard", ...onboardingRoutes.offboardUser);
 
 // -- Card routes --------------------------------------------//
 app.get("/api/v1/cards", ...cardRoutes.getCards);

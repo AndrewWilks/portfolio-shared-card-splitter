@@ -27,3 +27,24 @@ export const onboardUser = factory.createHandlers(async (c) => {
 
   return c.json(response.toJSON(), STATUS_CODE.OK);
 });
+
+export const offboardUser = factory.createHandlers(async (c) => {
+  const user = c.get("user");
+
+  const offboardingResult = await UserService.offboardUser(user.userId);
+
+  if (offboardingResult instanceof ApiError) {
+    const apiError = offboardingResult as TApiError;
+    return c.json(
+      apiError,
+      UserService.mapErrorToStatusCode(offboardingResult)
+    );
+  }
+
+  const response = new ApiResponse({
+    message: "User offboarding completed successfully",
+    data: offboardingResult,
+  });
+
+  return c.json(response.toJSON(), STATUS_CODE.OK);
+});

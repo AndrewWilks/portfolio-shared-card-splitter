@@ -149,6 +149,32 @@ export class UserService {
     return User.create(dbUser);
   }
 
+  /**
+   * Offboard a user by marking them as having completed offboarding
+   * @param userId - User ID to offboard
+   * @returns Updated User entity or ApiError
+   */
+  static async offboardUser(userId: string): Promise<User | ApiError> {
+    const parsedUserId = User.idSchema.safeParse(userId);
+
+    if (!parsedUserId.success) {
+      return new ApiError({
+        message: "Invalid user ID format",
+        code: ApiError.InternalCodes.INVALID_USER_ID,
+      });
+    }
+
+    const dbUser = await UserRepository.offboardUser(userId);
+
+    if (!dbUser) {
+      return new ApiError({
+        message: "User not found for offboarding",
+        code: ApiError.InternalCodes.USER_NOT_FOUND,
+      });
+    }
+    return User.create(dbUser);
+  }
+
   static mapErrorToStatusCode(error: ApiError) {
     switch (error.code) {
       case ApiError.InternalCodes.USER_NOT_FOUND:
