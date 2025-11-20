@@ -1,4 +1,4 @@
-import { createFileRoute, Outlet } from "@tanstack/react-router";
+import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
 import { DashboardSidebar } from "@/components/blocks/dashboard/sidebar.tsx";
 import {
   SidebarProvider,
@@ -8,6 +8,13 @@ import { ModeToggle } from "@/components/ui/theme/mode-toggle.tsx";
 
 export const Route = createFileRoute("/_authenticated/dashboard")({
   component: RouteComponent,
+  beforeLoad: ({ context, location }) => {
+    if (!context.auth.hasOnboarded) {
+      throw redirect({
+        to: "/onboarding",
+      });
+    }
+  },
 });
 
 function RouteComponent() {
