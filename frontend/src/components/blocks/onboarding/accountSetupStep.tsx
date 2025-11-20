@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { User as UserIcon } from "lucide-react";
 import { Input } from "@/components/ui/form/input.tsx";
 import { FormErrorBox } from "@/components/ui/form/formErrorBox.tsx";
@@ -13,6 +13,9 @@ export interface AccountSetupStepProps {
 }
 
 const { firstNameSchema, lastNameSchema } = User;
+
+// TODO: Use more semantic html tags
+// TODO: Code Split into multiple components and follow solid principles
 
 /**
  * Account setup step with form fields and validation
@@ -54,7 +57,7 @@ export function AccountSetupStep({ data, onUpdate }: AccountSetupStepProps) {
   // Validation check
   const isValid = useMemo(
     () => !errors.firstName && !errors.lastName,
-    [errors]
+    [errors],
   );
 
   // Register validation for this step
@@ -66,7 +69,7 @@ export function AccountSetupStep({ data, onUpdate }: AccountSetupStepProps) {
       () => {
         // Mark all fields as touched when validation fails on Next attempt
         setTouched({ firstName: true, lastName: true });
-      }
+      },
     );
     return () => unregisterStepValidation(1);
   }, [isValid, registerStepValidation, unregisterStepValidation]);
@@ -78,7 +81,9 @@ export function AccountSetupStep({ data, onUpdate }: AccountSetupStepProps) {
         <div className="inline-flex items-center justify-center size-16 rounded-full bg-linear-to-br from-primary/20 to-primary/5 text-primary mb-3">
           <UserIcon className="size-8" />
         </div>
-        <h2 className="text-3xl md:text-4xl font-bold">Complete Your Profile</h2>
+        <h2 className="text-3xl md:text-4xl font-bold">
+          Complete Your Profile
+        </h2>
         <p className="text-muted-foreground text-base md:text-lg">
           Tell us a bit about yourself
         </p>
@@ -104,7 +109,9 @@ export function AccountSetupStep({ data, onUpdate }: AccountSetupStepProps) {
             aria-invalid={!!(touched.firstName && errors.firstName)}
             className="h-11 text-base"
           />
-          {touched.firstName && errors.firstName && <FormErrorBox message={errors.firstName} />}
+          {touched.firstName && errors.firstName && (
+            <FormErrorBox message={errors.firstName} />
+          )}
         </div>
 
         {/* Last Name */}
@@ -125,15 +132,18 @@ export function AccountSetupStep({ data, onUpdate }: AccountSetupStepProps) {
             aria-invalid={!!(touched.lastName && errors.lastName)}
             className="h-11 text-base"
           />
-          {touched.lastName && errors.lastName && <FormErrorBox message={errors.lastName} />}
+          {touched.lastName && errors.lastName && (
+            <FormErrorBox message={errors.lastName} />
+          )}
         </div>
       </div>
 
       {/* Info Tip */}
       <div className="mt-8 p-5 rounded-xl bg-linear-to-br from-blue-50/50 to-blue-100/30 dark:from-blue-950/30 dark:to-blue-900/20 max-w-md mx-auto border border-blue-200/50 dark:border-blue-800/50">
         <p className="text-sm text-foreground/80">
-          💡 <strong className="text-foreground">Tip:</strong> You were invited to join Fair Share.
-          Complete your profile to get started with managing shared expenses.
+          💡 <strong className="text-foreground">Tip:</strong>{" "}
+          You were invited to join Fair Share. Complete your profile to get
+          started with managing shared expenses.
         </p>
       </div>
     </div>

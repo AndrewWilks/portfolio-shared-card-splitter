@@ -1,10 +1,13 @@
-import { CheckCircle2, User, Bell, Settings, DollarSign } from "lucide-react";
+import { Bell, CheckCircle2, DollarSign, Settings, User } from "lucide-react";
 import { cn } from "@/lib/utils.ts";
 import type { OnboardingData } from "./onboardingWizard.tsx";
 
 export interface CompleteStepProps {
   data: OnboardingData;
 }
+
+// TODO: Use more semantic html tags
+// TODO: Code Split into multiple components and follow solid principles
 
 /**
  * Completion step showing a summary of user choices
@@ -40,8 +43,8 @@ export function CompleteStep({ data }: CompleteStepProps) {
         </div>
         <h2 className="text-3xl md:text-4xl font-bold">You're All Set!</h2>
         <p className="text-muted-foreground text-base md:text-lg max-w-xl mx-auto leading-relaxed">
-          Review your information below and click "Get Started" to begin managing
-          your shared cards.
+          Review your information below and click "Get Started" to begin
+          managing your shared cards.
         </p>
       </div>
 
@@ -54,7 +57,7 @@ export function CompleteStep({ data }: CompleteStepProps) {
               key={item.label}
               className={cn(
                 "p-5 rounded-xl border-2 bg-card flex items-start gap-4",
-                "hover:border-primary/20 transition-all"
+                "hover:border-primary/20 transition-all",
               )}
             >
               <div className="inline-flex items-center justify-center size-12 rounded-lg bg-gradient-to-br from-primary/20 to-primary/5 text-primary shrink-0">
@@ -77,15 +80,21 @@ export function CompleteStep({ data }: CompleteStepProps) {
         <ul className="space-y-3 text-sm md:text-base">
           <li className="flex items-start gap-3">
             <span className="text-primary shrink-0 text-lg font-bold">✓</span>
-            <span className="text-foreground">Set up your first shared credit card</span>
+            <span className="text-foreground">
+              Set up your first shared credit card
+            </span>
           </li>
           <li className="flex items-start gap-3">
             <span className="text-primary shrink-0 text-lg font-bold">✓</span>
-            <span className="text-foreground">Invite your card partners to join</span>
+            <span className="text-foreground">
+              Invite your card partners to join
+            </span>
           </li>
           <li className="flex items-start gap-3">
             <span className="text-primary shrink-0 text-lg font-bold">✓</span>
-            <span className="text-foreground">Start tracking and allocating expenses</span>
+            <span className="text-foreground">
+              Start tracking and allocating expenses
+            </span>
           </li>
         </ul>
       </div>

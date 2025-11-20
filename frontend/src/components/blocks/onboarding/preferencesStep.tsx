@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Settings, Bell, Moon, DollarSign } from "lucide-react";
+import { Bell, DollarSign, Moon, Settings } from "lucide-react";
 import { useMultiStep } from "@/components/ui/form/multi-step/index.ts";
 import { cn } from "@/lib/utils.ts";
 import type { OnboardingData } from "./onboardingWizard.tsx";
@@ -8,6 +8,9 @@ export interface PreferencesStepProps {
   data: OnboardingData;
   onUpdate: (updates: Partial<OnboardingData>) => void;
 }
+
+// TODO: Use more semantic html tags
+// TODO: Code Split into multiple components and follow solid principles
 
 /**
  * Preferences step with mixed form controls and informational content
@@ -31,7 +34,7 @@ export function PreferencesStep({ data, onUpdate }: PreferencesStepProps) {
 
   const updatePreference = <K extends keyof OnboardingData["preferences"]>(
     key: K,
-    value: OnboardingData["preferences"][K]
+    value: OnboardingData["preferences"][K],
   ) => {
     onUpdate({
       preferences: {
@@ -48,7 +51,9 @@ export function PreferencesStep({ data, onUpdate }: PreferencesStepProps) {
         <div className="inline-flex items-center justify-center size-16 rounded-full bg-gradient-to-br from-primary/20 to-primary/5 text-primary mb-3">
           <Settings className="size-8" />
         </div>
-        <h2 className="text-3xl md:text-4xl font-bold">Customize Your Experience</h2>
+        <h2 className="text-3xl md:text-4xl font-bold">
+          Customize Your Experience
+        </h2>
         <p className="text-muted-foreground text-base md:text-lg">
           These settings can be changed later
         </p>
@@ -74,19 +79,21 @@ export function PreferencesStep({ data, onUpdate }: PreferencesStepProps) {
             role="switch"
             aria-checked={data.preferences.notifications}
             onClick={() =>
-              updatePreference("notifications", !data.preferences.notifications)
-            }
+              updatePreference(
+                "notifications",
+                !data.preferences.notifications,
+              )}
             className={cn(
               "relative inline-flex h-7 w-12 items-center rounded-full transition-colors shrink-0",
-              data.preferences.notifications
-                ? "bg-primary"
-                : "bg-muted"
+              data.preferences.notifications ? "bg-primary" : "bg-muted",
             )}
           >
             <span
               className={cn(
                 "inline-block size-5 transform rounded-full bg-white shadow-sm transition-transform",
-                data.preferences.notifications ? "translate-x-6" : "translate-x-1"
+                data.preferences.notifications
+                  ? "translate-x-6"
+                  : "translate-x-1",
               )}
             />
           </button>
@@ -110,19 +117,16 @@ export function PreferencesStep({ data, onUpdate }: PreferencesStepProps) {
             role="switch"
             aria-checked={data.preferences.darkMode}
             onClick={() =>
-              updatePreference("darkMode", !data.preferences.darkMode)
-            }
+              updatePreference("darkMode", !data.preferences.darkMode)}
             className={cn(
               "relative inline-flex h-7 w-12 items-center rounded-full transition-colors shrink-0",
-              data.preferences.darkMode
-                ? "bg-primary"
-                : "bg-muted"
+              data.preferences.darkMode ? "bg-primary" : "bg-muted",
             )}
           >
             <span
               className={cn(
                 "inline-block size-5 transform rounded-full bg-white shadow-sm transition-transform",
-                data.preferences.darkMode ? "translate-x-6" : "translate-x-1"
+                data.preferences.darkMode ? "translate-x-6" : "translate-x-1",
               )}
             />
           </button>
@@ -151,7 +155,7 @@ export function PreferencesStep({ data, onUpdate }: PreferencesStepProps) {
                   "p-4 rounded-lg border-2 text-left transition-all",
                   data.preferences.currency === currency.code
                     ? "bg-primary text-primary-foreground border-primary shadow-md scale-105"
-                    : "bg-background hover:bg-muted border-border hover:border-primary/30"
+                    : "bg-background hover:bg-muted border-border hover:border-primary/30",
                 )}
               >
                 <div className="font-bold text-lg">
@@ -167,7 +171,8 @@ export function PreferencesStep({ data, onUpdate }: PreferencesStepProps) {
       {/* Info */}
       <div className="mt-8 p-5 rounded-xl bg-gradient-to-br from-muted/50 to-muted/30 max-w-md mx-auto border">
         <p className="text-sm text-muted-foreground font-medium text-center">
-          ℹ️ Don't worry - you can change all these settings from your profile at any time.
+          ℹ️ Don't worry - you can change all these settings from your profile
+          at any time.
         </p>
       </div>
     </div>

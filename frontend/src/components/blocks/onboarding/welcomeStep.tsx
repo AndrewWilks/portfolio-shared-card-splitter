@@ -1,5 +1,8 @@
-import { Sparkles, CreditCard, Users, Shield } from "lucide-react";
+import { CreditCard, Shield, Sparkles, Users } from "lucide-react";
 import { cn } from "@/lib/utils.ts";
+
+// TODO: Use more semantic html tags
+// TODO: Code Split into multiple components and follow solid principles
 
 /**
  * Welcome step - informational content with app overview
@@ -35,8 +38,8 @@ export function WelcomeStep() {
           Manage Shared Cards Like a Pro
         </h2>
         <p className="text-muted-foreground text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
-          Fair Share helps you and your partners share a credit card
-          cleanly, track expenses, and settle up with complete transparency.
+          Fair Share helps you and your partners share a credit card cleanly,
+          track expenses, and settle up with complete transparency.
         </p>
       </div>
 
@@ -50,7 +53,7 @@ export function WelcomeStep() {
               className={cn(
                 "p-6 rounded-xl border-2 bg-card text-card-foreground",
                 "hover:shadow-lg hover:border-primary/20 transition-all duration-200",
-                "transform hover:-translate-y-1"
+                "transform hover:-translate-y-1",
               )}
             >
               <div className="inline-flex items-center justify-center size-12 rounded-lg bg-primary/10 text-primary mb-4">

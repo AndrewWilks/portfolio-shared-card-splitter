@@ -1,9 +1,9 @@
 import { useState } from "react";
 import {
-  MultiStepRoot,
-  MultiStepProgress,
   MultiStepContent,
   MultiStepNavigation,
+  MultiStepProgress,
+  MultiStepRoot,
 } from "@/components/ui/form/multi-step/index.ts";
 import { WelcomeStep } from "./welcomeStep.tsx";
 import { AccountSetupStep } from "./accountSetupStep.tsx";
@@ -28,6 +28,8 @@ export interface OnboardingWizardProps {
   /** Additional CSS classes */
   className?: string;
 }
+
+// TODO: Use more semantic html tags
 
 /**
  * Onboarding wizard component
@@ -67,7 +69,9 @@ export function OnboardingWizard({
       >
         {/* Header */}
         <div className="mb-10 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-3">Welcome to Fair Share</h1>
+          <h1 className="text-4xl md:text-5xl font-bold mb-3">
+            Welcome to Fair Share
+          </h1>
           <p className="text-muted-foreground text-base md:text-lg">
             Let's get you set up in just a few steps
           </p>
