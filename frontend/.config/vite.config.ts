@@ -25,6 +25,10 @@ export default defineConfig({
         find: "@shared",
         replacement: path.resolve(__dirname, "../../shared"),
       },
+      {
+        find: "@backend",
+        replacement: path.resolve(__dirname, "../../backend"),
+      },
     ],
   },
   build: {
