@@ -94,7 +94,7 @@ export class CardService {
    */
   static async updateCard(
     id: DB_CardKey,
-    data: DB_CardUpdate
+    data: DB_CardUpdate,
   ): Promise<Card | ApiError> {
     // Validate input data using Card entity's updateSchema
     const parseResult = Card.updateSchema.safeParse(data);
@@ -129,6 +129,25 @@ export class CardService {
       });
     }
     return deleted;
+  }
+
+  /**
+   * Check if a user has any cards
+   * @param userId - Owner user ID (UUID)
+   * @returns true if user has cards, false otherwise, or ApiError
+   */
+  static async hasCards(userId: string): Promise<boolean | ApiError> {
+    const parsed = Card.ownerIdSchema.safeParse(userId);
+    if (!parsed.success) {
+      return new ApiError({
+        message: "Invalid owner ID",
+        code: ApiError.InternalCodes.INVALID_CARD_OWNER_ID,
+        details: parsed.error.issues.toString(),
+      });
+    }
+
+    const dbCards = await CardRepository.getByOwner(userId);
+    return dbCards.length > 0;
   }
 
   static mapErrorToStatusCode(error: ApiError) {

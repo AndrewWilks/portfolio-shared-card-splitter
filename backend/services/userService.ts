@@ -1,4 +1,4 @@
-import { User, type TPassword } from "@shared/entities/user/index.ts";
+import { type TPassword, User } from "@shared/entities/user/index.ts";
 import { ApiError } from "@shared/entities/api/apiError.ts";
 import { UserRepository } from "../repositories/userRepository.ts";
 import { hash, verify } from "@node-rs/argon2";
@@ -88,7 +88,7 @@ export class UserService {
    */
   static async verifyPassword(
     email: string,
-    password: string
+    password: string,
   ): Promise<boolean> {
     const dbUser = await UserRepository.getByEmail(email);
 
@@ -120,6 +120,37 @@ export class UserService {
       console.error(`Password verification error for ${email}:`, error);
       return false;
     }
+  }
+
+  /**
+   * Update a user's basic information
+   * @param userId - User ID to update
+   * @param data - Update data (firstName, lastName, hasOnboarded)
+   * @returns Updated User entity or ApiError
+   */
+  static async updateUser(
+    userId: string,
+    data: { firstName?: string; lastName?: string; hasOnboarded?: boolean },
+  ): Promise<User | ApiError> {
+    const parsedUserId = User.idSchema.safeParse(userId);
+
+    if (!parsedUserId.success) {
+      return new ApiError({
+        message: "Invalid user ID format",
+        code: ApiError.InternalCodes.INVALID_USER_ID,
+      });
+    }
+
+    const dbUser = await UserRepository.update(userId, data);
+
+    if (!dbUser) {
+      return new ApiError({
+        message: "User not found",
+        code: ApiError.InternalCodes.USER_NOT_FOUND,
+      });
+    }
+
+    return User.create(dbUser);
   }
 
   /**

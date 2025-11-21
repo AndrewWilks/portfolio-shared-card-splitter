@@ -1,5 +1,5 @@
-import { pgTable, uuid, varchar, pgEnum, boolean } from "drizzle-orm/pg-core";
-import { cardTypeEnumValues } from "./constants.ts";
+import { boolean, pgEnum, pgTable, uuid, varchar } from "drizzle-orm/pg-core";
+import { cardTypeEnumValues, currencyValues } from "./constants.ts";
 
 export const usersTable = pgTable("users", {
   id: uuid().primaryKey().defaultRandom(),
@@ -11,6 +11,18 @@ export const usersTable = pgTable("users", {
 });
 
 export const cardTypeEnum = pgEnum("card_type", cardTypeEnumValues);
+export const currencyEnum = pgEnum("currency", currencyValues);
+
+export const userPreferencesTable = pgTable("user_preferences", {
+  id: uuid().primaryKey().defaultRandom(),
+  userId: uuid()
+    .notNull()
+    .unique()
+    .references(() => usersTable.id, { onDelete: "cascade" }),
+  notifications: boolean().notNull().default(true),
+  darkMode: boolean().notNull().default(false),
+  currency: currencyEnum().notNull().default("USD"),
+});
 
 export const cardsTable = pgTable("cards", {
   id: uuid().primaryKey().defaultRandom(),
