@@ -3,13 +3,13 @@ import { MastercardLogo } from "./mastercard.tsx";
 import { AmexLogo } from "./amex.tsx";
 import { DefaultLogo } from "./default.tsx";
 
-export const icons = {
+export const rounded = {
   visa: VisaLogo,
   mastercard: MastercardLogo,
   amex: AmexLogo,
   default: DefaultLogo,
 };
 
-export type CardIconType = keyof typeof icons;
+export type CardRoundedType = keyof typeof rounded;
 
 export { AmexLogo, DefaultLogo, MastercardLogo, VisaLogo };
