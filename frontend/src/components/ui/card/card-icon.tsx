@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils.ts";
-import * as assets from "./assets/index.tsx";
+import * as assets from "./assets/icon/index.tsx";
+import { CardLogoType } from "./assets/icon/index.tsx";
 import { createElement } from "react";
-import { CardLogoType } from "./assets/index.tsx";
 
 export interface CardIconProps {
   type: assets.CardLogoType;
