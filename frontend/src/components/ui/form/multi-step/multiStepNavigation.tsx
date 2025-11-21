@@ -1,7 +1,7 @@
-import { ChevronLeft, ChevronRight, Check } from "lucide-react";
 import { cn } from "@/lib/utils.ts";
-import { Button } from "@/components/ui/primitives/Button.tsx";
 import { useMultiStep } from "./multiStepContext.tsx";
+import { NavigationButton } from "./components/navigationButton.tsx";
+import { isLastStep } from "./utils/isLastStep.ts";
 
 export interface MultiStepNavigationProps {
   /** Label for the previous button */
@@ -20,12 +20,10 @@ export interface MultiStepNavigationProps {
   showIcons?: boolean;
 }
 
-// TODO: Use more semantic html tags
-// TODO: Code Split into multiple components and follow solid principles
-
 /**
  * Navigation controls for multi-step forms
  * Provides Previous, Next, and Submit buttons with appropriate states
+ * Uses semantic HTML nav element with accessible navigation buttons
  */
 export function MultiStepNavigation({
   previousLabel = "Previous",
@@ -45,10 +43,10 @@ export function MultiStepNavigation({
     canGoPrevious,
   } = useMultiStep();
 
-  const isLastStep = currentStep === totalSteps - 1;
+  const isOnLastStep = isLastStep(currentStep, totalSteps);
 
   const handleNext = () => {
-    if (isLastStep && onSubmit) {
+    if (isOnLastStep && onSubmit) {
       onSubmit();
     } else {
       goNext();
@@ -56,49 +54,33 @@ export function MultiStepNavigation({
   };
 
   return (
-    <div
+    <nav
       className={cn(
         "flex items-center justify-between gap-4 mt-6",
-        className
+        className,
       )}
+      aria-label="Form navigation"
     >
       {/* Previous Button */}
       {!hidePrevious && (
-        <Button
-          type="button"
-          variant="outline"
+        <NavigationButton
+          type="previous"
+          label={previousLabel}
           onClick={goPrevious}
           disabled={!canGoPrevious}
-          className={cn(!canGoPrevious && "invisible")}
-        >
-          {showIcons && <ChevronLeft className="size-4" />}
-          {previousLabel}
-        </Button>
+          showIcon={showIcons}
+        />
       )}
 
-      {/* Spacer when previous is hidden */}
-      {hidePrevious && <div />}
-
       {/* Next / Submit Button */}
-      <Button
-        type="button"
+      <NavigationButton
+        type={isOnLastStep ? "submit" : "next"}
+        label={isOnLastStep ? submitLabel : nextLabel}
         onClick={handleNext}
         disabled={!canGoNext}
-        variant={isLastStep ? "default" : "default"}
+        showIcon={showIcons}
         className="ml-auto"
-      >
-        {isLastStep ? (
-          <>
-            {showIcons && <Check className="size-4" />}
-            {submitLabel}
-          </>
-        ) : (
-          <>
-            {nextLabel}
-            {showIcons && <ChevronRight className="size-4" />}
-          </>
-        )}
-      </Button>
-    </div>
+      />
+    </nav>
   );
 }

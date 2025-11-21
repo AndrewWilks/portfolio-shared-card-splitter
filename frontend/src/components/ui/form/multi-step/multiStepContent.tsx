@@ -1,5 +1,4 @@
-import { Children, isValidElement, cloneElement } from "react";
-import { cn } from "@/lib/utils.ts";
+import { cloneElementWithProps, cn, getChildArray } from "@/lib/utils.ts";
 import { useMultiStep } from "./multiStepContext.tsx";
 
 export interface MultiStepContentProps {
@@ -11,12 +10,11 @@ export interface MultiStepContentProps {
   animation?: "fade" | "slide" | "none";
 }
 
-// TODO: Use more semantic html tags
-
 /**
  * Container for multi-step form content
  * Renders only the active step's content
  * Supports fade and slide transitions
+ * Uses semantic HTML section element with ARIA attributes
  */
 export function MultiStepContent({
   children,
@@ -25,11 +23,11 @@ export function MultiStepContent({
 }: MultiStepContentProps) {
   const { currentStep } = useMultiStep();
 
-  const childArray = Children.toArray(children);
+  const childArray = getChildArray(children);
 
   if (currentStep >= childArray.length) {
     console.warn(
-      `Current step ${currentStep} exceeds number of children ${childArray.length}`
+      `Current step ${currentStep} exceeds number of children ${childArray.length}`,
     );
     return null;
   }
@@ -37,24 +35,26 @@ export function MultiStepContent({
   const activeChild = childArray[currentStep];
 
   // Clone the child and inject step metadata as props if it's a valid element
-  const childWithProps = isValidElement(activeChild)
-    ? cloneElement(activeChild, {
-        stepIndex: currentStep,
-        isActive: true,
-      } as any)
-    : activeChild;
+  const childWithProps = cloneElementWithProps(activeChild, {
+    stepIndex: currentStep,
+    isActive: true,
+  });
 
   return (
-    <div
+    <section
       className={cn(
         "w-full",
         animation === "fade" && "animate-in fade-in duration-300",
-        animation === "slide" && "animate-in slide-in-from-right-4 duration-300",
-        className
+        animation === "slide" &&
+          "animate-in slide-in-from-right-4 duration-300",
+        className,
       )}
       key={currentStep} // Key forces re-mount for animations
+      role="region"
+      aria-label={`Step ${currentStep + 1} content`}
+      aria-live="polite"
     >
       {childWithProps}
-    </div>
+    </section>
   );
 }
