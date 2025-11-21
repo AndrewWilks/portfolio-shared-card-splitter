@@ -1,15 +1,16 @@
 import { useEffect, useMemo, useState } from "react";
-import { User as UserIcon } from "lucide-react";
+import { Bell, Moon, User as UserIcon } from "lucide-react";
 import { Input } from "@/components/ui/form/input.tsx";
 import { FormErrorBox } from "@/components/ui/form/formErrorBox.tsx";
 import { useMultiStep } from "@/components/ui/form/multi-step/index.ts";
 import { z } from "zod";
 import { User } from "@shared/entities/user/index.ts";
-import type { OnboardingData } from "./onboardingWizard.tsx";
+import { cn } from "@/lib/utils.ts";
+import type { TUserOnboarding } from "@shared/entities/user/index.ts";
 
 export interface AccountSetupStepProps {
-  data: OnboardingData;
-  onUpdate: (updates: Partial<OnboardingData>) => void;
+  data: TUserOnboarding;
+  onUpdate: (updates: Partial<TUserOnboarding>) => void;
 }
 
 const { firstNameSchema, lastNameSchema } = User;
@@ -136,14 +137,91 @@ export function AccountSetupStep({ data, onUpdate }: AccountSetupStepProps) {
             <FormErrorBox message={errors.lastName} />
           )}
         </div>
+
+        {/* Notifications Toggle */}
+        <div className="flex items-center justify-between p-5 rounded-xl border-2 bg-card hover:border-primary/20 transition-all">
+          <div className="flex items-center gap-4">
+            <div className="inline-flex items-center justify-center size-12 rounded-lg bg-linear-to-br from-primary/20 to-primary/5 text-primary shrink-0">
+              <Bell className="size-6" />
+            </div>
+            <div>
+              <h3 className="font-semibold text-base">Email Notifications</h3>
+              <p className="text-sm text-muted-foreground mt-0.5">
+                Get updates about shared expenses
+              </p>
+            </div>
+          </div>
+          <button
+            type="button"
+            role="switch"
+            aria-checked={data.preferences.notifications}
+            onClick={() =>
+              onUpdate({
+                preferences: {
+                  ...data.preferences,
+                  notifications: !data.preferences.notifications,
+                },
+              })}
+            className={cn(
+              "relative inline-flex h-7 w-12 items-center rounded-full transition-colors shrink-0",
+              data.preferences.notifications ? "bg-primary" : "bg-muted",
+            )}
+          >
+            <span
+              className={cn(
+                "inline-block size-5 transform rounded-full bg-white shadow-sm transition-transform",
+                data.preferences.notifications
+                  ? "translate-x-6"
+                  : "translate-x-1",
+              )}
+            />
+          </button>
+        </div>
+
+        {/* Dark Mode Toggle */}
+        <div className="flex items-center justify-between p-5 rounded-xl border-2 bg-card hover:border-primary/20 transition-all">
+          <div className="flex items-center gap-4">
+            <div className="inline-flex items-center justify-center size-12 rounded-lg bg-linear-to-br from-primary/20 to-primary/5 text-primary shrink-0">
+              <Moon className="size-6" />
+            </div>
+            <div>
+              <h3 className="font-semibold text-base">Dark Mode</h3>
+              <p className="text-sm text-muted-foreground mt-0.5">
+                Use dark theme for the interface
+              </p>
+            </div>
+          </div>
+          <button
+            type="button"
+            role="switch"
+            aria-checked={data.preferences.darkMode}
+            onClick={() =>
+              onUpdate({
+                preferences: {
+                  ...data.preferences,
+                  darkMode: !data.preferences.darkMode,
+                },
+              })}
+            className={cn(
+              "relative inline-flex h-7 w-12 items-center rounded-full transition-colors shrink-0",
+              data.preferences.darkMode ? "bg-primary" : "bg-muted",
+            )}
+          >
+            <span
+              className={cn(
+                "inline-block size-5 transform rounded-full bg-white shadow-sm transition-transform",
+                data.preferences.darkMode ? "translate-x-6" : "translate-x-1",
+              )}
+            />
+          </button>
+        </div>
       </div>
 
       {/* Info Tip */}
       <div className="mt-8 p-5 rounded-xl bg-linear-to-br from-blue-50/50 to-blue-100/30 dark:from-blue-950/30 dark:to-blue-900/20 max-w-md mx-auto border border-blue-200/50 dark:border-blue-800/50">
         <p className="text-sm text-foreground/80">
           💡 <strong className="text-foreground">Tip:</strong>{" "}
-          You were invited to join Fair Share. Complete your profile to get
-          started with managing shared expenses.
+          Complete your profile to get started managing shared expenses.
         </p>
       </div>
     </div>

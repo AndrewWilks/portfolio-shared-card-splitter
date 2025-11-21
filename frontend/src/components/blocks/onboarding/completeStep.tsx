@@ -1,9 +1,17 @@
-import { Bell, CheckCircle2, DollarSign, Settings, User } from "lucide-react";
+import {
+  Bell,
+  CheckCircle2,
+  CreditCard,
+  DollarSign,
+  Settings,
+  User,
+} from "lucide-react";
 import { cn } from "@/lib/utils.ts";
-import type { OnboardingData } from "./onboardingWizard.tsx";
+import type { TUserOnboarding } from "@shared/entities/user/index.ts";
 
 export interface CompleteStepProps {
-  data: OnboardingData;
+  data: TUserOnboarding;
+  hasCard: boolean;
 }
 
 // TODO: Use more semantic html tags
@@ -13,7 +21,7 @@ export interface CompleteStepProps {
  * Completion step showing a summary of user choices
  * Final step before submission
  */
-export function CompleteStep({ data }: CompleteStepProps) {
+export function CompleteStep({ data, hasCard }: CompleteStepProps) {
   const summaryItems = [
     { label: "First Name", value: data.firstName, icon: User },
     { label: "Last Name", value: data.lastName, icon: User },
@@ -33,6 +41,27 @@ export function CompleteStep({ data }: CompleteStepProps) {
       icon: DollarSign,
     },
   ];
+
+  // Add card information if card was created
+  if (hasCard && data.card) {
+    summaryItems.push(
+      {
+        label: "Card Name",
+        value: data.card.name,
+        icon: CreditCard,
+      },
+      {
+        label: "Card Type",
+        value: data.card.type.toUpperCase(),
+        icon: CreditCard,
+      },
+      {
+        label: "Last 4 Digits",
+        value: data.card.last4,
+        icon: CreditCard,
+      },
+    );
+  }
 
   return (
     <div className="space-y-8">
@@ -60,7 +89,7 @@ export function CompleteStep({ data }: CompleteStepProps) {
                 "hover:border-primary/20 transition-all",
               )}
             >
-              <div className="inline-flex items-center justify-center size-12 rounded-lg bg-gradient-to-br from-primary/20 to-primary/5 text-primary shrink-0">
+              <div className="inline-flex items-center justify-center size-12 rounded-lg bg-linear-to-br from-primary/20 to-primary/5 text-primary shrink-0">
                 <Icon className="size-6" />
               </div>
               <div className="flex-1 min-w-0">
