@@ -44,11 +44,19 @@ export function useStepNavigation({
         return;
       }
 
-      // If navigating forward and current step is valid, mark it as complete
-      if (step > currentStep && isStepValid(currentStep)) {
+      // If navigating forward, validate current step first
+      if (step > currentStep) {
+        if (!isStepValid(currentStep)) {
+          // Trigger validation failed callback
+          const entry = validationFns.current?.get(currentStep);
+          entry?.onFailed?.();
+          return; // Block navigation
+        }
+        // Current step is valid, mark it as complete
         markStepComplete(currentStep);
       }
 
+      // Allow navigation (backward or validated forward)
       setCurrentStep(step);
       setVisitedSteps((prev) => new Set(prev).add(step)); // Mark step as visited
       onStepChange?.(step);
@@ -61,6 +69,7 @@ export function useStepNavigation({
       onStepChange,
       setCurrentStep,
       setVisitedSteps,
+      validationFns,
     ],
   );
 
