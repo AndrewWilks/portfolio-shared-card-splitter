@@ -13,6 +13,7 @@ import { Route as PublicFormsRouteImport } from './routes/_publicForms.tsx'
 import { Route as PublicRouteImport } from './routes/_public.tsx'
 import { Route as AuthenticatedRouteImport } from './routes/_authenticated.tsx'
 import { Route as PublicIndexRouteImport } from './routes/_public/index.tsx'
+import { Route as PublicFormsRndRouteImport } from './routes/_publicForms/rnd.tsx'
 import { Route as PublicFormsOnboardingDemoRouteImport } from './routes/_publicForms/onboarding-demo.tsx'
 import { Route as AuthenticatedDashboardRouteRouteImport } from './routes/_authenticated/dashboard/route.tsx'
 import { Route as AuthenticatedDashboardIndexRouteImport } from './routes/_authenticated/dashboard/index.tsx'
@@ -41,6 +42,11 @@ const PublicIndexRoute = PublicIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => PublicRoute,
+} as any)
+const PublicFormsRndRoute = PublicFormsRndRouteImport.update({
+  id: '/rnd',
+  path: '/rnd',
+  getParentRoute: () => PublicFormsRoute,
 } as any)
 const PublicFormsOnboardingDemoRoute =
   PublicFormsOnboardingDemoRouteImport.update({
@@ -111,6 +117,7 @@ const AuthenticatedFormsAuthInviteRoute =
 export interface FileRoutesByFullPath {
   '/dashboard': typeof AuthenticatedDashboardRouteRouteWithChildren
   '/onboarding-demo': typeof PublicFormsOnboardingDemoRoute
+  '/rnd': typeof PublicFormsRndRoute
   '/': typeof PublicIndexRoute
   '/auth/accept-invite': typeof PublicFormsAuthAcceptInviteRoute
   '/auth/bootstrap': typeof PublicFormsAuthBootstrapRoute
@@ -124,6 +131,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/onboarding-demo': typeof PublicFormsOnboardingDemoRoute
+  '/rnd': typeof PublicFormsRndRoute
   '/': typeof PublicIndexRoute
   '/auth/accept-invite': typeof PublicFormsAuthAcceptInviteRoute
   '/auth/bootstrap': typeof PublicFormsAuthBootstrapRoute
@@ -142,6 +150,7 @@ export interface FileRoutesById {
   '/_publicForms': typeof PublicFormsRouteWithChildren
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRouteRouteWithChildren
   '/_publicForms/onboarding-demo': typeof PublicFormsOnboardingDemoRoute
+  '/_publicForms/rnd': typeof PublicFormsRndRoute
   '/_public/': typeof PublicIndexRoute
   '/_publicForms/auth/accept-invite': typeof PublicFormsAuthAcceptInviteRoute
   '/_publicForms/auth/bootstrap': typeof PublicFormsAuthBootstrapRoute
@@ -158,6 +167,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/dashboard'
     | '/onboarding-demo'
+    | '/rnd'
     | '/'
     | '/auth/accept-invite'
     | '/auth/bootstrap'
@@ -171,6 +181,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/onboarding-demo'
+    | '/rnd'
     | '/'
     | '/auth/accept-invite'
     | '/auth/bootstrap'
@@ -188,6 +199,7 @@ export interface FileRouteTypes {
     | '/_publicForms'
     | '/_authenticated/dashboard'
     | '/_publicForms/onboarding-demo'
+    | '/_publicForms/rnd'
     | '/_public/'
     | '/_publicForms/auth/accept-invite'
     | '/_publicForms/auth/bootstrap'
@@ -235,6 +247,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/'
       preLoaderRoute: typeof PublicIndexRouteImport
       parentRoute: typeof PublicRoute
+    }
+    '/_publicForms/rnd': {
+      id: '/_publicForms/rnd'
+      path: '/rnd'
+      fullPath: '/rnd'
+      preLoaderRoute: typeof PublicFormsRndRouteImport
+      parentRoute: typeof PublicFormsRoute
     }
     '/_publicForms/onboarding-demo': {
       id: '/_publicForms/onboarding-demo'
@@ -367,6 +386,7 @@ const PublicRouteWithChildren =
 
 interface PublicFormsRouteChildren {
   PublicFormsOnboardingDemoRoute: typeof PublicFormsOnboardingDemoRoute
+  PublicFormsRndRoute: typeof PublicFormsRndRoute
   PublicFormsAuthAcceptInviteRoute: typeof PublicFormsAuthAcceptInviteRoute
   PublicFormsAuthBootstrapRoute: typeof PublicFormsAuthBootstrapRoute
   PublicFormsAuthLoginRoute: typeof PublicFormsAuthLoginRoute
@@ -375,6 +395,7 @@ interface PublicFormsRouteChildren {
 
 const PublicFormsRouteChildren: PublicFormsRouteChildren = {
   PublicFormsOnboardingDemoRoute: PublicFormsOnboardingDemoRoute,
+  PublicFormsRndRoute: PublicFormsRndRoute,
   PublicFormsAuthAcceptInviteRoute: PublicFormsAuthAcceptInviteRoute,
   PublicFormsAuthBootstrapRoute: PublicFormsAuthBootstrapRoute,
   PublicFormsAuthLoginRoute: PublicFormsAuthLoginRoute,
