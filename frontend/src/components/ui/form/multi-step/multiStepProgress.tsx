@@ -69,7 +69,9 @@ export function MultiStepProgress({
 
           return (
             <li key={step} className="flex items-center">
-              <div className="flex flex-col items-center">
+              {/* Step indicator and label wrapper with fixed width for consistent spacing */}
+              <div className="flex flex-col items-center min-w-16 md:min-w-20">
+                {/* Step indicator button */}
                 <StepIndicator
                   stepNumber={step + 1}
                   label={label}
@@ -81,7 +83,7 @@ export function MultiStepProgress({
                 {/* Label */}
                 <span
                   className={cn(
-                    "mt-3 text-xs md:text-sm font-medium text-center transition-colors max-w-20",
+                    "mt-2 md:mt-3 text-xs md:text-sm font-medium text-center transition-colors px-1",
                     showLabelsOnMobile ? "block" : "hidden md:block",
                     status === "active" && "text-foreground font-semibold",
                     (status === "completed" || status === "visited") &&
