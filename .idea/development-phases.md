@@ -44,8 +44,8 @@
   - Post-onboarding flow✅
     - Update user context with `hasOnboarded: true`✅
     - Redirect to dashboard after completion✅
-    - Auto-select newly created card as active
-    - Show success message/toast
+    - Auto-select newly created card as active✅
+    - Show success message with confetty
 - Frontend: Connect card switcher
   - Card service/API client
   - Fetch user's cards
