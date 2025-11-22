@@ -38,7 +38,7 @@ export function WelcomeStep() {
           Manage Shared Cards Like a Pro
         </h2>
         <p className="text-muted-foreground text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
-          Fair Share helps you and your partners share a credit card cleanly,
+          FairShare helps you and your partners share a credit card cleanly,
           track expenses, and settle up with complete transparency.
         </p>
       </div>
