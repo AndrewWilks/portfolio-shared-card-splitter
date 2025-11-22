@@ -9,13 +9,17 @@ import { WelcomeStep } from "./welcomeStep.tsx";
 import { AccountSetupStep } from "./accountSetupStep.tsx";
 import { CardCreationStep } from "./cardCreationStep.tsx";
 import { CompleteStep } from "./completeStep.tsx";
-import { type TUserOnboarding, User } from "@shared/entities/user/index.ts";
+import {
+  type TApiRequest,
+  type TApiResponse,
+  UserOnboarding,
+} from "@shared/entities/user/onboarding.ts";
 
 export interface OnboardingWizardProps {
   /** Callback when onboarding is completed */
-  onComplete: (data: TUserOnboarding) => void;
+  onComplete: (data: TApiResponse) => void;
   /** Initial data to pre-fill the form */
-  initialData?: Partial<TUserOnboarding>;
+  initialData?: Partial<TApiRequest>;
   /** Additional CSS classes */
   className?: string;
 }
@@ -36,7 +40,7 @@ export function OnboardingWizard({
   );
   const [loading, setLoading] = useState(true);
 
-  const [data, setData] = useState<TUserOnboarding>({
+  const [data, setData] = useState<TApiRequest>({
     firstName: initialData?.firstName || "",
     lastName: initialData?.lastName || "",
     preferences: {
@@ -75,14 +79,16 @@ export function OnboardingWizard({
     checkCards();
   }, []);
 
-  const updateData = (updates: Partial<TUserOnboarding>) => {
+  const updateData = (updates: Partial<TApiRequest>) => {
     setData((prev) => ({ ...prev, ...updates }));
   };
 
   const handleComplete = async () => {
-    // Validate with User.onboardingSchema
-    const parseResult = User.onboardingSchema.safeParse(data);
+    // Validate
+    const parseResult = UserOnboarding.apiRequestDataSchema.safeParse(data);
+
     if (!parseResult.success) {
+      // TODO: Show Toast
       console.error("Validation failed:", parseResult.error);
       return;
     }
@@ -99,16 +105,21 @@ export function OnboardingWizard({
       });
 
       if (!res.ok) {
+        // TODO: Show Toast
         const error = await res.json();
         console.error("Onboarding failed:", error);
         return;
       }
 
       const responseData = await res.json();
-      console.log("Onboarding successful:", responseData);
+      const parsedResponse = UserOnboarding.parseApiResponse(
+        responseData,
+      );
+
+      console.log("Onboarding successful:", parsedResponse);
 
       // Call the onComplete callback with the data
-      onComplete(parseResult.data);
+      onComplete(parsedResponse);
     } catch (error) {
       console.error("Onboarding API error:", error);
     }
@@ -143,7 +154,7 @@ export function OnboardingWizard({
         {/* Header */}
         <div className="mb-10 text-center">
           <h1 className="text-4xl md:text-5xl font-bold mb-3">
-            Welcome to Fair Share
+            Welcome to FairShare
           </h1>
           <p className="text-muted-foreground text-base md:text-lg">
             Let's get you set up in just a few steps

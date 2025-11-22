@@ -15,7 +15,7 @@ export interface MultiStepNavigationProps {
   /** Hide previous button */
   hidePrevious?: boolean;
   /** Custom submit handler (called on last step) */
-  onSubmit?: () => void;
+  onSubmit?: () => void | Promise<void>;
   /** Show icons on buttons */
   showIcons?: boolean;
 }
@@ -45,11 +45,11 @@ export function MultiStepNavigation({
 
   const isOnLastStep = isLastStep(currentStep, totalSteps);
 
-  const handleNext = () => {
+  const handleNext = async () => {
     if (isOnLastStep && onSubmit) {
-      onSubmit();
+      await onSubmit();
     } else {
-      goNext();
+      await goNext();
     }
   };
 

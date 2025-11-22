@@ -12,7 +12,7 @@ export interface MultiStepRootProps {
   /** Initial step index (default: 0) */
   initialStep?: number;
   /** Callback when all steps are completed */
-  onComplete?: () => void;
+  onComplete?: () => void | Promise<void>;
   /** Callback when step changes */
   onStepChange?: (step: number) => void;
   /** Children components */

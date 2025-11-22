@@ -9,7 +9,7 @@ export interface MultiStepContextValue {
   /** Total number of steps in the form */
   totalSteps: number;
   /** Navigate to the next step */
-  goNext: () => void;
+  goNext: () => Promise<void>;
   /** Navigate to the previous step */
   goPrevious: () => void;
   /** Navigate to a specific step */
@@ -30,7 +30,7 @@ export interface MultiStepContextValue {
   registerStepValidation: (
     step: number,
     validator: () => boolean,
-    onValidationFailed?: () => void
+    onValidationFailed?: () => void,
   ) => void;
   /** Unregister a validation function for a step */
   unregisterStepValidation: (step: number) => void;
@@ -40,7 +40,7 @@ export interface MultiStepContextValue {
  * Multi-step form context
  */
 export const MultiStepContext = createContext<MultiStepContextValue | null>(
-  null
+  null,
 );
 
 /**

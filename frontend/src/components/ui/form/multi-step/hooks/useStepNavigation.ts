@@ -6,7 +6,7 @@ export interface UseStepNavigationParams {
   isStepValid: (step: number) => boolean;
   markStepComplete: (step: number) => void;
   onStepChange?: (step: number) => void;
-  onComplete?: () => void;
+  onComplete?: () => void | Promise<void>;
   setCurrentStep: (step: number) => void;
   setVisitedSteps: React.Dispatch<React.SetStateAction<Set<number>>>;
   validationFns: React.RefObject<
@@ -15,7 +15,7 @@ export interface UseStepNavigationParams {
 }
 
 export interface UseStepNavigationResult {
-  goNext: () => void;
+  goNext: () => Promise<void>;
   goPrevious: () => void;
   goToStep: (step: number) => void;
   canGoNext: boolean;
@@ -73,7 +73,7 @@ export function useStepNavigation({
     ],
   );
 
-  const goNext = useCallback(() => {
+  const goNext = useCallback(async () => {
     if (currentStep < totalSteps - 1) {
       // Validate current step before proceeding
       if (isStepValid(currentStep)) {
@@ -88,7 +88,7 @@ export function useStepNavigation({
       // On last step, trigger completion
       if (isStepValid(currentStep)) {
         markStepComplete(currentStep);
-        onComplete?.();
+        await onComplete?.();
       } else {
         // Trigger validation failed callback
         const entry = validationFns.current.get(currentStep);
