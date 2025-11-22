@@ -315,23 +315,6 @@ export class User {
     return z.boolean();
   }
 
-  static get onboardingSchema() {
-    return z.object({
-      firstName: this.firstNameSchema,
-      lastName: this.lastNameSchema,
-      preferences: z.object({
-        notifications: UserPreferences.notificationsSchema,
-        darkMode: UserPreferences.darkModeSchema,
-        currency: UserPreferences.currencySchema,
-      }),
-      card: z.object({
-        name: Card.nameSchema,
-        type: Card.typeSchema,
-        last4: Card.last4Schema,
-      }).optional(),
-    });
-  }
-
   toJSON() {
     return {
       id: this._id,
@@ -359,4 +342,3 @@ export type TUserLogin = z.infer<typeof User.loginSchema>;
 export type TUserLogout = z.infer<typeof User.logoutSchema>;
 export type TUserBootstrap = z.infer<typeof User.bootstrapSchema>;
 export type THasOnboarded = z.infer<typeof User.hasOnboardedSchema>;
-export type TUserOnboarding = z.infer<typeof User.onboardingSchema>;
