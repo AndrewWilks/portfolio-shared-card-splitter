@@ -27,15 +27,6 @@
   - Onboarding endpoint (POST /api/v1/onboarding) ✅
   - User.hasOnboarded flag in database ✅
 - Frontend: User First Card UX
-  - **Recommended Flow:**
-    1. User logs in/bootstraps → receives user object with `hasOnboarded` flag
-    2. Check `user.hasOnboarded` in AuthContext/route guard
-    3. If `false`, redirect to `/onboarding` route
-    4. Show onboarding wizard (create first card / review invited card)
-    5. On successful card creation / accepted of invited card, call
-       `POST /api/v1/onboarding` to mark user as onboarded
-    6. Redirect to dashboard with newly created card auto-selected
-    7. Future logins skip onboarding if `hasOnboarded === true`
   - Create onboarding wizard component (multi-step form)✅
     - Step 1: Welcome screen with explanation✅
     - Step 2: Card creation form (name, type, last4)✅
@@ -126,3 +117,15 @@
 - Focus: fast progress without bloat
 - Let real features drive component requirements
 - Each phase builds on the previous one
+
+## App Flows
+
+- **Bootstrap / Onboarding Flow:**
+  1. User logs in/bootstraps → receives user object with `hasOnboarded` flag
+  2. Check `user.hasOnboarded` in AuthContext/route guard
+  3. If `false`, redirect to `/onboarding` route
+  4. Show onboarding wizard (create first card / review invited card)
+  5. On successful card creation / accepted of invited card, call
+     `POST /api/v1/onboarding` to mark user as onboarded
+  6. Redirect to dashboard with newly created card auto-selected
+  7. Future logins skip onboarding if `hasOnboarded === true`
