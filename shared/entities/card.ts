@@ -1,8 +1,8 @@
-import { string, enum as zEnum, z } from "zod";
+import { enum as zEnum, string } from "zod";
 
 import Entity from "./base/entity.ts";
 import { User } from "./user/index.ts";
-import { DB_CardType, DB_CardCreate } from "@backend/db/types.ts";
+import { DB_CardCreate, DB_CardType } from "@backend/db/types.ts";
 import { cardTypeEnumValues } from "@backend/db/constants.ts";
 
 export class Card extends Entity {
@@ -21,11 +21,11 @@ export class Card extends Entity {
 
   override toJSON() {
     return {
-      ...super.toJSON(),
       ownerId: this.ownerId,
       name: this.name,
       type: this.type,
       last4: this.last4,
+      id: this._id,
     };
   }
 
