@@ -45,7 +45,12 @@
       "name": "Debug Frontend (Chrome)",
       "type": "chrome",
       "url": "http://localhost:3000",
-      "webRoot": "${workspaceFolder}",
+      "webRoot": "${workspaceFolder}/frontend",
+      "sourceMapPathOverrides": {
+        "/@/*": "${webRoot}/src/*",
+        "/@shared/*": "${workspaceFolder}/shared/*",
+        "/@backend/*": "${workspaceFolder}/backend/*"
+      },
       "presentation": {
         "hidden": true
       }
