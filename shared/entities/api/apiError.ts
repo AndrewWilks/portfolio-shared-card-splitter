@@ -31,7 +31,7 @@ export class ApiError implements IApiError {
   }
 
   static safeParse(
-    data: unknown
+    data: unknown,
   ): { success: true; data: ApiError } | { success: false; error: z.ZodError } {
     const parsed = ApiError.schema.safeParse(data);
 
@@ -109,6 +109,8 @@ enum ApiErrorInternalCodes {
   INVALID_USER_ID = 3005,
   ONBOARDING_FAILED = 3006,
   OFFBOARDING_FAILED = 3007,
+  USER_PREFERENCES_CREATION_FAILED = 3008,
+  USER_PREFERENCES_UPDATE_FAILED = 3009,
 
   // Card Errors
   INVALID_CARD_DATA = 4001,
