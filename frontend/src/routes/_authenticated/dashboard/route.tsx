@@ -8,7 +8,7 @@ import { ModeToggle } from "@/components/ui/theme/mode-toggle.tsx";
 
 export const Route = createFileRoute("/_authenticated/dashboard")({
   component: RouteComponent,
-  beforeLoad: ({ context, location }) => {
+  beforeLoad: ({ context }) => {
     if (!context.auth.hasOnboarded) {
       throw redirect({
         to: "/onboarding",
