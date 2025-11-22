@@ -6,7 +6,7 @@ import {
   DB_UserPreferencesCreate,
   DB_UserPreferencesUpdate,
 } from "@backend/db/types.ts";
-
+// TODO: Add api rollback strategy like the onboardingService
 /**
  * UserPreferencesService handles business logic related to user preferences
  * Sits between routes and repository for validation and transformation

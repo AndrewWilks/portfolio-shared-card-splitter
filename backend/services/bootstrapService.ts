@@ -3,7 +3,7 @@ import { ApiError } from "@shared/entities/api/apiError.ts";
 import { ApiResponse } from "@shared/entities/api/apiResponse.ts";
 import { UserRepository } from "../repositories/userRepository.ts";
 import { UserService } from "./userService.ts";
-
+// TODO: Add api rollback strategy like the onboardingService
 /**
  * BootstrapService handles initial system setup
  * Used to create the first user when the database is empty
@@ -30,7 +30,7 @@ export class BootstrapService {
     email: string,
     password: string,
     firstName: string,
-    lastName: string
+    lastName: string,
   ): Promise<ApiResponse<User> | ApiError> {
     // Check if system is already bootstrapped
     const alreadyBootstrapped = await this.isBootstrapped();

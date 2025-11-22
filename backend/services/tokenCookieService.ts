@@ -1,12 +1,12 @@
 import type { Context } from "hono";
-import { setCookie, getCookie, deleteCookie } from "hono/cookie";
+import { deleteCookie, getCookie, setCookie } from "hono/cookie";
 import { config } from "../.config/evnLoader.ts";
 import {
-  TokenService,
-  type TokenPayload,
   TokenExpiredError,
   TokenInvalidError,
   TokenMalformedError,
+  type TokenPayload,
+  TokenService,
 } from "./tokenService.ts";
 
 const COOKIE_NAME = "session";
@@ -83,7 +83,7 @@ export class TokenCookieService {
    */
   static async refreshTokenCookieIfNeeded(
     c: Context,
-    payload: TokenPayload
+    payload: TokenPayload,
   ): Promise<boolean> {
     if (TokenService.shouldRefreshToken(payload)) {
       const newToken = await TokenService.createRefreshedToken(payload);

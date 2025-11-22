@@ -4,7 +4,7 @@ import { ApiError } from "@shared/entities/api/apiError.ts";
 import { STATUS_CODE } from "@std/http";
 import { CardRepository } from "@backend/repositories/cardRepository.ts";
 import { DB_CardCreate, DB_CardKey, DB_CardUpdate } from "@backend/db/types.ts";
-
+// TODO: Add api rollback strategy like the onboardingService
 /**
  * CardService handles business logic related to cards
  * Sits between routes and repository for validation and transformation
