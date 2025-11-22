@@ -26,4 +26,4 @@ and a mobile-first approach.
 - **Framework**: React with TypeScript
 - **Build Tool**: Vite
 - **Styling**: Tailwind CSS with CSS modules
-- **Testing**: Vitest
+- **Testing**: Deno V2 Test
