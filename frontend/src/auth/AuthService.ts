@@ -1,7 +1,7 @@
 import {
-  User,
-  TUserLogin,
   TUserBootstrap,
+  TUserLogin,
+  User,
 } from "@shared/entities/user/index.ts";
 import { ApiError } from "@shared/entities/api/apiError.ts";
 import { router } from "../router.tsx";
@@ -109,44 +109,6 @@ export class AuthService {
 
     // Update bootstrap status
     this.isBootstrapped = true;
-
-    return res;
-  }
-
-  async onboardUser() {
-    const res = await User.onboardUser();
-
-    if (res instanceof ApiError) {
-      return res;
-    }
-
-    if (!res.data) {
-      return new ApiError({
-        message: "Onboarding failed: No user data returned",
-        code: ApiError.InternalCodes.ONBOARDING_FAILED,
-      });
-    }
-
-    this.setUser(res.data);
-
-    return res;
-  }
-
-  async offboardUser() {
-    const res = await User.offboardUser();
-
-    if (res instanceof ApiError) {
-      return res;
-    }
-
-    if (!res.data) {
-      return new ApiError({
-        message: "Offboarding failed: No user data returned",
-        code: ApiError.InternalCodes.OFFBOARDING_FAILED,
-      });
-    }
-
-    this.setUser(res.data);
 
     return res;
   }
