@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useState, useMemo, useEffect } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Loader, UserPlus } from "lucide-react";
 import { useAuth } from "@/auth/AuthContext.tsx";
 import { User } from "@shared/entities/user/index.ts";
@@ -56,21 +56,21 @@ function RouteComponent() {
 
   const parseFirstName = useMemo(
     () => _User.firstNameSchema.safeParse(firstName),
-    [firstName]
+    [firstName],
   );
   const parseLastName = useMemo(
     () => _User.lastNameSchema.safeParse(lastName),
-    [lastName]
+    [lastName],
   );
   const parseEmail = useMemo(() => _User.emailSchema.safeParse(email), [email]);
   const parsePassword = useMemo(
     () => _User.passwordSchema.safeParse(password),
-    [password]
+    [password],
   );
 
   const passwordsMatch = useMemo(
     () => password === confirmPassword,
-    [password, confirmPassword]
+    [password, confirmPassword],
   );
 
   const buttonLabel = useMemo(() => {
@@ -82,8 +82,9 @@ function RouteComponent() {
       emailError ||
       passwordError ||
       confirmPasswordError
-    )
+    ) {
       return "Fix Errors";
+    }
     return "Create Account";
   }, [
     loading,
@@ -128,7 +129,7 @@ function RouteComponent() {
     cn(
       "p-2 border rounded w-full mt-4",
       hasError ? "border-red-500" : "border-gray-300",
-      loading && "bg-gray-100 cursor-not-allowed cursor-progress"
+      loading && "bg-gray-100 cursor-not-allowed cursor-progress",
     );
 
   const buttonClass = useMemo(() => {
@@ -137,8 +138,7 @@ function RouteComponent() {
     const loadingClass = "opacity-50 cursor-progress hover:bg-blue-500";
     const normalClass = "hover:bg-blue-600 cursor-pointer bg-blue-500";
 
-    const isError =
-      !!firstNameError ||
+    const isError = !!firstNameError ||
       !!lastNameError ||
       !!emailError ||
       !!passwordError ||
@@ -147,7 +147,7 @@ function RouteComponent() {
 
     return cn(
       baseClass,
-      loading ? loadingClass : isError ? errorClass : normalClass
+      loading ? loadingClass : isError ? errorClass : normalClass,
     );
   }, [
     loading,
@@ -230,7 +230,7 @@ function RouteComponent() {
         <h1 className="text-3xl font-bold">
           Welcome to
           <br />
-          Fair Share
+          FairShare
         </h1>
         <p className="text-gray-600 mt-2">
           Let's set up your first administrator account to get started
@@ -310,9 +310,9 @@ function RouteComponent() {
           className={inputClass(!!confirmPasswordError)}
           disabled={loading}
         />
-        {confirmPasswordError && (
-          <FormErrorBox message={confirmPasswordError} />
-        )}
+        {confirmPasswordError && <FormErrorBox
+          message={confirmPasswordError}
+        />}
 
         <Button
           type="submit"
