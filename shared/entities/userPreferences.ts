@@ -1,9 +1,9 @@
-import { z } from "zod";
+import { boolean, enum as zEnum, infer as zInfer } from "zod";
 import Entity from "./base/entity.ts";
 import { User } from "./user/index.ts";
-import { DB_UserPreferencesCreate } from "@backend/db/types.ts";
 
 export type TCurrency = keyof typeof UserPreferences.currencyLabelMap;
+export type TUserPreferencesSchema = zInfer<typeof UserPreferences.schema>;
 
 export class UserPreferences extends Entity {
   public userId: string;
@@ -19,7 +19,7 @@ export class UserPreferences extends Entity {
     AUD: "Australian Dollar",
   };
 
-  constructor(data: DB_UserPreferencesCreate) {
+  constructor(data: TUserPreferencesSchema) {
     super({ id: data.id });
     this.userId = data.userId;
     this.notifications = data.notifications ?? true;
@@ -42,15 +42,15 @@ export class UserPreferences extends Entity {
   }
 
   static get notificationsSchema() {
-    return z.boolean().describe("Email notifications enabled/disabled");
+    return boolean().describe("Email notifications enabled/disabled");
   }
 
   static get darkModeSchema() {
-    return z.boolean().describe("Dark mode enabled/disabled");
+    return boolean().describe("Dark mode enabled/disabled");
   }
 
   static get currencySchema() {
-    return z.enum(this.currencyValues, { message: "Invalid currency code" });
+    return zEnum(this.currencyValues, { message: "Invalid currency code" });
   }
 
   static override get schema() {
@@ -62,7 +62,7 @@ export class UserPreferences extends Entity {
     });
   }
 
-  static create(data: DB_UserPreferencesCreate): UserPreferences {
+  static create(data: TUserPreferencesSchema): UserPreferences {
     const parsed = this.schema.parse(data);
     return new UserPreferences(parsed);
   }
