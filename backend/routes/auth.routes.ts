@@ -1,6 +1,5 @@
 import { zValidator } from "@hono/zod-validator";
 import { STATUS_CODE } from "@std/http/status";
-import type { Context } from "hono";
 import { createFactory } from "hono/factory";
 
 // Entities and Types
@@ -64,7 +63,7 @@ export const login = factory.createHandlers(
     });
 
     return c.json(apiResponse, STATUS_CODE.OK);
-  }
+  },
 );
 
 /**
@@ -101,6 +100,6 @@ export const me = factory.createHandlers(async (c) => {
       data: user,
       message: "User data retrieved successfully",
     }),
-    STATUS_CODE.OK
+    STATUS_CODE.OK,
   );
 });
