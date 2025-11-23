@@ -2,7 +2,7 @@ import { useCallback, useMemo, useState } from "react";
 import { useAuth } from "../AuthContext.tsx";
 import { ApiError } from "@shared/entities/api/apiError.ts";
 import { useRouter } from "@tanstack/react-router";
-import { Button } from "@/components/ui/primitives/Button.tsx";
+import { Button } from "@/components/ui/primitives/button.tsx";
 import { Ban, LogOut } from "lucide-react";
 
 export default function LogoutBtn() {
