@@ -1,5 +1,6 @@
 import { boolean, pgEnum, pgTable, uuid, varchar } from "drizzle-orm/pg-core";
-import { cardTypeEnumValues, currencyValues } from "./constants.ts";
+import { Card } from "@shared/entities/card.ts";
+import { UserPreferences } from "@shared/entities/userPreferences.ts";
 
 export const usersTable = pgTable("users", {
   id: uuid().primaryKey().defaultRandom(),
@@ -10,8 +11,8 @@ export const usersTable = pgTable("users", {
   hasOnboarded: boolean().notNull().default(false),
 });
 
-export const cardTypeEnum = pgEnum("card_type", cardTypeEnumValues);
-export const currencyEnum = pgEnum("currency", currencyValues);
+export const cardTypeEnum = pgEnum("card_type", Card.cardTypeEnumValues);
+export const currencyEnum = pgEnum("currency", UserPreferences.currencyValues);
 
 export const userPreferencesTable = pgTable("user_preferences", {
   id: uuid().primaryKey().defaultRandom(),
