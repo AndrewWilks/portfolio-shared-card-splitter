@@ -1,9 +1,14 @@
-import { Card } from "@shared/entities/card.ts";
+import {
+  Card,
+  type TCardArrayResponse,
+  type TCardSingleResponse,
+} from "@shared/entities/card.ts";
 
 import { ApiError } from "@shared/entities/api/apiError.ts";
 import { STATUS_CODE } from "@std/http";
 import { CardRepository } from "@backend/repositories/cardRepository.ts";
 import { DB_CardCreate, DB_CardKey, DB_CardUpdate } from "@backend/db/types.ts";
+import z from "zod";
 // TODO: Add api rollback strategy like the onboardingService
 /**
  * CardService handles business logic related to cards
@@ -13,9 +18,11 @@ export class CardService {
   /**
    * Get card by ID with proper error handling
    * @param id - Card ID (UUID)
-   * @returns Card entity or ApiError
+   * @returns ApiResponse with Card or ApiError
    */
-  static async getCardById(id: DB_CardKey): Promise<Card | ApiError> {
+  static async getCardById(
+    id: DB_CardKey,
+  ): Promise<TCardSingleResponse | ApiError> {
     const parsed = Card.idSchema.safeParse(id);
     if (!parsed.success) {
       return new ApiError({
@@ -34,15 +41,18 @@ export class CardService {
       });
     }
 
-    return Card.create(dbCard);
+    const card = Card.create(dbCard);
+    return Card.createSingleResponse(card);
   }
 
   /**
    * Get all cards owned by a specific user
    * @param ownerId - Owner user ID (UUID)
-   * @returns Array of Card entities or ApiError
+   * @returns ApiResponse with array of Cards or ApiError
    */
-  static async getCardsByOwner(ownerId: string): Promise<Card[] | ApiError> {
+  static async getCardsByOwner(
+    ownerId: string,
+  ): Promise<TCardArrayResponse | ApiError> {
     const parsed = Card.ownerIdSchema.safeParse(ownerId);
     if (!parsed.success) {
       return new ApiError({
@@ -53,23 +63,26 @@ export class CardService {
     }
     const dbCards = await CardRepository.getByOwner(ownerId);
 
-    return dbCards.map((dbCard) => Card.create(dbCard));
+    const cards = dbCards.map((dbCard) => Card.create(dbCard));
+    return Card.createArrayResponse(cards);
   }
 
   /**
    * Create a new card with validation
    * @param data - Card creation data
-   * @returns Created Card entity or ApiError
+   * @returns ApiResponse with created Card or ApiError
    */
-  static async createCard(data: DB_CardCreate): Promise<Card | ApiError> {
-    // Validate input data using Card entity's createSchema
-    const parseResult = Card.createSchema.safeParse(data);
-
-    if (!parseResult.success) {
+  static async createCard(
+    data: DB_CardCreate,
+  ): Promise<TCardSingleResponse | ApiError> {
+    // Validate input data using Card entity's parseCreateRequest
+    try {
+      Card.ApiCreateRequestSchema.parse(data);
+    } catch (error) {
       return new ApiError({
         message: "Invalid card data",
         code: ApiError.InternalCodes.INVALID_CARD_DATA,
-        details: parseResult.error.issues.toString(),
+        details: (error as z.ZodError).issues.toString(),
       });
     }
 
@@ -83,26 +96,28 @@ export class CardService {
       });
     }
 
-    return Card.create(dbCard);
+    const card = Card.create(dbCard);
+    return Card.createSingleResponse(card, "Card created successfully");
   }
 
   /**
    * Update an existing card with validation
    * @param id - Card ID (UUID)
    * @param data - Card update data
-   * @returns Updated Card entity or ApiError
+   * @returns ApiResponse with updated Card or ApiError
    */
   static async updateCard(
     id: DB_CardKey,
     data: DB_CardUpdate,
-  ): Promise<Card | ApiError> {
-    // Validate input data using Card entity's updateSchema
-    const parseResult = Card.updateSchema.safeParse(data);
-    if (!parseResult.success) {
+  ): Promise<TCardSingleResponse | ApiError> {
+    // Validate input data using Card entity's parseUpdateRequest
+    try {
+      Card.ApiUpdateRequestSchema.parse(data);
+    } catch (error) {
       return new ApiError({
         message: "Invalid card data",
         code: ApiError.InternalCodes.INVALID_CARD_DATA,
-        details: parseResult.error.issues.toString(),
+        details: (error as z.ZodError).issues.toString(),
       });
     }
     const dbCard = await CardRepository.update(id, data);
@@ -112,7 +127,8 @@ export class CardService {
         code: ApiError.InternalCodes.CARD_NOT_FOUND,
       });
     }
-    return Card.create(dbCard);
+    const card = Card.create(dbCard);
+    return Card.createSingleResponse(card, "Card updated successfully");
   }
 
   /**
