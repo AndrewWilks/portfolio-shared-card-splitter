@@ -1,8 +1,6 @@
-import { z } from "zod";
+import { boolean, email, infer as zInfer, object, string, uuid } from "zod";
 import { ApiError } from "../api/apiError.ts";
 import { ApiResponse } from "../api/apiResponse.ts";
-import { UserPreferences } from "../userPreferences.ts";
-import { Card } from "../card.ts";
 
 export class User {
   private _id: string;
@@ -167,7 +165,7 @@ export class User {
       return apiError;
     }
 
-    const parsed = ApiResponse.parse(data, z.object({ message: z.string() }));
+    const parsed = ApiResponse.parse(data, object({ message: string() }));
     return parsed;
   }
 
@@ -253,19 +251,18 @@ export class User {
   }
 
   static get loginSchema() {
-    return z.object({
+    return object({
       email: this.emailSchema,
       password: this.passwordSchema,
     });
   }
 
   static get logoutSchema() {
-    return z.string().min(1, "Logout token is required");
+    return string().min(1, "Logout token is required");
   }
 
   static get passwordSchema() {
-    return z
-      .string()
+    return string()
       .min(8, "Password must be at least 8 characters long")
       .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
       .regex(/[a-z]/, "Password must contain at least one lowercase letter")
@@ -277,23 +274,23 @@ export class User {
   }
 
   static get emailSchema() {
-    return z.email("Invalid email address");
+    return email("Invalid email address");
   }
 
   static get firstNameSchema() {
-    return z.string().min(1, "First name is required");
+    return string().min(1, "First name is required");
   }
 
   static get lastNameSchema() {
-    return z.string().min(1, "Last name is required");
+    return string().min(1, "Last name is required");
   }
 
   static get idSchema() {
-    return z.uuid("Invalid UUID format for User ID");
+    return uuid("Invalid UUID format for User ID");
   }
 
   static get schema() {
-    return z.object({
+    return object({
       id: this.idSchema,
       email: this.emailSchema,
       firstName: this.firstNameSchema,
@@ -303,7 +300,7 @@ export class User {
   }
 
   static get bootstrapSchema() {
-    return z.object({
+    return object({
       email: this.emailSchema,
       password: this.passwordSchema,
       firstName: this.firstNameSchema,
@@ -312,7 +309,7 @@ export class User {
   }
 
   static get hasOnboardedSchema() {
-    return z.boolean();
+    return boolean("HasOnboarded must be a boolean value");
   }
 
   toJSON() {
@@ -331,14 +328,14 @@ export class User {
   }
 }
 
-export type TPassword = z.infer<typeof User.passwordSchema>;
-export type TEmail = z.infer<typeof User.emailSchema>;
-export type TFirstName = z.infer<typeof User.firstNameSchema>;
-export type TLastName = z.infer<typeof User.lastNameSchema>;
-export type TUserId = z.infer<typeof User.idSchema>;
-export type TUser = z.infer<typeof User.schema>;
+export type TPassword = zInfer<typeof User.passwordSchema>;
+export type TEmail = zInfer<typeof User.emailSchema>;
+export type TFirstName = zInfer<typeof User.firstNameSchema>;
+export type TLastName = zInfer<typeof User.lastNameSchema>;
+export type TUserId = zInfer<typeof User.idSchema>;
+export type TUser = zInfer<typeof User.schema>;
 
-export type TUserLogin = z.infer<typeof User.loginSchema>;
-export type TUserLogout = z.infer<typeof User.logoutSchema>;
-export type TUserBootstrap = z.infer<typeof User.bootstrapSchema>;
-export type THasOnboarded = z.infer<typeof User.hasOnboardedSchema>;
+export type TUserLogin = zInfer<typeof User.loginSchema>;
+export type TUserLogout = zInfer<typeof User.logoutSchema>;
+export type TUserBootstrap = zInfer<typeof User.bootstrapSchema>;
+export type THasOnboarded = zInfer<typeof User.hasOnboardedSchema>;
