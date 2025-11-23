@@ -3,11 +3,12 @@ import { enum as zEnum, string } from "zod";
 import Entity from "./base/entity.ts";
 import { User } from "./user/index.ts";
 export type TCardType = keyof typeof Card.cardTypeLabelMap;
+export type TCardSchema = z.infer<typeof Card.schema>;
 
 export class Card extends Entity {
   public ownerId: string;
   public name: string;
-  public type: DB_CardType;
+  public type: TCardType;
   public last4: string;
 
   static readonly cardTypeEnumValues = ["visa", "mastercard", "amex"] as const;
