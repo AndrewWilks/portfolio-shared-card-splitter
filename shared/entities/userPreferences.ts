@@ -2,13 +2,20 @@ import { z } from "zod";
 import Entity from "./base/entity.ts";
 import { User } from "./user/index.ts";
 import { DB_UserPreferencesCreate } from "@backend/db/types.ts";
-import { currencyValues } from "@backend/db/constants.ts";
+
+export type TCurrency = keyof typeof UserPreferences.currencyLabelMap;
 
 export class UserPreferences extends Entity {
   public userId: string;
   public notifications: boolean;
   public darkMode: boolean;
-  public currency: string;
+  static readonly currencyValues = ["USD", "EUR", "GBP", "AUD"] as const;
+  static readonly currencyLabelMap = {
+    USD: "US Dollar",
+    EUR: "Euro",
+    GBP: "British Pound",
+    AUD: "Australian Dollar",
+  };
 
   constructor(data: DB_UserPreferencesCreate) {
     super({ id: data.id });

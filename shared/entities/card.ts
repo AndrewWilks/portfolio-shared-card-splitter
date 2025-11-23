@@ -2,14 +2,23 @@ import { enum as zEnum, string } from "zod";
 
 import Entity from "./base/entity.ts";
 import { User } from "./user/index.ts";
-import { DB_CardCreate, DB_CardType } from "@backend/db/types.ts";
-import { cardTypeEnumValues } from "@backend/db/constants.ts";
+export type TCardType = keyof typeof Card.cardTypeLabelMap;
 
 export class Card extends Entity {
   public ownerId: string;
   public name: string;
   public type: DB_CardType;
   public last4: string;
+
+  static readonly cardTypeEnumValues = ["visa", "mastercard", "amex"] as const;
+
+  static get cardTypeLabelMap() {
+    return {
+      visa: "Visa",
+      mastercard: "Mastercard",
+      amex: "American Express",
+    };
+  }
 
   constructor(data: DB_CardCreate) {
     super({ id: data.id });
