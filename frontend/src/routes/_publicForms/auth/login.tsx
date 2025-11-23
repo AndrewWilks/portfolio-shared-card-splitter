@@ -1,11 +1,11 @@
 import {
   createFileRoute,
-  useSearch,
-  useNavigate,
   Link,
   redirect,
+  useNavigate,
+  useSearch,
 } from "@tanstack/react-router";
-import { useState, useMemo, useEffect } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Loader, LogIn } from "lucide-react";
 import { useAuth } from "@/auth/AuthContext.tsx";
 import { User } from "@shared/entities/user/index.ts";
@@ -18,8 +18,9 @@ import { cn } from "@/lib/utils.ts";
 export const Route = createFileRoute("/_publicForms/auth/login")({
   validateSearch: (search: Record<string, unknown> | undefined) => {
     return {
-      redirectTo:
-        typeof search?.redirectTo === "string" ? search?.redirectTo : undefined,
+      redirectTo: typeof search?.redirectTo === "string"
+        ? search?.redirectTo
+        : undefined,
     };
   },
   component: RouteComponent,
@@ -53,7 +54,7 @@ function RouteComponent() {
   const parseEmail = useMemo(() => _User.emailSchema.safeParse(email), [email]);
   const parsePassword = useMemo(
     () => _User.passwordSchema.safeParse(password),
-    [password]
+    [password],
   );
 
   const buttonLabel = useMemo(() => {
@@ -84,9 +85,9 @@ function RouteComponent() {
       cn(
         "p-2 border rounded w-full mt-4",
         emailError ? "border-red-500" : "border-gray-300",
-        loading && "bg-gray-100 cursor-not-allowed cursor-progress"
+        loading && "bg-gray-100 cursor-not-allowed cursor-progress",
       ),
-    [emailError, loading]
+    [emailError, loading],
   );
 
   const passwordInputClass = useMemo(
@@ -94,9 +95,9 @@ function RouteComponent() {
       cn(
         "p-2 border rounded w-full mt-4",
         passwordError ? "border-red-500" : "border-gray-300",
-        loading && "bg-gray-100 cursor-not-allowed cursor-progress"
+        loading && "bg-gray-100 cursor-not-allowed cursor-progress",
       ),
-    [passwordError, loading]
+    [passwordError, loading],
   );
 
   const buttonClass = useMemo(() => {
@@ -109,7 +110,7 @@ function RouteComponent() {
 
     return cn(
       baseClass,
-      loading ? loadingClass : isError ? errorClass : normalClass
+      loading ? loadingClass : isError ? errorClass : normalClass,
     );
   }, [loading, error, emailError, passwordError]);
 

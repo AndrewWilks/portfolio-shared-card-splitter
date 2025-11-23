@@ -1,6 +1,6 @@
 import { Check, ChevronLeft, ChevronRight, LucideIcon } from "lucide-react";
 import { cn } from "@/lib/utils.ts";
-import { Button } from "@/components/ui/primitives/Button.tsx";
+import { Button } from "@/components/ui/primitives/button.tsx";
 
 export type NavigationButtonType = "previous" | "next" | "submit";
 
