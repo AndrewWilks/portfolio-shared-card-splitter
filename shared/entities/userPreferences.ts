@@ -9,6 +9,8 @@ export class UserPreferences extends Entity {
   public userId: string;
   public notifications: boolean;
   public darkMode: boolean;
+  public currency: TCurrency;
+
   static readonly currencyValues = ["USD", "EUR", "GBP", "AUD"] as const;
   static readonly currencyLabelMap = {
     USD: "US Dollar",
