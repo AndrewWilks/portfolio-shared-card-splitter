@@ -30,7 +30,7 @@ app.get("/api", (c) => c.text("Hello!"));
 // Public routes (no authentication required)
 // =============================================================
 // -- Bootstrap routes ---------------------------------------//
-app.get("/api/v1/bootstrap/status", bootstrapRoutes.getBootstrapStatus);
+app.get("/api/v1/bootstrap/status", ...bootstrapRoutes.getBootstrapStatus);
 app.post("/api/v1/bootstrap", ...bootstrapRoutes.createBootstrap);
 
 // -- Auth routes --------------------------------------------//

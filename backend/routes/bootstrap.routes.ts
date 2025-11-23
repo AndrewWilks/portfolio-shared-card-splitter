@@ -1,6 +1,5 @@
 import { zValidator } from "@hono/zod-validator";
 import { STATUS_CODE } from "@std/http/status";
-import type { Context } from "hono";
 import { createFactory } from "hono/factory";
 
 // Entities and Types
@@ -18,7 +17,7 @@ const factory = createFactory();
  * GET /api/v1/bootstrap/status
  * Check if the system has been bootstrapped
  */
-export const getBootstrapStatus = async (c: Context) => {
+export const getBootstrapStatus = factory.createHandlers(async (c) => {
   try {
     const isBootstrapped = await BootstrapService.isBootstrapped();
     return c.json(isBootstrapped);
@@ -28,10 +27,10 @@ export const getBootstrapStatus = async (c: Context) => {
         message: (error as Error).message,
         code: ApiError.InternalCodes.SYSTEM_BOOTSTRAP_CHECK_FAILED,
       }),
-      STATUS_CODE.InternalServerError
+      STATUS_CODE.InternalServerError,
     );
   }
-};
+});
 
 /**
  * POST /api/v1/bootstrap
@@ -55,7 +54,7 @@ export const createBootstrap = factory.createHandlers(
       email,
       password,
       firstName,
-      lastName
+      lastName,
     );
 
     if (response instanceof ApiError) {
@@ -75,5 +74,5 @@ export const createBootstrap = factory.createHandlers(
     TokenCookieService.setTokenCookie(c, token);
 
     return c.json(response, STATUS_CODE.Created);
-  }
+  },
 );
