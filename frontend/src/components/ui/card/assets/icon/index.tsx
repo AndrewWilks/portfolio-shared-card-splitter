@@ -1,7 +1,7 @@
 import { VisaLogo } from "./visa.tsx";
-import { MastercardLogo } from "./mastercard.tsx";
-import { AmexLogo } from "./amex.tsx";
-import { DefaultLogo } from "./default.tsx";
+import { MastercardLogo } from "../rounded/index.tsx";
+import { AmexLogo } from "../rounded/index.tsx";
+import { DefaultLogo } from "../rounded/index.tsx";
 
 export const icons = {
   visa: VisaLogo,
