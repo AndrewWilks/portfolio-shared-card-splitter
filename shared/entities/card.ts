@@ -1,9 +1,9 @@
-import { enum as zEnum, string } from "zod";
+import { enum as zEnum, infer as zInfer, string } from "zod";
 
 import Entity from "./base/entity.ts";
 import { User } from "./user/index.ts";
 export type TCardType = keyof typeof Card.cardTypeLabelMap;
-export type TCardSchema = z.infer<typeof Card.schema>;
+export type TCardSchema = zInfer<typeof Card.schema>;
 
 export class Card extends Entity {
   public ownerId: string;
@@ -21,7 +21,7 @@ export class Card extends Entity {
     };
   }
 
-  constructor(data: DB_CardCreate) {
+  constructor(data: TCardSchema) {
     super({ id: data.id });
     this.ownerId = data.ownerId;
     this.name = data.name;
@@ -57,22 +57,8 @@ export class Card extends Entity {
     return string().length(4, "Last 4 must be exactly 4 characters");
   }
 
-  static override get createSchema() {
-    return super.createSchema.extend({
-      ownerId: this.ownerIdSchema,
-      name: this.nameSchema,
-      type: this.typeSchema,
-      last4: this.last4Schema,
-    });
-  }
-
-  static override get updateSchema() {
-    return super.updateSchema.extend({
-      ownerId: this.ownerIdSchema.optional(),
-      name: this.nameSchema.optional(),
-      type: this.typeSchema.optional(),
-      last4: this.last4Schema.optional(),
-    });
+  static create(data: TCardSchema): Card {
+    return new Card(data);
   }
 
   static override get schema() {
