@@ -2,6 +2,8 @@ import { enum as zEnum, infer as zInfer, string } from "zod";
 
 import Entity from "./base/entity.ts";
 import { User } from "./user/index.ts";
+import { ApiResponse } from "./api/apiResponse.ts";
+
 export type TCardType = keyof typeof Card.cardTypeLabelMap;
 export type TCardSchema = zInfer<typeof Card.schema>;
 
@@ -70,7 +72,39 @@ export class Card extends Entity {
     });
   }
 
-  static create(data: DB_CardCreate): Card {
-    return new Card(data);
+  // API Request Helpers
+  static override get ApiCreateRequestSchema() {
+    return this.schema.omit({ id: true, ownerId: true });
+  }
+
+  static override parseSingleResponse(data: unknown) {
+    return ApiResponse.parse(data, this.schema);
+  }
+
+  static override parseArrayResponse(data: unknown) {
+    return ApiResponse.parse(data, this.schema.array());
+  }
+
+  static override createSingleResponse(
+    card: Card,
+    message = "Card retrieved successfully",
+  ) {
+    return new ApiResponse({
+      data: card.toJSON(),
+      message,
+    });
+  }
+
+  static override createArrayResponse(
+    cards: Card[],
+    message = "Cards retrieved successfully",
+  ) {
+    return new ApiResponse({
+      data: cards.map((card) => card.toJSON()),
+      message,
+    });
   }
 }
+
+export type TCardArrayResponse = ReturnType<typeof Card.createArrayResponse>;
+export type TCardSingleResponse = ReturnType<typeof Card.createSingleResponse>;

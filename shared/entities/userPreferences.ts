@@ -62,6 +62,18 @@ export class UserPreferences extends Entity {
     });
   }
 
+  static override get ApiCreateRequestSchema() {
+    return this.schema.omit({ userId: true, id: true });
+  }
+
+  static override get ApiUpdateRequestSchema() {
+    return this.schema.omit({ userId: true }).partial({
+      currency: true,
+      darkMode: true,
+      notifications: true,
+    });
+  }
+
   static create(data: TUserPreferencesSchema): UserPreferences {
     const parsed = this.schema.parse(data);
     return new UserPreferences(parsed);
