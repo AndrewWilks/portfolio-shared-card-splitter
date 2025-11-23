@@ -6,8 +6,8 @@ import {
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
-  SidebarMenuItem,
   SidebarMenuContent,
+  SidebarMenuItem,
 } from "@/components/ui/sidebar/index.tsx";
 import { useLocation } from "@tanstack/react-router";
 import { Link, LinkProps } from "@tanstack/react-router";
@@ -49,7 +49,7 @@ export function DashboardSidebar() {
             </SidebarMenuContent>
           </SidebarMenuItem>
         </SidebarMenu>
-        <CardSwitcher cards={[]} />
+        <CardSwitcher />
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup className="gap-2">
