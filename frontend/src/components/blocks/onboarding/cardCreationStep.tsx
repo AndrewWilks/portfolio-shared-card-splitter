@@ -6,14 +6,14 @@ import { useMultiStep } from "@/components/ui/form/multi-step/index.ts";
 import { z } from "zod";
 import { Card } from "@shared/entities/card.ts";
 import { cn } from "@/lib/utils.ts";
-import type { TUserOnboarding } from "@shared/entities/user/index.ts";
+import { TApiRequest } from "@shared/entities/user/onboarding.ts";
 
 // TODO: Use more semantic html tags
 // TODO: Code Split into multiple components, constants, etc and follow solid principles
 
 export interface CardCreationStepProps {
-  data: TUserOnboarding;
-  onUpdate: (updates: Partial<TUserOnboarding>) => void;
+  data: TApiRequest;
+  onUpdate: (updates: Partial<TApiRequest>) => void;
 }
 
 const currencies = [
@@ -78,20 +78,20 @@ export function CardCreationStep({ data, onUpdate }: CardCreationStepProps) {
     return () => unregisterStepValidation(2);
   }, [isValid, registerStepValidation, unregisterStepValidation]);
 
-  const updateCard = <K extends keyof NonNullable<TUserOnboarding["card"]>>(
+  const updateCard = <K extends keyof NonNullable<TApiRequest["card"]>>(
     key: K,
-    value: NonNullable<TUserOnboarding["card"]>[K],
+    value: NonNullable<TApiRequest["card"]>[K],
   ) => {
     onUpdate({
       card: {
         ...data.card,
         [key]: value,
-      } as TUserOnboarding["card"],
+      } as TApiRequest["card"],
     });
   };
 
   const updateCurrency = (
-    currency: TUserOnboarding["preferences"]["currency"],
+    currency: TApiRequest["preferences"]["currency"],
   ) => {
     onUpdate({
       preferences: {

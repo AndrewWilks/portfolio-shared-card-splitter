@@ -7,10 +7,10 @@ import {
   User,
 } from "lucide-react";
 import { cn } from "@/lib/utils.ts";
-import type { TUserOnboarding } from "@shared/entities/user/index.ts";
+import { TApiRequest } from "@shared/entities/user/onboarding.ts";
 
 export interface CompleteStepProps {
-  data: TUserOnboarding;
+  data: TApiRequest;
   hasCard: boolean;
 }
 
@@ -67,7 +67,7 @@ export function CompleteStep({ data, hasCard }: CompleteStepProps) {
     <div className="space-y-8">
       {/* Success Header */}
       <div className="text-center space-y-5">
-        <div className="inline-flex items-center justify-center size-20 rounded-full bg-gradient-to-br from-green-100 to-green-50 dark:from-green-900/30 dark:to-green-800/20 text-green-600 dark:text-green-400 mb-4 shadow-lg">
+        <div className="inline-flex items-center justify-center size-20 rounded-full bg-linear-to-br from-green-100 to-green-50 dark:from-green-900/30 dark:to-green-800/20 text-green-600 dark:text-green-400 mb-4 shadow-lg">
           <CheckCircle2 className="size-10" />
         </div>
         <h2 className="text-3xl md:text-4xl font-bold">You're All Set!</h2>
@@ -104,7 +104,7 @@ export function CompleteStep({ data, hasCard }: CompleteStepProps) {
       </div>
 
       {/* Next Steps */}
-      <div className="mt-10 p-8 rounded-2xl bg-gradient-to-br from-primary/10 via-primary/5 to-primary/10 max-w-lg mx-auto border-2 border-primary/20 shadow-lg">
+      <div className="mt-10 p-8 rounded-2xl bg-linear-to-br from-primary/10 via-primary/5 to-primary/10 max-w-lg mx-auto border-2 border-primary/20 shadow-lg">
         <h3 className="font-bold text-xl mb-5 text-center">What's Next?</h3>
         <ul className="space-y-3 text-sm md:text-base">
           <li className="flex items-start gap-3">

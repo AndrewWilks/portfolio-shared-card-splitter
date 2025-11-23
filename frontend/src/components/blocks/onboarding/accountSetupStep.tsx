@@ -6,11 +6,11 @@ import { useMultiStep } from "@/components/ui/form/multi-step/index.ts";
 import { z } from "zod";
 import { User } from "@shared/entities/user/index.ts";
 import { cn } from "@/lib/utils.ts";
-import type { TUserOnboarding } from "@shared/entities/user/index.ts";
+import { TApiRequest } from "@shared/entities/user/onboarding.ts";
 
 export interface AccountSetupStepProps {
-  data: TUserOnboarding;
-  onUpdate: (updates: Partial<TUserOnboarding>) => void;
+  data: TApiRequest;
+  onUpdate: (updates: Partial<TApiRequest>) => void;
 }
 
 const { firstNameSchema, lastNameSchema } = User;

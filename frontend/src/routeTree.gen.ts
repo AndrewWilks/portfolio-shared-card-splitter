@@ -22,6 +22,7 @@ import { Route as PublicFormsAuthLoginRouteImport } from './routes/_publicForms/
 import { Route as PublicFormsAuthBootstrapRouteImport } from './routes/_publicForms/auth/bootstrap.tsx'
 import { Route as PublicFormsAuthAcceptInviteRouteImport } from './routes/_publicForms/auth/accept-invite.tsx'
 import { Route as AuthenticatedDashboardProfileIndexRouteImport } from './routes/_authenticated/dashboard/profile/index.tsx'
+import { Route as AuthenticatedDashboardCreateCardIndexRouteImport } from './routes/_authenticated/dashboard/create-card/index.tsx'
 import { Route as AuthenticatedDashboardCardIdIndexRouteImport } from './routes/_authenticated/dashboard/$cardId/index.tsx'
 import { Route as AuthenticatedFormsOnboardingIndexRouteImport } from './routes/_authenticated/_forms/onboarding/index.tsx'
 import { Route as AuthenticatedFormsAuthInviteRouteImport } from './routes/_authenticated/_forms/auth/invite.tsx'
@@ -95,6 +96,12 @@ const AuthenticatedDashboardProfileIndexRoute =
     path: '/profile/',
     getParentRoute: () => AuthenticatedDashboardRouteRoute,
   } as any)
+const AuthenticatedDashboardCreateCardIndexRoute =
+  AuthenticatedDashboardCreateCardIndexRouteImport.update({
+    id: '/create-card/',
+    path: '/create-card/',
+    getParentRoute: () => AuthenticatedDashboardRouteRoute,
+  } as any)
 const AuthenticatedDashboardCardIdIndexRoute =
   AuthenticatedDashboardCardIdIndexRouteImport.update({
     id: '/$cardId/',
@@ -127,6 +134,7 @@ export interface FileRoutesByFullPath {
   '/auth/invite': typeof AuthenticatedFormsAuthInviteRoute
   '/onboarding': typeof AuthenticatedFormsOnboardingIndexRoute
   '/dashboard/$cardId': typeof AuthenticatedDashboardCardIdIndexRoute
+  '/dashboard/create-card': typeof AuthenticatedDashboardCreateCardIndexRoute
   '/dashboard/profile': typeof AuthenticatedDashboardProfileIndexRoute
 }
 export interface FileRoutesByTo {
@@ -141,6 +149,7 @@ export interface FileRoutesByTo {
   '/auth/invite': typeof AuthenticatedFormsAuthInviteRoute
   '/onboarding': typeof AuthenticatedFormsOnboardingIndexRoute
   '/dashboard/$cardId': typeof AuthenticatedDashboardCardIdIndexRoute
+  '/dashboard/create-card': typeof AuthenticatedDashboardCreateCardIndexRoute
   '/dashboard/profile': typeof AuthenticatedDashboardProfileIndexRoute
 }
 export interface FileRoutesById {
@@ -160,6 +169,7 @@ export interface FileRoutesById {
   '/_authenticated/_forms/auth/invite': typeof AuthenticatedFormsAuthInviteRoute
   '/_authenticated/_forms/onboarding/': typeof AuthenticatedFormsOnboardingIndexRoute
   '/_authenticated/dashboard/$cardId/': typeof AuthenticatedDashboardCardIdIndexRoute
+  '/_authenticated/dashboard/create-card/': typeof AuthenticatedDashboardCreateCardIndexRoute
   '/_authenticated/dashboard/profile/': typeof AuthenticatedDashboardProfileIndexRoute
 }
 export interface FileRouteTypes {
@@ -177,6 +187,7 @@ export interface FileRouteTypes {
     | '/auth/invite'
     | '/onboarding'
     | '/dashboard/$cardId'
+    | '/dashboard/create-card'
     | '/dashboard/profile'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -191,6 +202,7 @@ export interface FileRouteTypes {
     | '/auth/invite'
     | '/onboarding'
     | '/dashboard/$cardId'
+    | '/dashboard/create-card'
     | '/dashboard/profile'
   id:
     | '__root__'
@@ -209,6 +221,7 @@ export interface FileRouteTypes {
     | '/_authenticated/_forms/auth/invite'
     | '/_authenticated/_forms/onboarding/'
     | '/_authenticated/dashboard/$cardId/'
+    | '/_authenticated/dashboard/create-card/'
     | '/_authenticated/dashboard/profile/'
   fileRoutesById: FileRoutesById
 }
@@ -311,6 +324,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDashboardProfileIndexRouteImport
       parentRoute: typeof AuthenticatedDashboardRouteRoute
     }
+    '/_authenticated/dashboard/create-card/': {
+      id: '/_authenticated/dashboard/create-card/'
+      path: '/create-card'
+      fullPath: '/dashboard/create-card'
+      preLoaderRoute: typeof AuthenticatedDashboardCreateCardIndexRouteImport
+      parentRoute: typeof AuthenticatedDashboardRouteRoute
+    }
     '/_authenticated/dashboard/$cardId/': {
       id: '/_authenticated/dashboard/$cardId/'
       path: '/$cardId'
@@ -338,6 +358,7 @@ declare module '@tanstack/react-router' {
 interface AuthenticatedDashboardRouteRouteChildren {
   AuthenticatedDashboardIndexRoute: typeof AuthenticatedDashboardIndexRoute
   AuthenticatedDashboardCardIdIndexRoute: typeof AuthenticatedDashboardCardIdIndexRoute
+  AuthenticatedDashboardCreateCardIndexRoute: typeof AuthenticatedDashboardCreateCardIndexRoute
   AuthenticatedDashboardProfileIndexRoute: typeof AuthenticatedDashboardProfileIndexRoute
 }
 
@@ -346,6 +367,8 @@ const AuthenticatedDashboardRouteRouteChildren: AuthenticatedDashboardRouteRoute
     AuthenticatedDashboardIndexRoute: AuthenticatedDashboardIndexRoute,
     AuthenticatedDashboardCardIdIndexRoute:
       AuthenticatedDashboardCardIdIndexRoute,
+    AuthenticatedDashboardCreateCardIndexRoute:
+      AuthenticatedDashboardCreateCardIndexRoute,
     AuthenticatedDashboardProfileIndexRoute:
       AuthenticatedDashboardProfileIndexRoute,
   }
