@@ -17,19 +17,13 @@ const factory = createFactory();
 export const getCards = factory.createHandlers(async (c) => {
   const user = c.get("user");
 
-  const cards = await CardService.getCardsByOwner(user.userId);
+  const response = await CardService.getCardsByOwner(user.userId);
 
-  if (cards instanceof ApiError) {
-    return c.json(cards, CardService.mapErrorToStatusCode(cards));
+  if (response instanceof ApiError) {
+    return c.json(response, CardService.mapErrorToStatusCode(response));
   }
 
-  return c.json(
-    new ApiResponse({
-      data: cards,
-      message: "Cards retrieved successfully",
-    }),
-    STATUS_CODE.OK
-  );
+  return c.json(response, STATUS_CODE.OK);
 });
 
 /**
@@ -45,19 +39,13 @@ export const createCard = factory.createHandlers(async (c) => {
     ownerId: user.userId,
   };
 
-  const newCard = await CardService.createCard(cardData);
+  const response = await CardService.createCard(cardData);
 
-  if (newCard instanceof ApiError) {
-    return c.json(newCard, CardService.mapErrorToStatusCode(newCard));
+  if (response instanceof ApiError) {
+    return c.json(response, CardService.mapErrorToStatusCode(response));
   }
 
-  return c.json(
-    new ApiResponse({
-      data: newCard,
-      message: "Card created successfully",
-    }),
-    STATUS_CODE.Created
-  );
+  return c.json(response, STATUS_CODE.Created);
 });
 
 /**
@@ -76,13 +64,14 @@ export const getCardById = factory.createHandlers(async (c) => {
     return c.json(error, STATUS_CODE.BadRequest);
   }
 
-  const card = await CardService.getCardById(id);
+  const response = await CardService.getCardById(id);
 
-  if (card instanceof ApiError) {
-    return c.json(card, CardService.mapErrorToStatusCode(card));
+  if (response instanceof ApiError) {
+    return c.json(response, CardService.mapErrorToStatusCode(response));
   }
 
-  if (card.ownerId !== user.userId) {
+  // Check ownership - access response.data for the card
+  if (!response.data || response.data.ownerId !== user.userId) {
     const errorData: TApiError = {
       message: "Unauthorised access to card",
       code: ApiError.InternalCodes.INVALID_CARD_OWNER_ID,
@@ -90,13 +79,7 @@ export const getCardById = factory.createHandlers(async (c) => {
     return c.json(new ApiError(errorData), STATUS_CODE.Unauthorized);
   }
 
-  return c.json(
-    new ApiResponse({
-      data: card,
-      message: "Card retrieved successfully",
-    }),
-    STATUS_CODE.OK
-  );
+  return c.json(response, STATUS_CODE.OK);
 });
 
 /**
@@ -115,31 +98,31 @@ export const updateCardById = factory.createHandlers(async (c) => {
     return c.json(error, STATUS_CODE.BadRequest);
   }
 
-  const existingCard = await CardService.getCardById(id);
+  // Check if card exists and user owns it
+  const existingCardResponse = await CardService.getCardById(id);
 
-  if (existingCard instanceof ApiError) {
-    return c.json(existingCard, CardService.mapErrorToStatusCode(existingCard));
+  if (existingCardResponse instanceof ApiError) {
+    return c.json(
+      existingCardResponse,
+      CardService.mapErrorToStatusCode(existingCardResponse),
+    );
   }
 
-  if (existingCard.ownerId !== user.userId) {
+  if (existingCardResponse.data!.ownerId !== user.userId) {
     const errorData: TApiError = {
       message: "Unauthorised access to card",
       code: ApiError.InternalCodes.INVALID_CARD_OWNER_ID,
     };
     return c.json(new ApiError(errorData), STATUS_CODE.Unauthorized);
   }
-  const updatedCard = await CardService.updateCard(id, json);
 
-  if (updatedCard instanceof ApiError) {
-    return c.json(updatedCard, CardService.mapErrorToStatusCode(updatedCard));
+  const response = await CardService.updateCard(id, json);
+
+  if (response instanceof ApiError) {
+    return c.json(response, CardService.mapErrorToStatusCode(response));
   }
-  return c.json(
-    new ApiResponse({
-      data: updatedCard,
-      message: "Card updated successfully",
-    }),
-    STATUS_CODE.OK
-  );
+
+  return c.json(response, STATUS_CODE.OK);
 });
 
 /**
@@ -158,13 +141,17 @@ export const deleteCardById = factory.createHandlers(async (c) => {
     return c.json(error, STATUS_CODE.BadRequest);
   }
 
-  const existingCard = await CardService.getCardById(id);
+  // Check if card exists and user owns it
+  const existingCardResponse = await CardService.getCardById(id);
 
-  if (existingCard instanceof ApiError) {
-    return c.json(existingCard, CardService.mapErrorToStatusCode(existingCard));
+  if (existingCardResponse instanceof ApiError) {
+    return c.json(
+      existingCardResponse,
+      CardService.mapErrorToStatusCode(existingCardResponse),
+    );
   }
 
-  if (existingCard.ownerId !== user.userId) {
+  if (existingCardResponse.data!.ownerId !== user.userId) {
     const errorData: TApiError = {
       message: "Unauthorised access to card",
       code: ApiError.InternalCodes.INVALID_CARD_OWNER_ID,
@@ -183,6 +170,6 @@ export const deleteCardById = factory.createHandlers(async (c) => {
       data: deletedCard,
       message: "Card deleted successfully",
     }),
-    STATUS_CODE.OK
+    STATUS_CODE.OK,
   );
 });
