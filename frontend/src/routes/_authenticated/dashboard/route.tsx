@@ -23,12 +23,12 @@ function RouteComponent() {
     <SidebarProvider defaultOpen={defaultOpen}>
       {/* Dashboard Sidebar */}
       <DashboardSidebar />
-      <div className="relative w-full">
+      <div className="relative w-full flex flex-col">
         <header className="sticky top-0 z-20 border-b pt-4 pb-3 pl-2 pr-4 bg-background">
           <SidebarTrigger />
           <ModeToggle className="ml-2" />
         </header>
-        <main className="px-4 pt-2 pb-6 h-[200vh]">
+        <main className="px-4 pt-2 pb-6 flex-1">
           <Outlet />
         </main>
       </div>

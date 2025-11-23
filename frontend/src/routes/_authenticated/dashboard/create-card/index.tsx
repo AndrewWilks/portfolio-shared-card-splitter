@@ -96,7 +96,7 @@ function CreateCardPage() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-[calc(100vh-4rem)] p-6">
+    <div className="flex items-center justify-center min-h-full p-6">
       <div className="w-full max-w-2xl">
         {/* Header */}
         <div className="text-center space-y-3 mb-8">
