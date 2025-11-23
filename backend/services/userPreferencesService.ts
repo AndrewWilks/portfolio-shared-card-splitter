@@ -46,9 +46,11 @@ export class UserPreferencesService {
    * @returns Created UserPreferences entity or ApiError
    */
   static async create(
+    userId: string,
     data: DB_UserPreferencesCreate,
   ): Promise<UserPreferences | ApiError> {
-    const parseResult = UserPreferences.createSchema.safeParse(data);
+    const parseResult = UserPreferences.ApiCreateRequestSchema.safeParse(data);
+
     if (!parseResult.success) {
       return new ApiError({
         message: "Invalid preferences data",
@@ -57,7 +59,10 @@ export class UserPreferencesService {
       });
     }
 
-    const dbPrefs = await UserPreferencesRepository.create(parseResult.data);
+    const dbPrefs = await UserPreferencesRepository.create({
+      ...parseResult.data,
+      userId,
+    });
     if (!dbPrefs) {
       return new ApiError({
         message: "Failed to create preferences",
@@ -78,7 +83,10 @@ export class UserPreferencesService {
     userId: string,
     data: DB_UserPreferencesUpdate,
   ): Promise<UserPreferences | ApiError> {
-    const parseResult = UserPreferences.updateSchema.partial().safeParse(data);
+    const parseResult = UserPreferences.ApiCreateRequestSchema
+      .safeParse(
+        data,
+      );
     if (!parseResult.success) {
       return new ApiError({
         message: "Invalid preferences data",
