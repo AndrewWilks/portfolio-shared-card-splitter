@@ -13,8 +13,8 @@ export class ApiResponse<T> implements IApiResponse<T> {
     payload: {
       data: T;
       message?: string;
-    },
-    schema: Z
+    } | unknown,
+    schema: Z,
   ): ApiResponse<T> {
     const parsed = this.schema(schema).parse(payload);
     return new ApiResponse<T>({
@@ -27,8 +27,8 @@ export class ApiResponse<T> implements IApiResponse<T> {
     payload: {
       data?: T;
       message?: string;
-    },
-    schema: Z
+    } | unknown,
+    schema: Z,
   ) {
     const parsed = this.schema(schema).safeParse(payload);
 
