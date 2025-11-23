@@ -50,25 +50,7 @@ export class UserPreferences extends Entity {
   }
 
   static get currencySchema() {
-    return z.enum(currencyValues, { message: "Invalid currency code" });
-  }
-
-  static override get createSchema() {
-    return super.createSchema.extend({
-      userId: this.userIdSchema,
-      notifications: this.notificationsSchema.optional().default(true),
-      darkMode: this.darkModeSchema.optional().default(false),
-      currency: this.currencySchema.optional().default("USD"),
-    });
-  }
-
-  static override get updateSchema() {
-    return super.updateSchema.extend({
-      userId: this.userIdSchema.optional(),
-      notifications: this.notificationsSchema.optional(),
-      darkMode: this.darkModeSchema.optional(),
-      currency: this.currencySchema.optional(),
-    });
+    return z.enum(this.currencyValues, { message: "Invalid currency code" });
   }
 
   static override get schema() {

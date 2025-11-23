@@ -49,7 +49,7 @@ export class Card extends Entity {
   }
 
   static get typeSchema() {
-    return zEnum(cardTypeEnumValues, "Invalid card type");
+    return zEnum(this.cardTypeEnumValues, "Invalid card type");
   }
 
   static get last4Schema() {
