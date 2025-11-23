@@ -29,7 +29,7 @@ export class UserPreferences extends Entity {
 
   override toJSON() {
     return {
-      id: this._id,
+      id: this.id,
       userId: this.userId,
       notifications: this.notifications,
       darkMode: this.darkMode,

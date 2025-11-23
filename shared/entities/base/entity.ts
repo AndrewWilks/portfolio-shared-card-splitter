@@ -2,16 +2,16 @@ import { uuid, object } from "zod";
 export type EntityAction = "create" | "update";
 
 export default class Entity {
-  public readonly _id: string;
+  public readonly id: string;
 
   constructor({ id }: { id?: string }) {
-    const parsed = Entity.createSchema.parse({ id });
-    this._id = parsed.id;
+    const parsed = Entity.idSchema.parse(id);
+    this.id = parsed;
   }
 
   toJSON() {
     return {
-      id: this._id,
+      id: this.id,
     };
   }
 

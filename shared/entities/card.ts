@@ -34,7 +34,7 @@ export class Card extends Entity {
       name: this.name,
       type: this.type,
       last4: this.last4,
-      id: this._id,
+      id: this.id,
     };
   }
 
